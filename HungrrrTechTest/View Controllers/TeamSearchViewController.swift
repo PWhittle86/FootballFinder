@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  TeamSearchViewController.swift
 //  HungrrrTechTest
 //
 //  Created by Peter Whittle on 11/09/2020.
@@ -8,13 +8,16 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class TeamSearchViewController: UIViewController {
 
+    weak var coordinator: MainCoordinator?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
         // Do any additional setup after loading the view.
     }
-
-
+    
+    
+    
 }
-

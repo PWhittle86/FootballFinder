@@ -9,11 +9,18 @@
 /* Begin PBXBuildFile section */
 		22848913250BF09A00F12010 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22848912250BF09A00F12010 /* AppDelegate.swift */; };
 		22848915250BF09A00F12010 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22848914250BF09A00F12010 /* SceneDelegate.swift */; };
-		22848917250BF09A00F12010 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22848916250BF09A00F12010 /* ViewController.swift */; };
 		2284891A250BF09A00F12010 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22848918250BF09A00F12010 /* Main.storyboard */; };
 		2284891C250BF09D00F12010 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2284891B250BF09D00F12010 /* Assets.xcassets */; };
 		2284891F250BF09D00F12010 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2284891D250BF09D00F12010 /* LaunchScreen.storyboard */; };
 		2284892A250BF09D00F12010 /* HungrrrTechTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22848929250BF09D00F12010 /* HungrrrTechTestTests.swift */; };
+		22848939250BF40800F12010 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22848938250BF40800F12010 /* MainCoordinator.swift */; };
+		2284893A250BF40800F12010 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22848938250BF40800F12010 /* MainCoordinator.swift */; };
+		2284893D250BF4AC00F12010 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2284893C250BF4AC00F12010 /* CoordinatorProtocol.swift */; };
+		2284893E250BF4AC00F12010 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2284893C250BF4AC00F12010 /* CoordinatorProtocol.swift */; };
+		22848941250BF72300F12010 /* TeamSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2284893F250BF72300F12010 /* TeamSearchViewController.swift */; };
+		22848942250BF72300F12010 /* TeamSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2284893F250BF72300F12010 /* TeamSearchViewController.swift */; };
+		22848943250BF72300F12010 /* TeamSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22848940250BF72300F12010 /* TeamSearchViewController.xib */; };
+		22848944250BF72300F12010 /* TeamSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22848940250BF72300F12010 /* TeamSearchViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,7 +37,6 @@
 		2284890F250BF09A00F12010 /* HungrrrTechTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HungrrrTechTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22848912250BF09A00F12010 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22848914250BF09A00F12010 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		22848916250BF09A00F12010 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		22848919250BF09A00F12010 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2284891B250BF09D00F12010 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2284891E250BF09D00F12010 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -38,6 +44,10 @@
 		22848925250BF09D00F12010 /* HungrrrTechTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HungrrrTechTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		22848929250BF09D00F12010 /* HungrrrTechTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HungrrrTechTestTests.swift; sourceTree = "<group>"; };
 		2284892B250BF09D00F12010 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22848938250BF40800F12010 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		2284893C250BF4AC00F12010 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
+		2284893F250BF72300F12010 /* TeamSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSearchViewController.swift; sourceTree = "<group>"; };
+		22848940250BF72300F12010 /* TeamSearchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamSearchViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,13 +89,11 @@
 		22848911250BF09A00F12010 /* HungrrrTechTest */ = {
 			isa = PBXGroup;
 			children = (
-				22848912250BF09A00F12010 /* AppDelegate.swift */,
-				22848914250BF09A00F12010 /* SceneDelegate.swift */,
-				22848916250BF09A00F12010 /* ViewController.swift */,
+				22848937250BF21100F12010 /* Application Resources */,
+				22848936250BF17E00F12010 /* Coordinators */,
 				22848918250BF09A00F12010 /* Main.storyboard */,
-				2284891B250BF09D00F12010 /* Assets.xcassets */,
-				2284891D250BF09D00F12010 /* LaunchScreen.storyboard */,
-				22848920250BF09D00F12010 /* Info.plist */,
+				2284893B250BF43100F12010 /* Protocols */,
+				22848935250BF17300F12010 /* View Controllers */,
 			);
 			path = HungrrrTechTest;
 			sourceTree = "<group>";
@@ -97,6 +105,43 @@
 				2284892B250BF09D00F12010 /* Info.plist */,
 			);
 			path = HungrrrTechTestTests;
+			sourceTree = "<group>";
+		};
+		22848935250BF17300F12010 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2284893F250BF72300F12010 /* TeamSearchViewController.swift */,
+				22848940250BF72300F12010 /* TeamSearchViewController.xib */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		22848936250BF17E00F12010 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				22848938250BF40800F12010 /* MainCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		22848937250BF21100F12010 /* Application Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2284891D250BF09D00F12010 /* LaunchScreen.storyboard */,
+				22848912250BF09A00F12010 /* AppDelegate.swift */,
+				22848914250BF09A00F12010 /* SceneDelegate.swift */,
+				2284891B250BF09D00F12010 /* Assets.xcassets */,
+				22848920250BF09D00F12010 /* Info.plist */,
+			);
+			path = "Application Resources";
+			sourceTree = "<group>";
+		};
+		2284893B250BF43100F12010 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				2284893C250BF4AC00F12010 /* CoordinatorProtocol.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,6 +226,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2284891F250BF09D00F12010 /* LaunchScreen.storyboard in Resources */,
+				22848943250BF72300F12010 /* TeamSearchViewController.xib in Resources */,
 				2284891C250BF09D00F12010 /* Assets.xcassets in Resources */,
 				2284891A250BF09A00F12010 /* Main.storyboard in Resources */,
 			);
@@ -190,6 +236,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22848944250BF72300F12010 /* TeamSearchViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,8 +247,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22848917250BF09A00F12010 /* ViewController.swift in Sources */,
+				22848939250BF40800F12010 /* MainCoordinator.swift in Sources */,
+				2284893D250BF4AC00F12010 /* CoordinatorProtocol.swift in Sources */,
 				22848913250BF09A00F12010 /* AppDelegate.swift in Sources */,
+				22848941250BF72300F12010 /* TeamSearchViewController.swift in Sources */,
 				22848915250BF09A00F12010 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -211,6 +260,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2284892A250BF09D00F12010 /* HungrrrTechTestTests.swift in Sources */,
+				22848942250BF72300F12010 /* TeamSearchViewController.swift in Sources */,
+				2284893A250BF40800F12010 /* MainCoordinator.swift in Sources */,
+				2284893E250BF4AC00F12010 /* CoordinatorProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -364,7 +416,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2LN4RF2NZP;
-				INFOPLIST_FILE = HungrrrTechTest/Info.plist;
+				INFOPLIST_FILE = "HungrrrTechTest/Application Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -372,7 +425,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "whittle-productions.HungrrrTechTest";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -382,7 +435,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2LN4RF2NZP;
-				INFOPLIST_FILE = HungrrrTechTest/Info.plist;
+				INFOPLIST_FILE = "HungrrrTechTest/Application Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -390,7 +444,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "whittle-productions.HungrrrTechTest";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

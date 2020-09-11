@@ -110,8 +110,7 @@
 		22848935250BF17300F12010 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				2284893F250BF72300F12010 /* TeamSearchViewController.swift */,
-				22848940250BF72300F12010 /* TeamSearchViewController.xib */,
+				22848945250BF8E700F12010 /* TeamSearchViewController */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -142,6 +141,15 @@
 				2284893C250BF4AC00F12010 /* CoordinatorProtocol.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		22848945250BF8E700F12010 /* TeamSearchViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2284893F250BF72300F12010 /* TeamSearchViewController.swift */,
+				22848940250BF72300F12010 /* TeamSearchViewController.xib */,
+			);
+			path = TeamSearchViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

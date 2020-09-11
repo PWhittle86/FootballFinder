@@ -24,7 +24,6 @@ class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
         navigationController.delegate = self
     }
     
-
     
     
 }

@@ -16,6 +16,7 @@ enum tableViewSections: Int {
 class TeamSearchViewController: UIViewController {
     
     weak var coordinator: MainCoordinator?
+    let networkUtility = NetworkUtility()
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchButton: UIButton!
@@ -24,6 +25,7 @@ class TeamSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableViews()
+        networkUtility.basicPlayerTeamSearch(searchString: "barc")
     }
     
     func setupTableViews() {

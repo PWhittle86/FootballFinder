@@ -27,6 +27,14 @@
 		22848943250BF72300F12010 /* TeamSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22848940250BF72300F12010 /* TeamSearchViewController.xib */; };
 		22848944250BF72300F12010 /* TeamSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22848940250BF72300F12010 /* TeamSearchViewController.xib */; };
 		22DC46A6250C0A520000A47E /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46A5250C0A520000A47E /* PlayerTableViewCell.swift */; };
+		22DC46A9250C181F0000A47E /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46A8250C181F0000A47E /* Team.swift */; };
+		22DC46AA250C181F0000A47E /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46A8250C181F0000A47E /* Team.swift */; };
+		22DC46AC250C18290000A47E /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46AB250C18290000A47E /* Player.swift */; };
+		22DC46AD250C18290000A47E /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46AB250C18290000A47E /* Player.swift */; };
+		22DC46B4250C1A990000A47E /* NetworkUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46B3250C1A990000A47E /* NetworkUtility.swift */; };
+		22DC46B5250C1A990000A47E /* NetworkUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46B3250C1A990000A47E /* NetworkUtility.swift */; };
+		22DC46B7250C1EF10000A47E /* Codables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46B6250C1EF10000A47E /* Codables.swift */; };
+		22DC46B8250C1EF10000A47E /* Codables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46B6250C1EF10000A47E /* Codables.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +65,10 @@
 		2284893F250BF72300F12010 /* TeamSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSearchViewController.swift; sourceTree = "<group>"; };
 		22848940250BF72300F12010 /* TeamSearchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamSearchViewController.xib; sourceTree = "<group>"; };
 		22DC46A5250C0A520000A47E /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTableViewCell.swift; sourceTree = "<group>"; };
+		22DC46A8250C181F0000A47E /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		22DC46AB250C18290000A47E /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		22DC46B3250C1A990000A47E /* NetworkUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtility.swift; sourceTree = "<group>"; };
+		22DC46B6250C1EF10000A47E /* Codables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codables.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,10 +121,11 @@
 		22848911250BF09A00F12010 /* HungrrrTechTest */ = {
 			isa = PBXGroup;
 			children = (
-				22848937250BF21100F12010 /* Application Resources */,
+				22848937250BF21100F12010 /* Application Files */,
 				22848936250BF17E00F12010 /* Coordinators */,
 				22DC46A7250C13760000A47E /* Models */,
 				2284893B250BF43100F12010 /* Protocols */,
+				22DC46B2250C1A2C0000A47E /* Utilities */,
 				22848935250BF17300F12010 /* View Controllers */,
 			);
 			path = HungrrrTechTest;
@@ -143,7 +156,7 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
-		22848937250BF21100F12010 /* Application Resources */ = {
+		22848937250BF21100F12010 /* Application Files */ = {
 			isa = PBXGroup;
 			children = (
 				2284891D250BF09D00F12010 /* LaunchScreen.storyboard */,
@@ -152,7 +165,7 @@
 				2284891B250BF09D00F12010 /* Assets.xcassets */,
 				22848920250BF09D00F12010 /* Info.plist */,
 			);
-			path = "Application Resources";
+			path = "Application Files";
 			sourceTree = "<group>";
 		};
 		2284893B250BF43100F12010 /* Protocols */ = {
@@ -176,8 +189,19 @@
 		22DC46A7250C13760000A47E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				22DC46A8250C181F0000A47E /* Team.swift */,
+				22DC46AB250C18290000A47E /* Player.swift */,
+				22DC46B6250C1EF10000A47E /* Codables.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		22DC46B2250C1A2C0000A47E /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				22DC46B3250C1A990000A47E /* NetworkUtility.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,12 +311,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				22DC46A6250C0A520000A47E /* PlayerTableViewCell.swift in Sources */,
+				22DC46B7250C1EF10000A47E /* Codables.swift in Sources */,
 				2211AC62250C031A002EC546 /* TeamTableViewCell.swift in Sources */,
 				22848939250BF40800F12010 /* MainCoordinator.swift in Sources */,
 				2284893D250BF4AC00F12010 /* CoordinatorProtocol.swift in Sources */,
+				22DC46A9250C181F0000A47E /* Team.swift in Sources */,
 				22848913250BF09A00F12010 /* AppDelegate.swift in Sources */,
 				22848941250BF72300F12010 /* TeamSearchViewController.swift in Sources */,
+				22DC46AC250C18290000A47E /* Player.swift in Sources */,
 				22848915250BF09A00F12010 /* SceneDelegate.swift in Sources */,
+				22DC46B4250C1A990000A47E /* NetworkUtility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,9 +328,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22DC46AA250C181F0000A47E /* Team.swift in Sources */,
 				2284892A250BF09D00F12010 /* HungrrrTechTestTests.swift in Sources */,
 				22848942250BF72300F12010 /* TeamSearchViewController.swift in Sources */,
 				2211AC63250C031A002EC546 /* TeamTableViewCell.swift in Sources */,
+				22DC46B8250C1EF10000A47E /* Codables.swift in Sources */,
+				22DC46AD250C18290000A47E /* Player.swift in Sources */,
+				22DC46B5250C1A990000A47E /* NetworkUtility.swift in Sources */,
 				2284893A250BF40800F12010 /* MainCoordinator.swift in Sources */,
 				2284893E250BF4AC00F12010 /* CoordinatorProtocol.swift in Sources */,
 			);
@@ -450,7 +482,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2LN4RF2NZP;
-				INFOPLIST_FILE = "HungrrrTechTest/Application Resources/Info.plist";
+				INFOPLIST_FILE = "HungrrrTechTest/Application Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -469,7 +501,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2LN4RF2NZP;
-				INFOPLIST_FILE = "HungrrrTechTest/Application Resources/Info.plist";
+				INFOPLIST_FILE = "HungrrrTechTest/Application Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

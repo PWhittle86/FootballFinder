@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2211AC62250C031A002EC546 /* TeamTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211AC60250C031A002EC546 /* TeamTableViewCell.swift */; };
+		2211AC63250C031A002EC546 /* TeamTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211AC60250C031A002EC546 /* TeamTableViewCell.swift */; };
+		2211AC64250C031A002EC546 /* TeamTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2211AC61250C031A002EC546 /* TeamTableViewCell.xib */; };
+		2211AC65250C031A002EC546 /* TeamTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2211AC61250C031A002EC546 /* TeamTableViewCell.xib */; };
+		2211AC6A250C033C002EC546 /* PlayerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2211AC67250C033C002EC546 /* PlayerTableViewCell.xib */; };
+		2211AC6B250C033C002EC546 /* PlayerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2211AC67250C033C002EC546 /* PlayerTableViewCell.xib */; };
 		22848913250BF09A00F12010 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22848912250BF09A00F12010 /* AppDelegate.swift */; };
 		22848915250BF09A00F12010 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22848914250BF09A00F12010 /* SceneDelegate.swift */; };
 		2284891A250BF09A00F12010 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22848918250BF09A00F12010 /* Main.storyboard */; };
@@ -21,6 +27,7 @@
 		22848942250BF72300F12010 /* TeamSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2284893F250BF72300F12010 /* TeamSearchViewController.swift */; };
 		22848943250BF72300F12010 /* TeamSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22848940250BF72300F12010 /* TeamSearchViewController.xib */; };
 		22848944250BF72300F12010 /* TeamSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22848940250BF72300F12010 /* TeamSearchViewController.xib */; };
+		22DC46A6250C0A520000A47E /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46A5250C0A520000A47E /* PlayerTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2211AC60250C031A002EC546 /* TeamTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamTableViewCell.swift; sourceTree = "<group>"; };
+		2211AC61250C031A002EC546 /* TeamTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamTableViewCell.xib; sourceTree = "<group>"; };
+		2211AC67250C033C002EC546 /* PlayerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerTableViewCell.xib; sourceTree = "<group>"; };
 		2284890F250BF09A00F12010 /* HungrrrTechTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HungrrrTechTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22848912250BF09A00F12010 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22848914250BF09A00F12010 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -48,6 +58,7 @@
 		2284893C250BF4AC00F12010 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		2284893F250BF72300F12010 /* TeamSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSearchViewController.swift; sourceTree = "<group>"; };
 		22848940250BF72300F12010 /* TeamSearchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamSearchViewController.xib; sourceTree = "<group>"; };
+		22DC46A5250C0A520000A47E /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +79,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2211AC5F250C02E7002EC546 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				22DC46A5250C0A520000A47E /* PlayerTableViewCell.swift */,
+				2211AC67250C033C002EC546 /* PlayerTableViewCell.xib */,
+				2211AC60250C031A002EC546 /* TeamTableViewCell.swift */,
+				2211AC61250C031A002EC546 /* TeamTableViewCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		22848906250BF09A00F12010 = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +168,7 @@
 		22848945250BF8E700F12010 /* TeamSearchViewController */ = {
 			isa = PBXGroup;
 			children = (
+				2211AC5F250C02E7002EC546 /* Cells */,
 				2284893F250BF72300F12010 /* TeamSearchViewController.swift */,
 				22848940250BF72300F12010 /* TeamSearchViewController.xib */,
 			);
@@ -235,7 +258,9 @@
 			files = (
 				2284891F250BF09D00F12010 /* LaunchScreen.storyboard in Resources */,
 				22848943250BF72300F12010 /* TeamSearchViewController.xib in Resources */,
+				2211AC64250C031A002EC546 /* TeamTableViewCell.xib in Resources */,
 				2284891C250BF09D00F12010 /* Assets.xcassets in Resources */,
+				2211AC6A250C033C002EC546 /* PlayerTableViewCell.xib in Resources */,
 				2284891A250BF09A00F12010 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,6 +269,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2211AC65250C031A002EC546 /* TeamTableViewCell.xib in Resources */,
+				2211AC6B250C033C002EC546 /* PlayerTableViewCell.xib in Resources */,
 				22848944250BF72300F12010 /* TeamSearchViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -255,6 +282,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22DC46A6250C0A520000A47E /* PlayerTableViewCell.swift in Sources */,
+				2211AC62250C031A002EC546 /* TeamTableViewCell.swift in Sources */,
 				22848939250BF40800F12010 /* MainCoordinator.swift in Sources */,
 				2284893D250BF4AC00F12010 /* CoordinatorProtocol.swift in Sources */,
 				22848913250BF09A00F12010 /* AppDelegate.swift in Sources */,
@@ -269,6 +298,7 @@
 			files = (
 				2284892A250BF09D00F12010 /* HungrrrTechTestTests.swift in Sources */,
 				22848942250BF72300F12010 /* TeamSearchViewController.swift in Sources */,
+				2211AC63250C031A002EC546 /* TeamTableViewCell.swift in Sources */,
 				2284893A250BF40800F12010 /* MainCoordinator.swift in Sources */,
 				2284893E250BF4AC00F12010 /* CoordinatorProtocol.swift in Sources */,
 			);

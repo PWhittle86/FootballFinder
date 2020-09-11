@@ -73,8 +73,12 @@
                     </stackView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="bottom" secondItem="gUx-ci-PW7" secondAttribute="bottom" id="RdD-Go-ewG"/>
+                    <constraint firstItem="gUx-ci-PW7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="VPO-5e-aP9"/>
                     <constraint firstAttribute="bottom" secondItem="gUx-ci-PW7" secondAttribute="bottom" id="W57-0V-3ng"/>
                     <constraint firstItem="gUx-ci-PW7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Wv0-aT-gaH"/>
+                    <constraint firstItem="gUx-ci-PW7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="iCY-Pw-ufh"/>
+                    <constraint firstAttribute="trailing" secondItem="gUx-ci-PW7" secondAttribute="trailing" id="mL1-nT-Fsk"/>
                     <constraint firstItem="gUx-ci-PW7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="rt5-cs-7lY"/>
                     <constraint firstAttribute="trailing" secondItem="gUx-ci-PW7" secondAttribute="trailing" id="wYF-Gq-6BF"/>
                 </constraints>

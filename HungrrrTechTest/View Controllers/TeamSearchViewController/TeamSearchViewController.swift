@@ -8,8 +8,13 @@
 
 import UIKit
 
-class TeamSearchViewController: UIViewController {
+enum tableViewSections: Int {
+    case Players = 0
+    case Teams = 1
+}
 
+class TeamSearchViewController: UIViewController {
+    
     weak var coordinator: MainCoordinator?
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -33,23 +38,47 @@ class TeamSearchViewController: UIViewController {
 extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        //TODO: Make this dynamic.
         return 2
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
+        switch section {
+        case tableViewSections.Players.rawValue:
             return "Players"
-        } else {
+        case tableViewSections.Teams.rawValue:
             return "Teams"
+        default:
+            return ""
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //TODO: Make this dynamic
-        return 1
+        //TODO: Make this dynamic.
+        return 10
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        switch indexPath.section {
+        case tableViewSections.Players.rawValue:
+            if let playerCell = tableView.dequeueReusableCell(withIdentifier: "PlayerTableViewCell", for: indexPath) as? PlayerTableViewCell {
+                playerCell.ageLabel.text = "25"
+                playerCell.clubLabel.text = "Real Madrid"
+                playerCell.playerNameLabel.text = "David Football"
+                return playerCell
+            }
+        case tableViewSections.Teams.rawValue:
+            if let teamCell = tableView.dequeueReusableCell(withIdentifier: "TeamTableViewCell", for: indexPath) as? TeamTableViewCell {
+                teamCell.cityLabel.text = "Edinburgh"
+                teamCell.stadiumLabel.text = "Super Stadium"
+                teamCell.teamNameLabel.text = "Hearts of Midlothian"
+                return teamCell
+            }
+        default:
+            print("Unable to dequeue player/teams tableview cell.")
+            return UITableViewCell()
+        }
         return UITableViewCell()
     }
     

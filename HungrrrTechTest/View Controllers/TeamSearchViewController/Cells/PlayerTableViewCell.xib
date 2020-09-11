@@ -16,17 +16,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="360" height="90"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="TJq-V8-guQ">
-                        <rect key="frame" x="20" y="17" width="183.5" height="49"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="TJq-V8-guQ">
+                        <rect key="frame" x="0.0" y="0.0" width="360" height="90"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lionel Messi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="62f-SY-k6n">
-                                <rect key="frame" x="0.0" y="0.0" width="94.5" height="20.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="94.5" height="61.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="1cv-zn-AYX">
-                                <rect key="frame" x="0.0" y="28.5" width="183.5" height="20.5"/>
+                                <rect key="frame" x="0.0" y="69.5" width="183.5" height="20.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Age" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C04-aS-PmD" userLabel="Age Label">
                                         <rect key="frame" x="0.0" y="0.0" width="30" height="20.5"/>
@@ -57,6 +57,12 @@
                         </subviews>
                     </stackView>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="TJq-V8-guQ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="A3b-uI-b3N"/>
+                    <constraint firstItem="TJq-V8-guQ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Gks-UD-GnH"/>
+                    <constraint firstAttribute="bottom" secondItem="TJq-V8-guQ" secondAttribute="bottom" id="Uyo-Uq-xR3"/>
+                    <constraint firstAttribute="trailing" secondItem="TJq-V8-guQ" secondAttribute="trailing" id="fY5-k9-KvL"/>
+                </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>

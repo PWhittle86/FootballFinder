@@ -15,7 +15,7 @@ class TeamSearchViewController: UIViewController {
     
     var players: [Player] = []
     var teams: [Team] = []
-    var previousSearchString: String
+    var previousSearchString: String?
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchButton: UIButton!
@@ -29,15 +29,18 @@ class TeamSearchViewController: UIViewController {
     }
     
     func fetchPlayerAndTeamData(searchString: String) {
-        let completionHandler: (FootballAPIJSON) -> Void = { [weak self] (footballData) in
+        let completionHandler: (PlayerTeamRootObject) -> Void = { [weak self] (footballData) in
             
-            for player in footballData.result.players {
-                //TODO: going to need some logic in here so that duplicate players aren't added to the array.
-                self?.players.append(player)
+            if let players = footballData.result.players {
+                for player in players {
+                    self?.players.append(player)
+                }
             }
             
-            for team in footballData.result.teams {
-                self?.teams.append(team)
+            if let teams = footballData.result.teams {
+                for team in teams {
+                      self?.teams.append(team)
+                  }
             }
             
             DispatchQueue.main.async {
@@ -58,6 +61,8 @@ class TeamSearchViewController: UIViewController {
                            forCellReuseIdentifier: TableViewCellIdentifiers.playerCell)
         tableView.register(UINib(nibName: TableViewCellIdentifiers.teamCell, bundle: nil),
                            forCellReuseIdentifier: TableViewCellIdentifiers.teamCell)
+        tableView.register(UINib(nibName: TableViewCellIdentifiers.noResultsCell, bundle: nil),
+                           forCellReuseIdentifier: TableViewCellIdentifiers.noResultsCell)
     }
     
     func setupSearchBar() {
@@ -97,7 +102,7 @@ class TeamSearchViewController: UIViewController {
 
     @IBAction func searchButtonTapped(_ sender: Any) {
         if let searchString = self.searchBar.text {
-            if previousSearchString != searchString {
+            if previousSearchString ?? "" != searchString {
                 players.removeAll()
                 teams.removeAll()
             }
@@ -181,14 +186,13 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableviewSectionCount() -> Int {
-        var sectionCount = 0
-        if !self.players.isEmpty {
-            sectionCount += 1
+        
+        switch  availableDataCheck() {
+        case .PlayersAndTeams:
+            return 2
+        default:
+            return 1
         }
-        if !self.teams.isEmpty {
-            sectionCount += 1
-        }
-        return sectionCount
     }
     
     func getPlayerCell(tableView: UITableView,

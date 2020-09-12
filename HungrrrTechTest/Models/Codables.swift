@@ -8,35 +8,18 @@
 
 import Foundation
 
-//MARK: The 4 components of a basic search result
-struct FootballAPIJSON: Codable {
-    let result: Result
-    
-    init() {
-        self.result = Result()
-    }
+//TODO: Make these comments appear as an XCode description
+struct PlayerTeamRootObject: Codable {
+    let result: SuccessfulResult
 }
 
-struct Result: Codable {
-    let players: [Player]
-    let teams: [Team]
+struct SuccessfulResult: Codable {
+    let players: [Player]?
+    let teams: [Team]?
     let status: Bool
     let message: String
     let request_order: Int
     let searchType, searchString, minVer, serverAlert: String
-    
-    //Initialiser so that we can return an empty Result, if necessary.
-    init() {
-        self.players = []
-        self.teams = []
-        self.status = false
-        self.message = ""
-        self.request_order = 0
-        self.searchType = ""
-        self.searchString = ""
-        self.minVer = ""
-        self.serverAlert = ""
-    }
 }
 
 struct Player: Codable {

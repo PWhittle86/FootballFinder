@@ -11,8 +11,7 @@ import Foundation
 class NetworkUtility {
     
     //TODO: Perhaps split this into smaller functions? One for getting the data and one for decoding?
-    //TODO: Unit test this lot.
-    func basicPlayerTeamSearch(searchString: String, completion: @escaping (FootballAPIJSON) -> Void) {
+    func basicPlayerTeamSearch(searchString: String, completion: @escaping (PlayerTeamRootObject) -> Void) {
                 
         let session = URLSession.init(configuration: .default)
         guard let footballAPI = URL(string: "http://trials.mtcmobile.co.uk/api/football/1.0/search") else {
@@ -46,13 +45,15 @@ class NetworkUtility {
                 return
             }
             
+            let decoder = JSONDecoder()
+
+            //TODO: This needs refactored so badly.
             do {
-                let decoder = JSONDecoder()
-                let playerTeams = try decoder.decode(FootballAPIJSON.self, from: data)
+                let playerTeams = try decoder.decode(PlayerTeamRootObject.self, from: data)
                 completion(playerTeams)
             } catch {
                 print("Unable to decode data received from API. Error: \(error)")
-            }
+                }
         }
         task.resume()
     }
@@ -68,12 +69,6 @@ class NetworkUtility {
         }
     }
     
-    func getPlayers() {
-        
-    }
     
-    func getTeams() {
-        
-    }
     
 }

@@ -33,9 +33,14 @@ class TeamSearchViewController: UIViewController {
         setupTableView()
         setupSearchBar()
         setupSearchbutton()
+        setupUI()
     }
     
     //MARK: Setup Functions
+    
+    func setupUI() {
+        self.title = "Football Finder"
+    }
     
     func setupSearchbutton() {
         self.searchButton.isEnabled = false
@@ -124,7 +129,9 @@ class TeamSearchViewController: UIViewController {
     }
     
     @IBAction func searchButtonTapped(_ sender: Any) {
-        //TODO: This will execute additional searches if the user taps the button twice without changes.
+        //TODO: Temp solution to double search issue, but architectural change of firstSearchCheck might be better.
+        //Disabling the search button after a search so that user has to change the search string to search for new data.
+        self.searchButton.isEnabled = false
         executeSearch(searchParameter: nil, offset: nil)
     }
     
@@ -200,6 +207,7 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         var teamCount = teams.count
         
         //If not 0 and multiple of 10 there may be more data available to download from the API. Add 1 to the team/player count so there is room for the MoreCell.
+        //TODO: Figure out how to handle a final batch of data which brings the player count to a multiple of 10.
         if (playerCount != 0) && (playerCount % 10 == 0){
             playerCount += 1
         }
@@ -220,7 +228,7 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         case .OnlyTeams:
             return teamCount
         case .NoData:
-            //Return a single row in the event that no data is available
+            //Return a single row in the event that no data is available, for the No Data cell.
             return 1
         }
     }
@@ -352,9 +360,9 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
 extension TeamSearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        /*A single character isn't enough info for a useful search to be completed.
-         As such, I've limited access to the search button until the user has entered at least 2 characters. */
-        if searchText.count >= 2 {
+        /*A single character isn't enough info for a useful search to be completed. As such, I've limited access to the search button until the user has entered at least 2 characters. Additionally, since we want users to search for more players/teams using the More cell, rather than the search button, the search cell is disabled if the search text is the same as the last string they searched for.*/
+        //TODO: Review as part of previousSearchString refactoring (if necessary).
+        if (searchText.count >= 2) && (searchText != previousSearchString) {
             self.searchButton.isEnabled = true
         } else {
             self.searchButton.isEnabled = false

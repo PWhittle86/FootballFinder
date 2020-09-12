@@ -8,11 +8,6 @@
 
 import Foundation
 
-public enum SearchParameter : String {
-    case players
-    case teams
-}
-
 class NetworkUtility {
 
     //Move this to a constant?

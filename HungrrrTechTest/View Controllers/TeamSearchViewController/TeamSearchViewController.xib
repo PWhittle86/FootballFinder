@@ -26,7 +26,7 @@
                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gui-hM-huD">
                             <rect key="frame" x="0.0" y="0.0" width="404" height="56"/>
                             <subviews>
-                                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="5pP-L6-CzL">
+                                <searchBar contentMode="redraw" placeholder="Search for a player or team!" translatesAutoresizingMaskIntoConstraints="NO" id="5pP-L6-CzL">
                                     <rect key="frame" x="0.0" y="0.0" width="331" height="56"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>

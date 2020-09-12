@@ -1,5 +1,5 @@
 //
-//  Constants.swift
+//  Constants+Enums.swift
 //  HungrrrTechTest
 //
 //  Created by Peter Whittle on 12/09/2020.
@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+//Strings, particularly those that are used in more than one place, have been stored here as static properties in order to ease any changes which need to be made in future. Enums used throughout the project are also stored here.
 
 //MARK: Error Constants
 public enum DownloadError: String, Error {
@@ -30,4 +32,15 @@ struct TableViewCellIdentifiers {
 struct TableViewSectionHeaders {
     static let players = "Players"
     static let teams = "Teams"
+}
+
+//MARK: NetworkUtility Constants {
+struct NetworkUtilityStrings {
+    static let apiString = "http://trials.mtcmobile.co.uk/api/football/1.0/search"
+}
+
+//MARK: Search parameter types for API requests
+public enum SearchParameter {
+    case players
+    case teams
 }

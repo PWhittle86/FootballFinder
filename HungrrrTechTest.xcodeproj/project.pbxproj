@@ -26,8 +26,8 @@
 		22848942250BF72300F12010 /* TeamSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2284893F250BF72300F12010 /* TeamSearchViewController.swift */; };
 		22848943250BF72300F12010 /* TeamSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22848940250BF72300F12010 /* TeamSearchViewController.xib */; };
 		22848944250BF72300F12010 /* TeamSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22848940250BF72300F12010 /* TeamSearchViewController.xib */; };
-		229EAAE1250CFB8600FE3CE7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAE0250CFB8600FE3CE7 /* Constants.swift */; };
-		229EAAE2250CFB8600FE3CE7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAE0250CFB8600FE3CE7 /* Constants.swift */; };
+		229EAAE1250CFB8600FE3CE7 /* Constants+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAE0250CFB8600FE3CE7 /* Constants+Enums.swift */; };
+		229EAAE2250CFB8600FE3CE7 /* Constants+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAE0250CFB8600FE3CE7 /* Constants+Enums.swift */; };
 		229EAAE5250D2B4500FE3CE7 /* NoResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAE3250D2B4400FE3CE7 /* NoResultsTableViewCell.swift */; };
 		229EAAE6250D2B4500FE3CE7 /* NoResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAE3250D2B4400FE3CE7 /* NoResultsTableViewCell.swift */; };
 		229EAAE7250D2B4500FE3CE7 /* NoResultsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 229EAAE4250D2B4400FE3CE7 /* NoResultsTableViewCell.xib */; };
@@ -76,7 +76,7 @@
 		2284893C250BF4AC00F12010 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		2284893F250BF72300F12010 /* TeamSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSearchViewController.swift; sourceTree = "<group>"; };
 		22848940250BF72300F12010 /* TeamSearchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamSearchViewController.xib; sourceTree = "<group>"; };
-		229EAAE0250CFB8600FE3CE7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		229EAAE0250CFB8600FE3CE7 /* Constants+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Enums.swift"; sourceTree = "<group>"; };
 		229EAAE3250D2B4400FE3CE7 /* NoResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultsTableViewCell.swift; sourceTree = "<group>"; };
 		229EAAE4250D2B4400FE3CE7 /* NoResultsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoResultsTableViewCell.xib; sourceTree = "<group>"; };
 		229EAAED250D4E8600FE3CE7 /* MoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableViewCell.swift; sourceTree = "<group>"; };
@@ -208,7 +208,7 @@
 		229EAADF250CFB6500FE3CE7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				229EAAE0250CFB8600FE3CE7 /* Constants.swift */,
+				229EAAE0250CFB8600FE3CE7 /* Constants+Enums.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -392,7 +392,7 @@
 				22DC46AC250C18290000A47E /* Player.swift in Sources */,
 				22848915250BF09A00F12010 /* SceneDelegate.swift in Sources */,
 				22DC46B4250C1A990000A47E /* NetworkUtility.swift in Sources */,
-				229EAAE1250CFB8600FE3CE7 /* Constants.swift in Sources */,
+				229EAAE1250CFB8600FE3CE7 /* Constants+Enums.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,7 +407,7 @@
 				229EAAF0250D4E8600FE3CE7 /* MoreTableViewCell.swift in Sources */,
 				2211AC63250C031A002EC546 /* TeamTableViewCell.swift in Sources */,
 				22DC46B8250C1EF10000A47E /* Codables.swift in Sources */,
-				229EAAE2250CFB8600FE3CE7 /* Constants.swift in Sources */,
+				229EAAE2250CFB8600FE3CE7 /* Constants+Enums.swift in Sources */,
 				22DC46AD250C18290000A47E /* Player.swift in Sources */,
 				229EAAF5250D5AB400FE3CE7 /* SearchParameter.swift in Sources */,
 				22DC46B5250C1A990000A47E /* NetworkUtility.swift in Sources */,

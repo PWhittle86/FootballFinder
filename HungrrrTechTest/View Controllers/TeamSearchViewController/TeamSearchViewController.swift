@@ -15,6 +15,7 @@ class TeamSearchViewController: UIViewController {
     
     var players: [Player] = []
     var teams: [Team] = []
+    var previousSearchString: String
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchButton: UIButton!
@@ -65,8 +66,9 @@ class TeamSearchViewController: UIViewController {
     
     /*
      This function is used to check what data, if any, is currently available for the tableview to use following a search to the player/team API.
+     It is used extensively throughout the tableview's delegate functions.
      
-     There are 4 possible scenarios:
+     There are 4 possible scenarios being checked:
      1. Teams + Players
      2. Only Players
      3. Only Teams
@@ -92,22 +94,14 @@ class TeamSearchViewController: UIViewController {
         }
         return AvailableTableviewData.NoData
     }
-    
-    func tableviewSectionCount() -> Int {
-        var sectionCount = 0
-        if !self.players.isEmpty {
-            sectionCount += 1
-        }
-        if !self.teams.isEmpty {
-            sectionCount += 1
-        }
-        return sectionCount
-    }
-    
-    
-    
+
     @IBAction func searchButtonTapped(_ sender: Any) {
         if let searchString = self.searchBar.text {
+            if previousSearchString != searchString {
+                players.removeAll()
+                teams.removeAll()
+            }
+            previousSearchString = searchString
             fetchPlayerAndTeamData(searchString: searchString)
         }
     }
@@ -120,11 +114,8 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
         let playerHeading = TableViewSectionHeaders.players
         let teamHeading = TableViewSectionHeaders.teams
-        
-        /* Check what data is available before determining what title to apply to the header of the section.*/
         
         switch availableDataCheck() {
         case .PlayersAndTeams:
@@ -140,11 +131,9 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         case .NoData:
             return ""
         }
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         let playerCount = players.count
         let teamCount = teams.count
         
@@ -188,17 +177,22 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
                 return noResultsCell
             }
         }
-        
-        
-        
-        
-        
         return UITableViewCell()
+    }
+    
+    func tableviewSectionCount() -> Int {
+        var sectionCount = 0
+        if !self.players.isEmpty {
+            sectionCount += 1
+        }
+        if !self.teams.isEmpty {
+            sectionCount += 1
+        }
+        return sectionCount
     }
     
     func getPlayerCell(tableView: UITableView,
                           indexPath: IndexPath) -> PlayerTableViewCell {
-        
         if let playerCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.playerCell,
                                                           for: indexPath) as? PlayerTableViewCell {
             if self.players.isEmpty {
@@ -206,10 +200,10 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
             }
             
             let player = self.players[indexPath.row]
-            
             playerCell.playerNameLabel.text = "\(player.playerFirstName) \(player.playerSecondName)"
             playerCell.ageLabel.text = player.playerAge
             playerCell.clubLabel.text = player.playerClub
+            
             return playerCell
         }
         return PlayerTableViewCell()
@@ -217,7 +211,6 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     func getTeamCell(tableView: UITableView,
                         indexPath: IndexPath) -> TeamTableViewCell {
-        
         if let teamCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.teamCell,
                                                         for: indexPath) as? TeamTableViewCell {
             if self.teams.isEmpty {
@@ -225,16 +218,17 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
             }
             
             let team = teams[indexPath.row]
-            
             teamCell.cityLabel.text = team.teamCity
             teamCell.stadiumLabel.text = team.teamStadium
             teamCell.teamNameLabel.text = team.teamName
+            
             return teamCell
         }
         return TeamTableViewCell()
     }
 }
 
+//Perhaps put these into their own variables to tidy the file up a bit?
 extension TeamSearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

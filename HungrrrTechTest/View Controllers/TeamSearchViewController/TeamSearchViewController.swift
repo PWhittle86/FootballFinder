@@ -8,12 +8,6 @@
 
 import UIKit
 
-//MARK: Tableview Section Indexes - these will probably need to be removed.
-public enum tableViewSections: Int {
-    case Players = 0
-    case Teams = 1
-}
-
 class TeamSearchViewController: UIViewController {
     
     weak var coordinator: MainCoordinator?
@@ -69,81 +63,175 @@ class TeamSearchViewController: UIViewController {
         searchBar.delegate = self
     }
     
+    /*
+     This function is used to check what data, if any, is currently available for the tableview to use following a search to the player/team API.
+     
+     There are 4 possible scenarios:
+     1. Teams + Players
+     2. Only Players
+     3. Only Teams
+     4. No Players or Teams
+     */
+    
+    func availableDataCheck() -> AvailableTableviewData {
+        //TODO: Prime candidates for unit testing here.
+        let appHasPlayerData = !self.players.isEmpty
+        let appHasTeamData = !self.teams.isEmpty
+        
+        //Teams + Players
+        if appHasPlayerData && appHasTeamData {
+            return AvailableTableviewData.PlayersAndTeams
+        }
+        //Only Players
+        if appHasPlayerData && !appHasTeamData {
+            return AvailableTableviewData.OnlyPlayers
+        }
+        //Only Teams
+        if !appHasPlayerData && appHasTeamData {
+            return AvailableTableviewData.OnlyTeams
+        }
+        return AvailableTableviewData.NoData
+    }
+    
+    func tableviewSectionCount() -> Int {
+        var sectionCount = 0
+        if !self.players.isEmpty {
+            sectionCount += 1
+        }
+        if !self.teams.isEmpty {
+            sectionCount += 1
+        }
+        return sectionCount
+    }
+    
+    
+    
     @IBAction func searchButtonTapped(_ sender: Any) {
         if let searchString = self.searchBar.text {
             fetchPlayerAndTeamData(searchString: searchString)
         }
     }
-    
-    
 }
 
 extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        //TODO: Make this dynamic.
-        return 2
+        return tableviewSectionCount()
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case tableViewSections.Players.rawValue:
-            return "Players"
-        case tableViewSections.Teams.rawValue:
-            return "Teams"
-        default:
+        
+        let playerHeading = TableViewSectionHeaders.players
+        let teamHeading = TableViewSectionHeaders.teams
+        
+        /* Check what data is available before determining what title to apply to the header of the section.*/
+        
+        switch availableDataCheck() {
+        case .PlayersAndTeams:
+            if section == 0 {
+                return playerHeading
+            } else {
+                return teamHeading
+            }
+        case .OnlyPlayers:
+            return playerHeading
+        case .OnlyTeams:
+            return teamHeading
+        case .NoData:
             return ""
         }
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //TODO: Make this dynamic.
-        switch section {
-        case tableViewSections.Players.rawValue:
-            return players.count
-        case tableViewSections.Teams.rawValue:
-            return teams.count
-        default:
-            return 0
+        
+        let playerCount = players.count
+        let teamCount = teams.count
+        
+        switch availableDataCheck() {
+        case .PlayersAndTeams:
+            if section == 0 {
+                return playerCount
+            } else {
+                return teamCount
+            }
+        case .OnlyPlayers:
+            return playerCount
+        case .OnlyTeams:
+            return teamCount
+        case .NoData:
+            //Return a single row in the event that no data is available
+            return 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        switch indexPath.section {
-        case tableViewSections.Players.rawValue:
-            if let playerCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.playerCell,
-                                                              for: indexPath) as? PlayerTableViewCell {
-                if self.players.isEmpty {
-                    return playerCell
-                }
-                
-                let player = self.players[indexPath.row]
-                playerCell.playerNameLabel.text = "\(player.playerFirstName) \(player.playerSecondName)"
-                playerCell.ageLabel.text = player.playerAge
-                playerCell.clubLabel.text = player.playerClub
+        switch availableDataCheck() {
+        case .PlayersAndTeams:
+            if indexPath.section == 0 {
+                return getPlayerCell(tableView: tableView,
+                              indexPath: indexPath)
+            } else {
+                return getTeamCell(tableView: tableView,
+                            indexPath: indexPath)
+            }
+        case .OnlyTeams:
+            return getTeamCell(tableView: tableView,
+                               indexPath: indexPath)
+        case .OnlyPlayers:
+            return getPlayerCell(tableView: tableView,
+                                 indexPath: indexPath)
+        case .NoData:
+            if let noResultsCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultsCell,
+                                                                 for: indexPath) as? NoResultsTableViewCell {
+                return noResultsCell
+            }
+        }
+        
+        
+        
+        
+        
+        return UITableViewCell()
+    }
+    
+    func getPlayerCell(tableView: UITableView,
+                          indexPath: IndexPath) -> PlayerTableViewCell {
+        
+        if let playerCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.playerCell,
+                                                          for: indexPath) as? PlayerTableViewCell {
+            if self.players.isEmpty {
                 return playerCell
             }
             
-        case tableViewSections.Teams.rawValue:
-            if let teamCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.teamCell,
-                                                            for: indexPath) as? TeamTableViewCell {
-                if self.teams.isEmpty {
-                    return teamCell
-                }
-                
-                let team = self.teams[indexPath.row]
-                teamCell.cityLabel.text = team.teamCity
-                teamCell.stadiumLabel.text = team.teamStadium
-                teamCell.teamNameLabel.text = team.teamName
+            let player = self.players[indexPath.row]
+            
+            playerCell.playerNameLabel.text = "\(player.playerFirstName) \(player.playerSecondName)"
+            playerCell.ageLabel.text = player.playerAge
+            playerCell.clubLabel.text = player.playerClub
+            return playerCell
+        }
+        return PlayerTableViewCell()
+    }
+    
+    func getTeamCell(tableView: UITableView,
+                        indexPath: IndexPath) -> TeamTableViewCell {
+        
+        if let teamCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.teamCell,
+                                                        for: indexPath) as? TeamTableViewCell {
+            if self.teams.isEmpty {
                 return teamCell
             }
             
-        default:
-            print("Unable to dequeue player/teams tableview cell.")
-            return UITableViewCell()
+            let team = teams[indexPath.row]
+            
+            teamCell.cityLabel.text = team.teamCity
+            teamCell.stadiumLabel.text = team.teamStadium
+            teamCell.teamNameLabel.text = team.teamName
+            return teamCell
         }
-        return UITableViewCell()
+        return TeamTableViewCell()
     }
 }
 

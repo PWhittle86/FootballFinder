@@ -21,7 +21,7 @@ public enum DownloadError: String, Error {
 }
 
 //MARK: TableViewCell Identifiers
-struct TableViewCellIdentifiers {
+struct TableViewCellIdentifier {
     static let playerCell = "PlayerTableViewCell"
     static let teamCell = "TeamTableViewCell"
     static let noResultsCell = "NoResultsTableViewCell"
@@ -29,13 +29,13 @@ struct TableViewCellIdentifiers {
 }
 
 //MARK: Tableview Section Indexes
-struct TableViewSectionHeaders {
+struct TableViewSectionHeader {
     static let players = "Players"
     static let teams = "Teams"
 }
 
 //MARK: NetworkUtility Constants {
-struct NetworkUtilityStrings {
+struct NetworkUtilityConstant {
     static let apiString = "http://trials.mtcmobile.co.uk/api/football/1.0/search"
 }
 

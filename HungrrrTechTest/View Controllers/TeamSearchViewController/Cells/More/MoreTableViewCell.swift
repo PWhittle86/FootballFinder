@@ -10,6 +10,8 @@ import UIKit
 
 class MoreTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var moreLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,6 +21,17 @@ class MoreTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func setLabelText(tableViewSectionType: String) {
+        switch tableViewSectionType {
+        case "Players":
+            moreLabel.text = "More Players..."
+        case "Teams":
+            moreLabel.text = "More Teams..."
+        default:
+            moreLabel.text = "More..."
+        }
     }
     
 }

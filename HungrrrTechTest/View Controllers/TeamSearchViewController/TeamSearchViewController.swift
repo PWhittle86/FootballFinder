@@ -49,14 +49,14 @@ class TeamSearchViewController: UIViewController {
     func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: TableViewCellIdentifiers.playerCell, bundle: nil),
-                           forCellReuseIdentifier: TableViewCellIdentifiers.playerCell)
-        tableView.register(UINib(nibName: TableViewCellIdentifiers.teamCell, bundle: nil),
-                           forCellReuseIdentifier: TableViewCellIdentifiers.teamCell)
-        tableView.register(UINib(nibName: TableViewCellIdentifiers.noResultsCell, bundle: nil),
-                           forCellReuseIdentifier: TableViewCellIdentifiers.noResultsCell)
-        tableView.register(UINib(nibName: TableViewCellIdentifiers.moreCell, bundle: nil),
-                           forCellReuseIdentifier: TableViewCellIdentifiers.moreCell)
+        tableView.register(UINib(nibName: TableViewCellIdentifier.playerCell, bundle: nil),
+                           forCellReuseIdentifier: TableViewCellIdentifier.playerCell)
+        tableView.register(UINib(nibName: TableViewCellIdentifier.teamCell, bundle: nil),
+                           forCellReuseIdentifier: TableViewCellIdentifier.teamCell)
+        tableView.register(UINib(nibName: TableViewCellIdentifier.noResultsCell, bundle: nil),
+                           forCellReuseIdentifier: TableViewCellIdentifier.noResultsCell)
+        tableView.register(UINib(nibName: TableViewCellIdentifier.moreCell, bundle: nil),
+                           forCellReuseIdentifier: TableViewCellIdentifier.moreCell)
     }
     
     func setupSearchBar() {
@@ -183,8 +183,8 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let playerHeading = TableViewSectionHeaders.players
-        let teamHeading = TableViewSectionHeaders.teams
+        let playerHeading = TableViewSectionHeader.players
+        let teamHeading = TableViewSectionHeader.teams
         
         switch availableDataCheck() {
         case .PlayersAndTeams:
@@ -251,7 +251,7 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
             return getPlayerCell(tableView: tableView,
                                  indexPath: indexPath)
         case .NoData:
-            if let noResultsCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.noResultsCell,
+            if let noResultsCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.noResultsCell,
                                                                  for: indexPath) as? NoResultsTableViewCell {
                 return noResultsCell
             }
@@ -305,13 +305,14 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         
         //TODO: Placeholder - make this more robust.
         if (indexPath.row + 1) > self.players.count {
-            if let moreCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.moreCell,
+            if let moreCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.moreCell,
                                                             for: indexPath) as? MoreTableViewCell {
+                moreCell.setLabelText(tableViewSectionType: TableViewSectionHeader.players)
                 return moreCell
             }
         }
         
-        if let playerCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.playerCell,
+        if let playerCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.playerCell,
                                                           for: indexPath) as? PlayerTableViewCell {
             if self.players.isEmpty {
                 return playerCell
@@ -332,13 +333,14 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         
         //TODO: Placeholder. Make this more robust.
         if (indexPath.row + 1) > self.teams.count {
-            if let moreCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.moreCell,
+            if let moreCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.moreCell,
                                                             for: indexPath) as? MoreTableViewCell {
+                moreCell.setLabelText(tableViewSectionType: TableViewSectionHeader.teams)
                 return moreCell
             }
         }
         
-        if let teamCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.teamCell,
+        if let teamCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.teamCell,
                                                         for: indexPath) as? TeamTableViewCell {
             if self.teams.isEmpty {
                 return teamCell
@@ -353,7 +355,6 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return TeamTableViewCell()
     }
-    
 }
 
 //Perhaps put these into their own variables to tidy the file up a bit?

@@ -21,30 +21,27 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wIX-Xf-Plx">
-                    <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                    <rect key="frame" x="5" y="44" width="404" height="852"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sIy-3j-Cdp">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gui-hM-huD">
+                            <rect key="frame" x="0.0" y="0.0" width="404" height="56"/>
                             <subviews>
-                                <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5pP-L6-CzL">
-                                    <rect key="frame" x="0.0" y="3" width="331" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="5pP-L6-CzL">
+                                    <rect key="frame" x="0.0" y="0.0" width="331" height="56"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
-                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4E-9i-vrp">
-                                    <rect key="frame" x="345" y="7" width="61" height="36"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4E-9i-vrp">
+                                    <rect key="frame" x="331" y="0.0" width="73" height="56"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                     <state key="normal" title="Search"/>
+                                    <connections>
+                                        <action selector="searchButtonTapped:" destination="-1" eventType="touchUpInside" id="Aah-Jn-Z3e"/>
+                                    </connections>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="50" id="gH3-Mk-ijY"/>
-                            </constraints>
-                        </view>
+                        </stackView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9c3-YZ-CBd">
-                            <rect key="frame" x="0.0" y="50" width="414" height="802"/>
+                            <rect key="frame" x="0.0" y="56" width="404" height="796"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         </tableView>
                     </subviews>
@@ -52,8 +49,8 @@
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
-                <constraint firstItem="wIX-Xf-Plx" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="PMa-VT-z1z"/>
-                <constraint firstItem="wIX-Xf-Plx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="R8Z-ME-GP6"/>
+                <constraint firstItem="wIX-Xf-Plx" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-5" id="PMa-VT-z1z"/>
+                <constraint firstItem="wIX-Xf-Plx" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="5" id="R8Z-ME-GP6"/>
                 <constraint firstItem="wIX-Xf-Plx" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="TuL-uc-IZC"/>
                 <constraint firstAttribute="bottom" secondItem="wIX-Xf-Plx" secondAttribute="bottom" id="uoa-4g-tdU"/>
             </constraints>

@@ -24,8 +24,3 @@ struct TableViewCellIdentifiers {
     static let teamCell = "TeamTableViewCell"
 }
 
-//MARK: Tableview Section Indexes
-public enum tableViewSections: Int {
-    case Players = 0
-    case Teams = 1
-}

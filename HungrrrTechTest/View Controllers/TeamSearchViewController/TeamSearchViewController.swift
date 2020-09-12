@@ -8,6 +8,12 @@
 
 import UIKit
 
+//MARK: Tableview Section Indexes - these will probably need to be removed.
+public enum tableViewSections: Int {
+    case Players = 0
+    case Teams = 1
+}
+
 class TeamSearchViewController: UIViewController {
     
     weak var coordinator: MainCoordinator?
@@ -22,11 +28,12 @@ class TeamSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchPlayerAndTeamData()
         setupTableViews()
+        setupSearchBar()
+        setupUI()
     }
     
-    func fetchPlayerAndTeamData() {
+    func fetchPlayerAndTeamData(searchString: String) {
         let completionHandler: (FootballAPIJSON) -> Void = { [weak self] (footballData) in
             
             for player in footballData.result.players {
@@ -42,7 +49,11 @@ class TeamSearchViewController: UIViewController {
                 self?.tableView.reloadData()
             }
         }
-        networkUtility.basicPlayerTeamSearch(searchString: "barc", completion: completionHandler)
+        networkUtility.basicPlayerTeamSearch(searchString: searchString, completion: completionHandler)
+    }
+    
+    func setupUI() {
+        self.searchButton.isEnabled = false
     }
     
     func setupTableViews() {
@@ -53,6 +64,17 @@ class TeamSearchViewController: UIViewController {
         tableView.register(UINib(nibName: TableViewCellIdentifiers.teamCell, bundle: nil),
                            forCellReuseIdentifier: TableViewCellIdentifiers.teamCell)
     }
+    
+    func setupSearchBar() {
+        searchBar.delegate = self
+    }
+    
+    @IBAction func searchButtonTapped(_ sender: Any) {
+        if let searchString = self.searchBar.text {
+            fetchPlayerAndTeamData(searchString: searchString)
+        }
+    }
+    
     
 }
 
@@ -76,7 +98,14 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //TODO: Make this dynamic.
-        return 10
+        switch section {
+        case tableViewSections.Players.rawValue:
+            return players.count
+        case tableViewSections.Teams.rawValue:
+            return teams.count
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -95,6 +124,7 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
                 playerCell.clubLabel.text = player.playerClub
                 return playerCell
             }
+            
         case tableViewSections.Teams.rawValue:
             if let teamCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.teamCell,
                                                             for: indexPath) as? TeamTableViewCell {
@@ -102,19 +132,30 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
                     return teamCell
                 }
                 
-                teamCell.cityLabel.text = "Edinburgh"
-                teamCell.stadiumLabel.text = "Super Stadium"
-                teamCell.teamNameLabel.text = "Hearts of Midlothian"
+                let team = self.teams[indexPath.row]
+                teamCell.cityLabel.text = team.teamCity
+                teamCell.stadiumLabel.text = team.teamStadium
+                teamCell.teamNameLabel.text = team.teamName
                 return teamCell
             }
+            
         default:
             print("Unable to dequeue player/teams tableview cell.")
             return UITableViewCell()
         }
         return UITableViewCell()
     }
+}
+
+extension TeamSearchViewController: UISearchBarDelegate {
     
-    
-    
-    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        /*A single character isn't enough info for a useful search to be completed.
+         As such, I've limited access to the search button until the user has entered at least 2 characters. */
+        if searchText.count >= 2 {
+            self.searchButton.isEnabled = true
+        } else {
+            self.searchButton.isEnabled = false
+        }
+    }
 }

@@ -40,11 +40,13 @@ struct Result: Codable {
 }
 
 struct Player: Codable {
+    //TODO: Use coding keys to turn these into neater values. See table view controller for details.
     let playerID, playerFirstName, playerSecondName, playerNationality: String
     let playerAge, playerClub: String
 }
 
 struct Team: Codable {
+    //TODO: Use coding keys to turn these into neater values. See table view controller for details.
     let teamID, teamName, teamStadium: String, isNation: String
     let teamNationality, teamCity: String
 }

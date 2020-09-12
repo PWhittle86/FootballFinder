@@ -58,8 +58,6 @@ class TeamSearchViewController: UIViewController {
         searchBar.delegate = self
     }
     
-    
-    
     //MARK: Data Functions
     
     /*
@@ -97,7 +95,7 @@ class TeamSearchViewController: UIViewController {
     
     func fetchPlayerAndTeamData(searchString: String,
                                 isFirstSearch: Bool,
-                                searchType: searchParameter?,
+                                searchType: SearchParameter?,
                                 offset: Int?) {
         let completionHandler: (PlayerTeamRootObject) -> Void = { [weak self] (footballData) in
             
@@ -126,18 +124,32 @@ class TeamSearchViewController: UIViewController {
     }
     
     @IBAction func searchButtonTapped(_ sender: Any) {
-        //TODO: Might want to check this is working as intended.
-        guard let searchString = self.searchBar.text else { return }
-        let isFirstSearch = self.firstSearchCheck(searchString: searchString)
-        
-        self.clearTableDataPriorToNewSearch(searchString: searchString)
-        self.fetchPlayerAndTeamData(searchString: searchString,
-                                   isFirstSearch: isFirstSearch,
-                                   searchType: nil,
-                                   offset: nil)
+        //TODO: This will execute additional searches if the user taps the button twice without changes.
+        executeSearch(searchParameter: nil, offset: nil)
     }
     
-    //TODO: String comparison. Might be worth trying to find a more robust method.
+    func executeSearch(searchParameter: SearchParameter?, offset: Int?) {
+        //TODO: Check this is working as intended.
+        guard let searchString = self.searchBar.text else { return }
+        let isNewSearch = self.firstSearchCheck(searchString: searchString)
+
+        if isNewSearch {
+            self.clearTableDataPriorToNewSearch(searchString: searchString)
+            self.fetchPlayerAndTeamData(searchString: searchString,
+                                       isFirstSearch: isNewSearch,
+                                       searchType: nil,
+                                       offset: nil)
+        } else {
+            self.fetchPlayerAndTeamData(searchString: searchString,
+                                        isFirstSearch: false,
+                                        searchType: searchParameter,
+                                        offset: offset)
+        }
+        
+
+    }
+    
+    //TODO: This won't work - will cause issues if the user updates the searchstring and then taps on more. Fix.
     //Check if user is searching for the first time by comparing the string he is searching for to the last string he searched for.
     func firstSearchCheck(searchString: String) -> Bool {
         return searchString == previousSearchString ? false : true
@@ -240,10 +252,34 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.moreCell) as? MoreTableViewCell {
+        
+        guard let cell = tableView.cellForRow(at: indexPath) else {
+            return
+        }
             
-            
-            
+        if cell.isKind(of: MoreTableViewCell.self) {
+            switch availableDataCheck() {
+            case .PlayersAndTeams:
+                if indexPath.section == 0 {
+                    //Further search for players
+                    self.executeSearch(searchParameter: SearchParameter.players, offset: self.players.count)
+                    return
+                } else {
+                    self.executeSearch(searchParameter: SearchParameter.teams, offset: self.teams.count)
+                    //Further search for teams
+                    return
+                }
+            case .OnlyPlayers:
+                //Further search for players
+                self.executeSearch(searchParameter: SearchParameter.players, offset: self.players.count)
+                return
+            case .OnlyTeams:
+                //further search for teams
+                self.executeSearch(searchParameter: SearchParameter.teams, offset: self.teams.count)
+                return
+            case .NoData:
+                return
+            }
         }
     }
     
@@ -287,7 +323,7 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
                      indexPath: IndexPath) -> UITableViewCell {
         
         //TODO: Placeholder. Make this more robust.
-        if (indexPath.row + 1) > self.players.count {
+        if (indexPath.row + 1) > self.teams.count {
             if let moreCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.moreCell,
                                                             for: indexPath) as? MoreTableViewCell {
                 return moreCell

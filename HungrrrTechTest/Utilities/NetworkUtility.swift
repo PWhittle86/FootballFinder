@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum searchParameter : String {
+public enum SearchParameter : String {
     case players
     case teams
 }
@@ -20,7 +20,7 @@ class NetworkUtility {
 
     func executeSearch(searchString: String,
                        isFirstSearch: Bool,
-                       searchType: searchParameter?,
+                       searchType: SearchParameter?,
                        offset: Int?,
                        completionHandler: @escaping (PlayerTeamRootObject) -> Void) {
 
@@ -86,7 +86,7 @@ class NetworkUtility {
         return request
     }
     
-    func generateSearchParameters(searchString: String, searchType: searchParameter?, offset: Int?) -> [String : Any] {
+    func generateSearchParameters(searchString: String, searchType: SearchParameter?, offset: Int?) -> [String : Any] {
         //Always add the searchString parameter to the request.
         var searchParameters: [String : Any] = ["searchString": "\(searchString)"]
         

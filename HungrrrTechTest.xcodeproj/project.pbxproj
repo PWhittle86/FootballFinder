@@ -32,6 +32,12 @@
 		229EAAE6250D2B4500FE3CE7 /* NoResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAE3250D2B4400FE3CE7 /* NoResultsTableViewCell.swift */; };
 		229EAAE7250D2B4500FE3CE7 /* NoResultsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 229EAAE4250D2B4400FE3CE7 /* NoResultsTableViewCell.xib */; };
 		229EAAE8250D2B4500FE3CE7 /* NoResultsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 229EAAE4250D2B4400FE3CE7 /* NoResultsTableViewCell.xib */; };
+		229EAAEF250D4E8600FE3CE7 /* MoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAED250D4E8600FE3CE7 /* MoreTableViewCell.swift */; };
+		229EAAF0250D4E8600FE3CE7 /* MoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAED250D4E8600FE3CE7 /* MoreTableViewCell.swift */; };
+		229EAAF1250D4E8600FE3CE7 /* MoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 229EAAEE250D4E8600FE3CE7 /* MoreTableViewCell.xib */; };
+		229EAAF2250D4E8600FE3CE7 /* MoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 229EAAEE250D4E8600FE3CE7 /* MoreTableViewCell.xib */; };
+		229EAAF4250D5AB400FE3CE7 /* SearchParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAF3250D5AB400FE3CE7 /* SearchParameter.swift */; };
+		229EAAF5250D5AB400FE3CE7 /* SearchParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAF3250D5AB400FE3CE7 /* SearchParameter.swift */; };
 		22DC46A6250C0A520000A47E /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46A5250C0A520000A47E /* PlayerTableViewCell.swift */; };
 		22DC46A9250C181F0000A47E /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46A8250C181F0000A47E /* Team.swift */; };
 		22DC46AA250C181F0000A47E /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46A8250C181F0000A47E /* Team.swift */; };
@@ -73,6 +79,9 @@
 		229EAAE0250CFB8600FE3CE7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		229EAAE3250D2B4400FE3CE7 /* NoResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultsTableViewCell.swift; sourceTree = "<group>"; };
 		229EAAE4250D2B4400FE3CE7 /* NoResultsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoResultsTableViewCell.xib; sourceTree = "<group>"; };
+		229EAAED250D4E8600FE3CE7 /* MoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableViewCell.swift; sourceTree = "<group>"; };
+		229EAAEE250D4E8600FE3CE7 /* MoreTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MoreTableViewCell.xib; sourceTree = "<group>"; };
+		229EAAF3250D5AB400FE3CE7 /* SearchParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchParameter.swift; sourceTree = "<group>"; };
 		22DC46A5250C0A520000A47E /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTableViewCell.swift; sourceTree = "<group>"; };
 		22DC46A8250C181F0000A47E /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		22DC46AB250C18290000A47E /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -101,12 +110,10 @@
 		2211AC5F250C02E7002EC546 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				22DC46A5250C0A520000A47E /* PlayerTableViewCell.swift */,
-				2211AC67250C033C002EC546 /* PlayerTableViewCell.xib */,
-				2211AC60250C031A002EC546 /* TeamTableViewCell.swift */,
-				2211AC61250C031A002EC546 /* TeamTableViewCell.xib */,
-				229EAAE3250D2B4400FE3CE7 /* NoResultsTableViewCell.swift */,
-				229EAAE4250D2B4400FE3CE7 /* NoResultsTableViewCell.xib */,
+				229EAAEC250D4C6F00FE3CE7 /* More */,
+				229EAAEB250D4C6300FE3CE7 /* No Results */,
+				229EAAEA250D4C5300FE3CE7 /* Team */,
+				229EAAE9250D4C4300FE3CE7 /* Player */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -206,12 +213,49 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		229EAAE9250D4C4300FE3CE7 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				22DC46A5250C0A520000A47E /* PlayerTableViewCell.swift */,
+				2211AC67250C033C002EC546 /* PlayerTableViewCell.xib */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
+		229EAAEA250D4C5300FE3CE7 /* Team */ = {
+			isa = PBXGroup;
+			children = (
+				2211AC60250C031A002EC546 /* TeamTableViewCell.swift */,
+				2211AC61250C031A002EC546 /* TeamTableViewCell.xib */,
+			);
+			path = Team;
+			sourceTree = "<group>";
+		};
+		229EAAEB250D4C6300FE3CE7 /* No Results */ = {
+			isa = PBXGroup;
+			children = (
+				229EAAE3250D2B4400FE3CE7 /* NoResultsTableViewCell.swift */,
+				229EAAE4250D2B4400FE3CE7 /* NoResultsTableViewCell.xib */,
+			);
+			path = "No Results";
+			sourceTree = "<group>";
+		};
+		229EAAEC250D4C6F00FE3CE7 /* More */ = {
+			isa = PBXGroup;
+			children = (
+				229EAAED250D4E8600FE3CE7 /* MoreTableViewCell.swift */,
+				229EAAEE250D4E8600FE3CE7 /* MoreTableViewCell.xib */,
+			);
+			path = More;
+			sourceTree = "<group>";
+		};
 		22DC46A7250C13760000A47E /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				22DC46A8250C181F0000A47E /* Team.swift */,
 				22DC46AB250C18290000A47E /* Player.swift */,
 				22DC46B6250C1EF10000A47E /* Codables.swift */,
+				229EAAF3250D5AB400FE3CE7 /* SearchParameter.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -307,6 +351,7 @@
 			files = (
 				2284891F250BF09D00F12010 /* LaunchScreen.storyboard in Resources */,
 				229EAAE7250D2B4500FE3CE7 /* NoResultsTableViewCell.xib in Resources */,
+				229EAAF1250D4E8600FE3CE7 /* MoreTableViewCell.xib in Resources */,
 				22848943250BF72300F12010 /* TeamSearchViewController.xib in Resources */,
 				2211AC64250C031A002EC546 /* TeamTableViewCell.xib in Resources */,
 				2284891C250BF09D00F12010 /* Assets.xcassets in Resources */,
@@ -319,6 +364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2211AC65250C031A002EC546 /* TeamTableViewCell.xib in Resources */,
+				229EAAF2250D4E8600FE3CE7 /* MoreTableViewCell.xib in Resources */,
 				229EAAE8250D2B4500FE3CE7 /* NoResultsTableViewCell.xib in Resources */,
 				2211AC6B250C033C002EC546 /* PlayerTableViewCell.xib in Resources */,
 				22848944250BF72300F12010 /* TeamSearchViewController.xib in Resources */,
@@ -334,8 +380,10 @@
 			files = (
 				22DC46A6250C0A520000A47E /* PlayerTableViewCell.swift in Sources */,
 				22DC46B7250C1EF10000A47E /* Codables.swift in Sources */,
+				229EAAF4250D5AB400FE3CE7 /* SearchParameter.swift in Sources */,
 				2211AC62250C031A002EC546 /* TeamTableViewCell.swift in Sources */,
 				22848939250BF40800F12010 /* MainCoordinator.swift in Sources */,
+				229EAAEF250D4E8600FE3CE7 /* MoreTableViewCell.swift in Sources */,
 				2284893D250BF4AC00F12010 /* CoordinatorProtocol.swift in Sources */,
 				229EAAE5250D2B4500FE3CE7 /* NoResultsTableViewCell.swift in Sources */,
 				22DC46A9250C181F0000A47E /* Team.swift in Sources */,
@@ -356,10 +404,12 @@
 				229EAAE6250D2B4500FE3CE7 /* NoResultsTableViewCell.swift in Sources */,
 				2284892A250BF09D00F12010 /* HungrrrTechTestTests.swift in Sources */,
 				22848942250BF72300F12010 /* TeamSearchViewController.swift in Sources */,
+				229EAAF0250D4E8600FE3CE7 /* MoreTableViewCell.swift in Sources */,
 				2211AC63250C031A002EC546 /* TeamTableViewCell.swift in Sources */,
 				22DC46B8250C1EF10000A47E /* Codables.swift in Sources */,
 				229EAAE2250CFB8600FE3CE7 /* Constants.swift in Sources */,
 				22DC46AD250C18290000A47E /* Player.swift in Sources */,
+				229EAAF5250D5AB400FE3CE7 /* SearchParameter.swift in Sources */,
 				22DC46B5250C1A990000A47E /* NetworkUtility.swift in Sources */,
 				2284893A250BF40800F12010 /* MainCoordinator.swift in Sources */,
 				2284893E250BF4AC00F12010 /* CoordinatorProtocol.swift in Sources */,

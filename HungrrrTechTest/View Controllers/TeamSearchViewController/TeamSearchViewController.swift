@@ -8,6 +8,13 @@
 
 import UIKit
 
+public enum AvailableTableviewData {
+    case PlayersAndTeams
+    case OnlyPlayers
+    case OnlyTeams
+    case NoData
+}
+
 class TeamSearchViewController: UIViewController {
     
     weak var coordinator: MainCoordinator?
@@ -23,9 +30,69 @@ class TeamSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableViews()
+        setupTableView()
         setupSearchBar()
-        setupUI()
+        setupSearchbutton()
+    }
+    
+//MARK: Setup Functions
+    
+    func setupSearchbutton() {
+        self.searchButton.isEnabled = false
+    }
+    
+    func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UINib(nibName: TableViewCellIdentifiers.playerCell, bundle: nil),
+                           forCellReuseIdentifier: TableViewCellIdentifiers.playerCell)
+        tableView.register(UINib(nibName: TableViewCellIdentifiers.teamCell, bundle: nil),
+                           forCellReuseIdentifier: TableViewCellIdentifiers.teamCell)
+        tableView.register(UINib(nibName: TableViewCellIdentifiers.noResultsCell, bundle: nil),
+                           forCellReuseIdentifier: TableViewCellIdentifiers.noResultsCell)
+        tableView.register(UINib(nibName: TableViewCellIdentifiers.moreCell, bundle: nil),
+                           forCellReuseIdentifier: TableViewCellIdentifiers.moreCell)
+    }
+    
+    func setupSearchBar() {
+        searchBar.delegate = self
+    }
+    
+
+    
+    //MARK: Data Functions
+    
+    /*
+     This function is used to check what data, if any, is currently available for the tableview to use following a search to the player/team API.
+     It is used extensively throughout the tableview's delegate functions.
+     
+     There are 4 possible scenarios being checked:
+     1. Teams + Players
+     2. Only Players
+     3. Only Teams
+     4. No Players or Teams
+     
+     Based on the current capabilities of the API and the scope of this exercise, this covers all of the different types of
+     data configurations that need to be considered by the tableview.
+     */
+    func availableDataCheck() -> AvailableTableviewData {
+        let appHasPlayerData = !self.players.isEmpty
+        let appHasTeamData = !self.teams.isEmpty
+        
+        //Teams + Players
+        if appHasPlayerData && appHasTeamData {
+            return AvailableTableviewData.PlayersAndTeams
+        }
+        //Only Players
+        if appHasPlayerData && !appHasTeamData {
+            return AvailableTableviewData.OnlyPlayers
+        }
+        //Only Teams
+        if !appHasPlayerData && appHasTeamData {
+            return AvailableTableviewData.OnlyTeams
+        }
+        //No Players or Teams
+        return AvailableTableviewData.NoData
     }
     
     func fetchPlayerAndTeamData(searchString: String) {
@@ -47,57 +114,7 @@ class TeamSearchViewController: UIViewController {
                 self?.tableView.reloadData()
             }
         }
-        networkUtility.basicPlayerTeamSearch(searchString: searchString, completion: completionHandler)
-    }
-    
-    func setupUI() {
-        self.searchButton.isEnabled = false
-    }
-    
-    func setupTableViews() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UINib(nibName: TableViewCellIdentifiers.playerCell, bundle: nil),
-                           forCellReuseIdentifier: TableViewCellIdentifiers.playerCell)
-        tableView.register(UINib(nibName: TableViewCellIdentifiers.teamCell, bundle: nil),
-                           forCellReuseIdentifier: TableViewCellIdentifiers.teamCell)
-        tableView.register(UINib(nibName: TableViewCellIdentifiers.noResultsCell, bundle: nil),
-                           forCellReuseIdentifier: TableViewCellIdentifiers.noResultsCell)
-    }
-    
-    func setupSearchBar() {
-        searchBar.delegate = self
-    }
-    
-    /*
-     This function is used to check what data, if any, is currently available for the tableview to use following a search to the player/team API.
-     It is used extensively throughout the tableview's delegate functions.
-     
-     There are 4 possible scenarios being checked:
-     1. Teams + Players
-     2. Only Players
-     3. Only Teams
-     4. No Players or Teams
-     */
-    
-    func availableDataCheck() -> AvailableTableviewData {
-        //TODO: Prime candidates for unit testing here.
-        let appHasPlayerData = !self.players.isEmpty
-        let appHasTeamData = !self.teams.isEmpty
-        
-        //Teams + Players
-        if appHasPlayerData && appHasTeamData {
-            return AvailableTableviewData.PlayersAndTeams
-        }
-        //Only Players
-        if appHasPlayerData && !appHasTeamData {
-            return AvailableTableviewData.OnlyPlayers
-        }
-        //Only Teams
-        if !appHasPlayerData && appHasTeamData {
-            return AvailableTableviewData.OnlyTeams
-        }
-        return AvailableTableviewData.NoData
+        networkUtility.executeSearch(searchString: searchString, completion: completionHandler)
     }
 
     @IBAction func searchButtonTapped(_ sender: Any) {

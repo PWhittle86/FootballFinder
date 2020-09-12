@@ -8,24 +8,40 @@
 
 import Foundation
 
+public enum searchParameter : String {
+    case players
+    case teams
+}
+
 class NetworkUtility {
     
-    //TODO: Perhaps split this into smaller functions? One for getting the data and one for decoding?
-    func basicPlayerTeamSearch(searchString: String, completion: @escaping (PlayerTeamRootObject) -> Void) {
-                
-        let session = URLSession.init(configuration: .default)
-        guard let footballAPI = URL(string: "http://trials.mtcmobile.co.uk/api/football/1.0/search") else {
-            print("Failure to generate URL for playerTeamSearch.")
+    let apiString = "http://trials.mtcmobile.co.uk/api/football/1.0/search"
+    
+    func executeSearch(searchString: String,
+                       isFirstSearch: Bool,
+                       searchType: searchParameter?,
+                       offset: Int?,
+                       completion: @escaping (PlayerTeamRootObject) -> Void) {
+          
+        //Generate URL Request
+        let request = generateURLRequest()
+        
+        //Generate parameters based on whether this is the first search by the user, or they are searching for additional players/teams.
+        let searchParameters = generateSearchParameters(searchString: searchString,
+                                                  searchType: searchType,
+                                                  offset: offset)
+
+        //Attempt to serialise the parameters into JSON format.
+        let jsonData: Data
+        do {
+            jsonData = try JSONSerialization.data(withJSONObject: searchParameters, options: [])
+        } catch {
+            print("Error: Unable to serialise JSON data for upload: \(error)")
             return
         }
         
-        var request = URLRequest(url: footballAPI)
-        request.httpMethod = "POST"
-        let searchParameters: [String : Any] = [
-            "searchString": "\(searchString)"
-        ]
-        let jsonData = try! JSONSerialization.data(withJSONObject: searchParameters, options: [])
-                
+        //Attempt Upload
+        let session = URLSession.init(configuration: .default)
         let task = session.uploadTask(with: request, from: jsonData) { (data, response, error) in
             
             //Check that we can parse the response from the API.
@@ -39,16 +55,15 @@ class NetworkUtility {
                 print("Unexpected API response: \(responseError.rawValue)")
             }
 
-            //Check we have received valid data and unwrap it safely.
+            //Check we have received valid data and unwrap it.
             guard let data = data else {
                 print("")
                 return
             }
-            
-            let decoder = JSONDecoder()
-
-            //TODO: This needs refactored so badly.
+                        
+            //Decode the JSON object into a struct and use the completion handler to pass the data back to the tableview once complete.
             do {
+                let decoder = JSONDecoder()
                 let playerTeams = try decoder.decode(PlayerTeamRootObject.self, from: data)
                 completion(playerTeams)
             } catch {
@@ -56,6 +71,35 @@ class NetworkUtility {
                 }
         }
         task.resume()
+    }
+    
+    
+    func generateURLRequest() -> URLRequest {
+        guard let footballAPI = URL(string: apiString) else { print("Failure to generate URL for playerTeamSearch.")
+            //TODO: Force unwrap here, fix it.
+            return URLRequest(url: URL(string: "")!)
+        }
+        var request = URLRequest(url: footballAPI)
+        request.httpMethod = "POST"
+        return request
+    }
+    
+    func generateSearchParameters(searchString: String, searchType: searchParameter?, offset: Int?) -> [String : Any] {
+        //Always add the searchString parameter to the request.
+        var searchParameters: [String : Any] = ["searchString": "\(searchString)"]
+        
+        //If searchType and offset have also been requested, add the parameters to the dictionary.
+        if let type = searchType,
+            let searchOffset = offset {
+            searchParameters["offset"] = searchOffset
+            switch type {
+            case .players:
+                searchParameters["searchType"] = "players"
+            case .teams:
+                searchParameters["searchType"] = "teams"
+            }
+        }
+        return searchParameters
     }
     
     private func handleNetworkResponse(response: HTTPURLResponse) -> DownloadError? {
@@ -68,7 +112,5 @@ class NetworkUtility {
         default: return (.unknownError)
         }
     }
-    
-    
     
 }

@@ -23,17 +23,11 @@ struct TableViewCellIdentifiers {
     static let playerCell = "PlayerTableViewCell"
     static let teamCell = "TeamTableViewCell"
     static let noResultsCell = "NoResultsTableViewCell"
+    static let moreCell = "MoreTableViewCell"
 }
 
-//MARK: Tableview Section Indexes - these will probably need to be removed.
+//MARK: Tableview Section Indexes
 struct TableViewSectionHeaders {
     static let players = "Players"
     static let teams = "Teams"
-}
-
-public enum AvailableTableviewData {
-    case PlayersAndTeams
-    case OnlyPlayers
-    case OnlyTeams
-    case NoData
 }

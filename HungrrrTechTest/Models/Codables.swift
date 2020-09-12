@@ -8,8 +8,13 @@
 
 import Foundation
 
-struct PlayerTeamJson: Codable {
+//MARK: The 4 components of a basic search result
+struct FootballAPIJSON: Codable {
     let result: Result
+    
+    init() {
+        self.result = Result()
+    }
 }
 
 struct Result: Codable {
@@ -19,6 +24,19 @@ struct Result: Codable {
     let message: String
     let request_order: Int
     let searchType, searchString, minVer, serverAlert: String
+    
+    //Initialiser so that we can return an empty Result, if necessary.
+    init() {
+        self.players = []
+        self.teams = []
+        self.status = false
+        self.message = ""
+        self.request_order = 0
+        self.searchType = ""
+        self.searchString = ""
+        self.minVer = ""
+        self.serverAlert = ""
+    }
 }
 
 struct Player: Codable {

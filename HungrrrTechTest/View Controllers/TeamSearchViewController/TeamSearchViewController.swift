@@ -8,15 +8,13 @@
 
 import UIKit
 
-enum tableViewSections: Int {
-    case Players = 0
-    case Teams = 1
-}
-
 class TeamSearchViewController: UIViewController {
     
     weak var coordinator: MainCoordinator?
     let networkUtility = NetworkUtility()
+    
+    var players: [Player] = []
+    var teams: [Team] = []
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchButton: UIButton!
@@ -24,15 +22,36 @@ class TeamSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchPlayerAndTeamData()
         setupTableViews()
-        networkUtility.basicPlayerTeamSearch(searchString: "barc")
+    }
+    
+    func fetchPlayerAndTeamData() {
+        let completionHandler: (FootballAPIJSON) -> Void = { [weak self] (footballData) in
+            
+            for player in footballData.result.players {
+                //TODO: going to need some logic in here so that duplicate players aren't added to the array.
+                self?.players.append(player)
+            }
+            
+            for team in footballData.result.teams {
+                self?.teams.append(team)
+            }
+            
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
+        networkUtility.basicPlayerTeamSearch(searchString: "barc", completion: completionHandler)
     }
     
     func setupTableViews() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UINib(nibName: "PlayerTableViewCell", bundle: nil), forCellReuseIdentifier: "PlayerTableViewCell")
-        tableView.register(UINib(nibName: "TeamTableViewCell", bundle: nil), forCellReuseIdentifier: "TeamTableViewCell")
+        tableView.register(UINib(nibName: TableViewCellIdentifiers.playerCell, bundle: nil),
+                           forCellReuseIdentifier: TableViewCellIdentifiers.playerCell)
+        tableView.register(UINib(nibName: TableViewCellIdentifiers.teamCell, bundle: nil),
+                           forCellReuseIdentifier: TableViewCellIdentifiers.teamCell)
     }
     
 }
@@ -64,14 +83,25 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         
         switch indexPath.section {
         case tableViewSections.Players.rawValue:
-            if let playerCell = tableView.dequeueReusableCell(withIdentifier: "PlayerTableViewCell", for: indexPath) as? PlayerTableViewCell {
-                playerCell.ageLabel.text = "25"
-                playerCell.clubLabel.text = "Real Madrid"
-                playerCell.playerNameLabel.text = "David Football"
+            if let playerCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.playerCell,
+                                                              for: indexPath) as? PlayerTableViewCell {
+                if self.players.isEmpty {
+                    return playerCell
+                }
+                
+                let player = self.players[indexPath.row]
+                playerCell.playerNameLabel.text = "\(player.playerFirstName) \(player.playerSecondName)"
+                playerCell.ageLabel.text = player.playerAge
+                playerCell.clubLabel.text = player.playerClub
                 return playerCell
             }
         case tableViewSections.Teams.rawValue:
-            if let teamCell = tableView.dequeueReusableCell(withIdentifier: "TeamTableViewCell", for: indexPath) as? TeamTableViewCell {
+            if let teamCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.teamCell,
+                                                            for: indexPath) as? TeamTableViewCell {
+                if self.teams.isEmpty {
+                    return teamCell
+                }
+                
                 teamCell.cityLabel.text = "Edinburgh"
                 teamCell.stadiumLabel.text = "Super Stadium"
                 teamCell.teamNameLabel.text = "Hearts of Midlothian"

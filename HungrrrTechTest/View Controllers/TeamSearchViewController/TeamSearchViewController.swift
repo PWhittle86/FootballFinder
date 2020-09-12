@@ -35,7 +35,7 @@ class TeamSearchViewController: UIViewController {
         setupSearchbutton()
     }
     
-//MARK: Setup Functions
+    //MARK: Setup Functions
     
     func setupSearchbutton() {
         self.searchButton.isEnabled = false
@@ -58,7 +58,7 @@ class TeamSearchViewController: UIViewController {
         searchBar.delegate = self
     }
     
-
+    
     
     //MARK: Data Functions
     
@@ -95,7 +95,10 @@ class TeamSearchViewController: UIViewController {
         return AvailableTableviewData.NoData
     }
     
-    func fetchPlayerAndTeamData(searchString: String) {
+    func fetchPlayerAndTeamData(searchString: String,
+                                isFirstSearch: Bool,
+                                searchType: searchParameter?,
+                                offset: Int?) {
         let completionHandler: (PlayerTeamRootObject) -> Void = { [weak self] (footballData) in
             
             if let players = footballData.result.players {
@@ -106,27 +109,52 @@ class TeamSearchViewController: UIViewController {
             
             if let teams = footballData.result.teams {
                 for team in teams {
-                      self?.teams.append(team)
-                  }
+                    self?.teams.append(team)
+                }
             }
             
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
         }
-        networkUtility.executeSearch(searchString: searchString, completion: completionHandler)
+        
+        networkUtility.executeSearch(searchString: searchString,
+                                     isFirstSearch: isFirstSearch,
+                                     searchType: searchType,
+                                     offset: offset,
+                                     completionHandler: completionHandler)
     }
-
+    
     @IBAction func searchButtonTapped(_ sender: Any) {
-        if let searchString = self.searchBar.text {
-            if previousSearchString ?? "" != searchString {
-                players.removeAll()
-                teams.removeAll()
-            }
-            previousSearchString = searchString
-            fetchPlayerAndTeamData(searchString: searchString)
-        }
+        //TODO: Might want to check this is working as intended.
+        guard let searchString = self.searchBar.text else { return }
+        let isFirstSearch = self.firstSearchCheck(searchString: searchString)
+        
+        self.clearTableDataPriorToNewSearch(searchString: searchString)
+        self.fetchPlayerAndTeamData(searchString: searchString,
+                                   isFirstSearch: isFirstSearch,
+                                   searchType: nil,
+                                   offset: nil)
     }
+    
+    //TODO: String comparison. Might be worth trying to find a more robust method.
+    //Check if user is searching for the first time by comparing the string he is searching for to the last string he searched for.
+    func firstSearchCheck(searchString: String) -> Bool {
+        return searchString == previousSearchString ? false : true
+    }
+    
+    //If the user is searching for new data, clear everything that we currently hold in the data arrays.
+    func clearTableDataPriorToNewSearch(searchString: String) {
+        //TODO: Consider moving this logic to the completion handler, so that data is only deleted once we know new data has been successfully received?
+        if self.previousSearchString ?? "" != searchString {
+            players.removeAll()
+            teams.removeAll()
+        }
+        self.previousSearchString = searchString
+    }
+    
+    
+    
 }
 
 extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
@@ -156,8 +184,17 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let playerCount = players.count
-        let teamCount = teams.count
+        var playerCount = players.count
+        var teamCount = teams.count
+        
+        //If not 0 and multiple of 10 there may be more data available to download from the API. Add 1 to the team/player count so there is room for the MoreCell.
+        if (playerCount != 0) && (playerCount % 10 == 0){
+            playerCount += 1
+        }
+        
+        if (teamCount != 0) && (teamCount % 10 == 0){
+            teamCount += 1
+        }
         
         switch availableDataCheck() {
         case .PlayersAndTeams:
@@ -182,10 +219,10 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         case .PlayersAndTeams:
             if indexPath.section == 0 {
                 return getPlayerCell(tableView: tableView,
-                              indexPath: indexPath)
+                                     indexPath: indexPath)
             } else {
                 return getTeamCell(tableView: tableView,
-                            indexPath: indexPath)
+                                   indexPath: indexPath)
             }
         case .OnlyTeams:
             return getTeamCell(tableView: tableView,
@@ -202,8 +239,15 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         return UITableViewCell()
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.moreCell) as? MoreTableViewCell {
+            
+            
+            
+        }
+    }
+    
     func tableviewSectionCount() -> Int {
-        
         switch  availableDataCheck() {
         case .PlayersAndTeams:
             return 2
@@ -213,7 +257,16 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func getPlayerCell(tableView: UITableView,
-                          indexPath: IndexPath) -> PlayerTableViewCell {
+                       indexPath: IndexPath) -> UITableViewCell {
+        
+        //TODO: Placeholder - make this more robust.
+        if (indexPath.row + 1) > self.players.count {
+            if let moreCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.moreCell,
+                                                            for: indexPath) as? MoreTableViewCell {
+                return moreCell
+            }
+        }
+        
         if let playerCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.playerCell,
                                                           for: indexPath) as? PlayerTableViewCell {
             if self.players.isEmpty {
@@ -231,7 +284,16 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func getTeamCell(tableView: UITableView,
-                        indexPath: IndexPath) -> TeamTableViewCell {
+                     indexPath: IndexPath) -> UITableViewCell {
+        
+        //TODO: Placeholder. Make this more robust.
+        if (indexPath.row + 1) > self.players.count {
+            if let moreCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.moreCell,
+                                                            for: indexPath) as? MoreTableViewCell {
+                return moreCell
+            }
+        }
+        
         if let teamCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifiers.teamCell,
                                                         for: indexPath) as? TeamTableViewCell {
             if self.teams.isEmpty {
@@ -247,6 +309,7 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return TeamTableViewCell()
     }
+    
 }
 
 //Perhaps put these into their own variables to tidy the file up a bit?

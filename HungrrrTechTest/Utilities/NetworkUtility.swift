@@ -14,19 +14,21 @@ public enum searchParameter : String {
 }
 
 class NetworkUtility {
-    
+
+    //Move this to a constant?
     let apiString = "http://trials.mtcmobile.co.uk/api/football/1.0/search"
-    
+
     func executeSearch(searchString: String,
                        isFirstSearch: Bool,
                        searchType: searchParameter?,
                        offset: Int?,
-                       completion: @escaping (PlayerTeamRootObject) -> Void) {
-          
+                       completionHandler: @escaping (PlayerTeamRootObject) -> Void) {
+
         //Generate URL Request
         let request = generateURLRequest()
-        
+
         //Generate parameters based on whether this is the first search by the user, or they are searching for additional players/teams.
+        //See the generateSearchParameters function for additional info.
         let searchParameters = generateSearchParameters(searchString: searchString,
                                                   searchType: searchType,
                                                   offset: offset)
@@ -39,7 +41,7 @@ class NetworkUtility {
             print("Error: Unable to serialise JSON data for upload: \(error)")
             return
         }
-        
+
         //Attempt Upload
         let session = URLSession.init(configuration: .default)
         let task = session.uploadTask(with: request, from: jsonData) { (data, response, error) in
@@ -49,30 +51,30 @@ class NetworkUtility {
                 print("Error: Unable to parse API response as HTTPURLResponse")
                 return
             }
-            
+
             //Check for any http status code errors using the network response checker.
             if let responseError = self.handleNetworkResponse(response: httpResponse) {
-                print("Unexpected API response: \(responseError.rawValue)")
+                print("Unexpected API HTTP response: \(responseError.rawValue)")
+                return
             }
 
             //Check we have received valid data and unwrap it.
             guard let data = data else {
-                print("")
+                print("Unable to safely unwrap data received from API.")
                 return
             }
-                        
+
             //Decode the JSON object into a struct and use the completion handler to pass the data back to the tableview once complete.
             do {
                 let decoder = JSONDecoder()
                 let playerTeams = try decoder.decode(PlayerTeamRootObject.self, from: data)
-                completion(playerTeams)
+                completionHandler(playerTeams)
             } catch {
                 print("Unable to decode data received from API. Error: \(error)")
                 }
         }
         task.resume()
     }
-    
     
     func generateURLRequest() -> URLRequest {
         guard let footballAPI = URL(string: apiString) else { print("Failure to generate URL for playerTeamSearch.")

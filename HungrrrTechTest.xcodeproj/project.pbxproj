@@ -3,10 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		220CE957250E3B6A00BC35A0 /* FavouritesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220CE955250E3B6A00BC35A0 /* FavouritesTableViewController.swift */; };
+		220CE958250E3B6A00BC35A0 /* FavouritesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220CE955250E3B6A00BC35A0 /* FavouritesTableViewController.swift */; };
+		220CE959250E3B6A00BC35A0 /* FavouritesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 220CE956250E3B6A00BC35A0 /* FavouritesTableViewController.xib */; };
+		220CE95A250E3B6A00BC35A0 /* FavouritesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 220CE956250E3B6A00BC35A0 /* FavouritesTableViewController.xib */; };
 		2211AC62250C031A002EC546 /* TeamTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211AC60250C031A002EC546 /* TeamTableViewCell.swift */; };
 		2211AC63250C031A002EC546 /* TeamTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211AC60250C031A002EC546 /* TeamTableViewCell.swift */; };
 		2211AC64250C031A002EC546 /* TeamTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2211AC61250C031A002EC546 /* TeamTableViewCell.xib */; };
@@ -63,6 +67,8 @@
 
 /* Begin PBXFileReference section */
 		01629116ECF9CF3A8E19209D /* Pods-HungrrrTechTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HungrrrTechTest.release.xcconfig"; path = "Target Support Files/Pods-HungrrrTechTest/Pods-HungrrrTechTest.release.xcconfig"; sourceTree = "<group>"; };
+		220CE955250E3B6A00BC35A0 /* FavouritesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesTableViewController.swift; sourceTree = "<group>"; };
+		220CE956250E3B6A00BC35A0 /* FavouritesTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FavouritesTableViewController.xib; sourceTree = "<group>"; };
 		2211AC60250C031A002EC546 /* TeamTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamTableViewCell.swift; sourceTree = "<group>"; };
 		2211AC61250C031A002EC546 /* TeamTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamTableViewCell.xib; sourceTree = "<group>"; };
 		2211AC67250C033C002EC546 /* PlayerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerTableViewCell.xib; sourceTree = "<group>"; };
@@ -117,6 +123,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		220CE954250E3B3800BC35A0 /* FavouritesViewController */ = {
+			isa = PBXGroup;
+			children = (
+				220CE955250E3B6A00BC35A0 /* FavouritesTableViewController.swift */,
+				220CE956250E3B6A00BC35A0 /* FavouritesTableViewController.xib */,
+			);
+			path = FavouritesViewController;
+			sourceTree = "<group>";
+		};
 		2211AC5F250C02E7002EC546 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +189,7 @@
 		22848935250BF17300F12010 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				220CE954250E3B3800BC35A0 /* FavouritesViewController */,
 				22848945250BF8E700F12010 /* TeamSearchViewController */,
 			);
 			path = "View Controllers";
@@ -297,7 +313,6 @@
 				3214C33E815231229407EAD0 /* Pods-HungrrrTechTestTests.debug.xcconfig */,
 				267B375B1B43D19D1DC68B22 /* Pods-HungrrrTechTestTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -388,6 +403,7 @@
 				2284891F250BF09D00F12010 /* LaunchScreen.storyboard in Resources */,
 				229EAAE7250D2B4500FE3CE7 /* NoResultsTableViewCell.xib in Resources */,
 				229EAAF1250D4E8600FE3CE7 /* MoreTableViewCell.xib in Resources */,
+				220CE959250E3B6A00BC35A0 /* FavouritesTableViewController.xib in Resources */,
 				22848943250BF72300F12010 /* TeamSearchViewController.xib in Resources */,
 				2211AC64250C031A002EC546 /* TeamTableViewCell.xib in Resources */,
 				2284891C250BF09D00F12010 /* Assets.xcassets in Resources */,
@@ -404,6 +420,7 @@
 				229EAAE8250D2B4500FE3CE7 /* NoResultsTableViewCell.xib in Resources */,
 				2211AC6B250C033C002EC546 /* PlayerTableViewCell.xib in Resources */,
 				22848944250BF72300F12010 /* TeamSearchViewController.xib in Resources */,
+				220CE95A250E3B6A00BC35A0 /* FavouritesTableViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,6 +500,7 @@
 				229EAAF4250D5AB400FE3CE7 /* SearchParameter.swift in Sources */,
 				2211AC62250C031A002EC546 /* TeamTableViewCell.swift in Sources */,
 				22848939250BF40800F12010 /* MainCoordinator.swift in Sources */,
+				220CE957250E3B6A00BC35A0 /* FavouritesTableViewController.swift in Sources */,
 				229EAAEF250D4E8600FE3CE7 /* MoreTableViewCell.swift in Sources */,
 				2284893D250BF4AC00F12010 /* CoordinatorProtocol.swift in Sources */,
 				229EAAE5250D2B4500FE3CE7 /* NoResultsTableViewCell.swift in Sources */,
@@ -513,6 +531,7 @@
 				22DC46B5250C1A990000A47E /* NetworkUtility.swift in Sources */,
 				2284893A250BF40800F12010 /* MainCoordinator.swift in Sources */,
 				2284893E250BF4AC00F12010 /* CoordinatorProtocol.swift in Sources */,
+				220CE958250E3B6A00BC35A0 /* FavouritesTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

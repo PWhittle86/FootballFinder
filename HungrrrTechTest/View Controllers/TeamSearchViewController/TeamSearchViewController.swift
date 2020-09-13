@@ -17,7 +17,7 @@ public enum AvailableTableviewData {
 
 class TeamSearchViewController: UIViewController {
     
-    weak var coordinator: MainCoordinator?
+    var coordinator: MainCoordinator?
     let networkUtility = NetworkUtility()
     
     var players: [Player] = []
@@ -40,6 +40,9 @@ class TeamSearchViewController: UIViewController {
     
     func setupUI() {
         self.title = "Football Finder"
+        
+        let favouritesButton = UIBarButtonItem(title: "Favourites", style: .plain, target: self, action: #selector(favouritesButtonTapped))
+        self.navigationItem.rightBarButtonItem = favouritesButton
     }
     
     func setupSearchbutton() {
@@ -126,6 +129,10 @@ class TeamSearchViewController: UIViewController {
                                      searchType: searchType,
                                      offset: offset,
                                      completionHandler: completionHandler)
+    }
+    
+    @objc func favouritesButtonTapped() {
+        self.coordinator?.navigateToFavouritesController()
     }
     
     @IBAction func searchButtonTapped(_ sender: Any) {

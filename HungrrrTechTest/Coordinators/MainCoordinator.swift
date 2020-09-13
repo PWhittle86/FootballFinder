@@ -24,6 +24,9 @@ class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
         navigationController.delegate = self
     }
     
-    
+    func navigateToFavouritesController() {
+        let favouritesController = FavouritesTableViewController()
+        self.navigationController.pushViewController(favouritesController, animated: true)
+    }
     
 }

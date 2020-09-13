@@ -21,6 +21,7 @@ class FavouritesTableViewController: UITableViewController {
         getFavouritePlayerData()
     }
     
+    //MARK: Setup Functions
     func setupUI() {
         self.title = "Favourite Players"
     }
@@ -34,6 +35,20 @@ class FavouritesTableViewController: UITableViewController {
                            forCellReuseIdentifier: TableViewCellIdentifier.playerCell)
         tableView.register(UINib(nibName: TableViewCellIdentifier.genericCell, bundle: nil),
         forCellReuseIdentifier: TableViewCellIdentifier.genericCell)
+    }
+    
+    //MARK: Tableview Delegate Functions
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let players = favouritePlayers else { return 1 }
+        return players.isEmpty ? 1 : players.count
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -55,15 +70,6 @@ class FavouritesTableViewController: UITableViewController {
             cell.showHeartImage()
             return cell
         }
-    }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let players = favouritePlayers else { return 1 }
-        return players.isEmpty ? 1 : players.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

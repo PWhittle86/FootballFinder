@@ -10,19 +10,16 @@ import Foundation
 
 class NetworkUtility {
 
-    //Move this to a constant?
-    let apiString = "http://trials.mtcmobile.co.uk/api/football/1.0/search"
-
+    //The prime function of the class. Sends POST requests to the specified API, decodes the data and returns it to the requesting class in a completion handler.
     func executeSearch(searchString: String,
                        searchType: SearchParameter?,
                        offset: Int?,
                        completionHandler: @escaping (FootballAPIRootDataObject, String) -> Void) {
 
         //Generate URL Request
-        let request = generateURLRequest()
+        let request = generatePOSTURLRequest()
 
         //Generate parameters based on whether this is the first search by the user, or they are searching for additional players/teams.
-        //See the generateSearchParameters function for additional info.
         let searchParameters = generateSearchParameters(searchString: searchString,
                                                   searchType: searchType,
                                                   offset: offset)
@@ -70,8 +67,10 @@ class NetworkUtility {
         task.resume()
     }
     
-    func generateURLRequest() -> URLRequest {
-        guard let footballAPI = URL(string: apiString) else { print("Failure to generate URL for playerTeamSearch.")
+    //Generate a POST URLRequest
+    private func generatePOSTURLRequest() -> URLRequest {
+        guard let footballAPI = URL(string: NetworkUtilityConstant.apiString) else {
+            print("Failure to generate URL for playerTeamSearch.")
             return URLRequest(url: URL(string: "")!)
         }
         var request = URLRequest(url: footballAPI)
@@ -79,7 +78,8 @@ class NetworkUtility {
         return request
     }
     
-    func generateSearchParameters(searchString: String, searchType: SearchParameter?, offset: Int?) -> [String : Any] {
+    //Generates search parameters based on whether user is searching for the first time, or asking for more players/teams.
+    private func generateSearchParameters(searchString: String, searchType: SearchParameter?, offset: Int?) -> [String : Any] {
         //Always add the searchString parameter to the request.
         var searchParameters: [String : Any] = ["searchString": "\(searchString)"]
         
@@ -97,6 +97,7 @@ class NetworkUtility {
         return searchParameters
     }
     
+    //Convenience function to return specific error codes for http codes that don't represent success.
     private func handleNetworkResponse(response: HTTPURLResponse) -> DownloadError? {
         switch response.statusCode {
         case 200...299: return (nil)

@@ -23,28 +23,28 @@ class DBUtility {
         }
     }
     
+    //Adds a favourite player to the DB.
     func addFavouritePlayer(player: FavouritePlayer) {
-            do { try db.write({
-            db.add(player)
-            })
+            do { try db.write({ db.add(player) })
         } catch {
             print("Unable to add object to realm. Error: \(error)")
         }
     }
     
+    //Returns a player with a matching ID (primary key).
     func findFavouritePlayer(playerID: String) -> Results<FavouritePlayer> {
         return db.objects(FavouritePlayer.self).filter("playerID = '\(playerID)'")
     }
     
+    //Returns all favourite players saved to the DB.
     func getAllFavouritePlayers() -> Results<FavouritePlayer> {
         return db.objects(FavouritePlayer.self)
     }
     
+    //Deletes a specified player from the DB.
     func deleteFavouritePlayer(playerID: String) {
         let player = self.findFavouritePlayer(playerID: playerID)[0]
-        do { try db.write({
-            db.delete(player)
-            })
+        do { try db.write({ db.delete(player) })
         } catch {
             print("Unable to delete object from realm. Error: \(error)")
         }

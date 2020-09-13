@@ -325,22 +325,22 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
                         
             let player = players[indexPath.row]
             
-            if isFavouritePlayer(playerID: player.playerID) {
+            if isFavouritePlayer(playerID: player.id) {
                 playerCell.setFavouritePlayerStatus(bool: false)
                 playerCell.hideHeartImage()
-                db.deleteFavouritePlayer(playerID: player.playerID)
+                db.deleteFavouritePlayer(playerID: player.id)
             } else {
                 playerCell.setFavouritePlayerStatus(bool: true)
                 playerCell.showHeartImage()
                 
                 let favouritePlayer = FavouritePlayer()
                 
-                favouritePlayer.playerID = player.playerID
-                favouritePlayer.playerFirstName = player.playerFirstName
-                favouritePlayer.playerSecondName = player.playerSecondName
-                favouritePlayer.playerNationality = player.playerNationality
-                favouritePlayer.playerAge = player.playerAge
-                favouritePlayer.playerClub = player.playerClub
+                favouritePlayer.playerID = player.id
+                favouritePlayer.playerFirstName = player.firstName
+                favouritePlayer.playerSecondName = player.secondName
+                favouritePlayer.playerNationality = player.nationality
+                favouritePlayer.playerAge = player.age
+                favouritePlayer.playerClub = player.club
                 
                 db.addFavouritePlayer(player: favouritePlayer)
             }
@@ -401,7 +401,7 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
             
             let player = self.players[indexPath.row]
             
-            if isFavouritePlayer(playerID: player.playerID) {
+            if isFavouritePlayer(playerID: player.id) {
                 playerCell.setFavouritePlayerStatus(bool: true)
                 playerCell.showHeartImage()
             } else {
@@ -409,9 +409,9 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
                 playerCell.hideHeartImage()
             }
             
-            playerCell.playerNameLabel.text = "\(player.playerFirstName) \(player.playerSecondName)"
-            playerCell.ageLabel.text = player.playerAge
-            playerCell.clubLabel.text = player.playerClub
+            playerCell.playerNameLabel.text = "\(player.firstName) \(player.secondName)"
+            playerCell.ageLabel.text = player.age
+            playerCell.clubLabel.text = player.club
             
             return playerCell
         }
@@ -437,9 +437,9 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
             }
             
             let team = teams[indexPath.row]
-            teamCell.cityLabel.text = team.teamCity
-            teamCell.stadiumLabel.text = team.teamStadium
-            teamCell.teamNameLabel.text = team.teamName
+            teamCell.cityLabel.text = team.city
+            teamCell.stadiumLabel.text = team.stadium
+            teamCell.teamNameLabel.text = team.name
             
             return teamCell
         }

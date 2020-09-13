@@ -23,12 +23,31 @@ struct SuccessfulResult: Codable {
 }
 
 struct Player: Codable {
-    //TODO: Use coding keys to turn these into neater values. See table view controller for details.
-    let playerID, playerFirstName, playerSecondName, playerNationality: String
-    let playerAge, playerClub: String
+    
+    let id, firstName, secondName, nationality: String
+    let age, club: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "playerID"
+        case firstName = "playerFirstName"
+        case secondName = "playerSecondName"
+        case nationality = "playerNationality"
+        case age = "playerAge"
+        case club = "playerClub"
+    }
 }
 
 struct Team: Codable {
-    let teamID, teamName, teamStadium: String, isNation: String
-    let teamNationality, teamCity: String
+    let id, name, stadium, nation: String
+    let nationality, city: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "teamID"
+        case name = "teamName"
+        case stadium = "teamStadium"
+        case nation = "isNation"
+        case nationality = "teamNationality"
+        case city = "teamCity"
+    }
+    
 }

@@ -16,7 +16,7 @@ class NetworkUtility {
     func executeSearch(searchString: String,
                        searchType: SearchParameter?,
                        offset: Int?,
-                       completionHandler: @escaping (PlayerTeamRootObject, String) -> Void) {
+                       completionHandler: @escaping (FootballAPIRootDataObject, String) -> Void) {
 
         //Generate URL Request
         let request = generateURLRequest()
@@ -61,7 +61,7 @@ class NetworkUtility {
             //Decode the JSON object into a struct and use the completion handler to pass the data back to the tableview once complete.
             do {
                 let decoder = JSONDecoder()
-                let playerTeams = try decoder.decode(PlayerTeamRootObject.self, from: data)
+                let playerTeams = try decoder.decode(FootballAPIRootDataObject.self, from: data)
                 completionHandler(playerTeams, searchString)
             } catch {
                 print("Unable to decode data received from API. Error: \(error)")

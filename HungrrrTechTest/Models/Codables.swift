@@ -8,8 +8,7 @@
 
 import Foundation
 
-//TODO: Make these comments appear as an XCode description
-struct PlayerTeamRootObject: Codable {
+struct FootballAPIRootDataObject: Codable {
     let result: SuccessfulResult
 }
 
@@ -23,7 +22,6 @@ struct SuccessfulResult: Codable {
 }
 
 struct Player: Codable {
-    
     let id, firstName, secondName, nationality: String
     let age, club: String
     

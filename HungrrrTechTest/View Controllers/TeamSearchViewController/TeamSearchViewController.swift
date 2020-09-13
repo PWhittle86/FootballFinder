@@ -119,7 +119,7 @@ class TeamSearchViewController: UIViewController {
          whilst the searchType and offset parameters are only used when the user is doing a follow-up search for more players or teams. A completion handler is
          used to pass data back to the table view controller once the data has been returned from the back end.
          */
-        let completionHandler: (PlayerTeamRootObject, String) -> Void = { [weak self] (footballData, searchString) in
+        let completionHandler: (FootballAPIRootDataObject, String) -> Void = { [weak self] (footballData, searchString) in
             
             self?.clearDataIfUserSearchedNewString(searchString: searchString)
 
@@ -275,7 +275,6 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         switch availableDataCheck() {
         case .PlayersAndTeams:
             if indexPath.section == 0 {

@@ -19,6 +19,7 @@ class TeamSearchViewController: UIViewController {
     
     var coordinator: MainCoordinator?
     let networkUtility = NetworkUtility()
+    let db = DBHelper.sharedInstance
     
     var players: [Player] = []
     var teams: [Team] = []
@@ -274,6 +275,19 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         
         if cell.isKind(of: PlayerTableViewCell.self) {
             guard let playerCell = cell as? PlayerTableViewCell else {  return }
+            
+            let player = players[indexPath.row]
+            let favouritePlayer = FavouritePlayer()
+            
+            favouritePlayer.playerID = player.playerID
+            favouritePlayer.playerFirstName = player.playerFirstName
+            favouritePlayer.playerSecondName = player.playerSecondName
+            favouritePlayer.playerNationality = player.playerNationality
+            favouritePlayer.playerAge = player.playerAge
+            favouritePlayer.playerClub = player.playerClub
+
+            db.add(object: favouritePlayer)
+            
             playerCell.toggleFavouritePlayerStatus()
             playerCell.toggleHeartImageVisibility()
         }

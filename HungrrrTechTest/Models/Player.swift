@@ -7,7 +7,20 @@
 //
 
 import Foundation
+import RealmSwift
 
-//class Player {
-//    //Realm code goes here
-//}
+class FavouritePlayer: Object {
+
+    @objc dynamic var playerID = ""
+    @objc dynamic var playerFirstName = ""
+    @objc dynamic var playerSecondName = ""
+    @objc dynamic var playerNationality = ""
+    @objc dynamic var playerAge = ""
+    @objc dynamic var playerClub = ""
+
+    
+    override static func primaryKey() -> String? {
+        return "playerID"
+    }
+    
+}

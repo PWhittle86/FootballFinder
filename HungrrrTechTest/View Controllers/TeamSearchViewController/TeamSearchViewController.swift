@@ -23,6 +23,8 @@ class TeamSearchViewController: UIViewController {
     
     var players: [Player] = []
     var teams: [Team] = []
+    var favouritePlayers: [FavouritePlayer] = []
+    
     var previousSearchString: String?
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -180,7 +182,9 @@ class TeamSearchViewController: UIViewController {
         self.previousSearchString = searchString
     }
     
-    
+    func isFavouritePlayer(playerID: Int) -> Bool {
+        return !db.findFavouritePlayer(playerID: playerID).isEmpty
+    }
     
 }
 
@@ -275,21 +279,29 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         
         if cell.isKind(of: PlayerTableViewCell.self) {
             guard let playerCell = cell as? PlayerTableViewCell else {  return }
-            
+                        
             let player = players[indexPath.row]
-            let favouritePlayer = FavouritePlayer()
+            guard let playerID = Int(player.playerID) else { return }
             
-            favouritePlayer.playerID = player.playerID
-            favouritePlayer.playerFirstName = player.playerFirstName
-            favouritePlayer.playerSecondName = player.playerSecondName
-            favouritePlayer.playerNationality = player.playerNationality
-            favouritePlayer.playerAge = player.playerAge
-            favouritePlayer.playerClub = player.playerClub
-
-            db.add(object: favouritePlayer)
-            
-            playerCell.toggleFavouritePlayerStatus()
-            playerCell.toggleHeartImageVisibility()
+            if isFavouritePlayer(playerID: playerID) {
+                playerCell.setFavouritePlayerStatus(bool: false)
+                playerCell.hideHeartImage()
+                db.deleteFavouritePlayer(playerID: playerID)
+            } else {
+                playerCell.setFavouritePlayerStatus(bool: true)
+                playerCell.showHeartImage()
+                
+                let favouritePlayer = FavouritePlayer()
+                
+                favouritePlayer.playerID = player.playerID
+                favouritePlayer.playerFirstName = player.playerFirstName
+                favouritePlayer.playerSecondName = player.playerSecondName
+                favouritePlayer.playerNationality = player.playerNationality
+                favouritePlayer.playerAge = player.playerAge
+                favouritePlayer.playerClub = player.playerClub
+                
+                db.addFavouritePlayer(player: favouritePlayer)
+            }
         }
         
         if cell.isKind(of: MoreTableViewCell.self) {

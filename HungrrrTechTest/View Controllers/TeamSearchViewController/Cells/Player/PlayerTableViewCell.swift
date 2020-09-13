@@ -18,7 +18,7 @@ class PlayerTableViewCell: UITableViewCell {
     @IBOutlet weak var clubLabel: UILabel!
     @IBOutlet weak var heartImage: UIImageView!
     
-    var favouritePlayer = false
+    private var favouritePlayer = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,17 +26,19 @@ class PlayerTableViewCell: UITableViewCell {
         heartImage.alpha = 0
     }
 
-    func toggleFavouritePlayerStatus() {
-        self.favouritePlayer = !favouritePlayer
+    func setFavouritePlayerStatus(bool: Bool) {
+        favouritePlayer = bool
     }
     
-    func toggleHeartImageVisibility() {
+    func showHeartImage() {
         UIView.animate(withDuration: 0.1, animations: { [weak self] in
-            if self!.favouritePlayer {
                 self?.heartImage.alpha = 1
-            } else {
+        })
+    }
+    
+    func hideHeartImage() {
+        UIView.animate(withDuration: 0.1, animations: { [weak self] in
                 self?.heartImage.alpha = 0
-            }
         })
     }
 }

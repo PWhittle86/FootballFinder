@@ -23,8 +23,6 @@ class FavouritesTableViewController: UITableViewController {
     
     func setupUI() {
         self.title = "Favourite Players"
-        self.navigationController?.navigationItem.backBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: CustomFontNames.latoLight, size: 20) as Any], for: .normal)
-        self.navigationController?.navigationItem.backBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: CustomFontNames.latoLight, size: 20) as Any], for: .selected)
     }
     
     func getFavouritePlayerData() {

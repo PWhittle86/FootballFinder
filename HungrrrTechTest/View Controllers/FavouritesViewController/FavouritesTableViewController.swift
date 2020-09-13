@@ -10,16 +10,21 @@ import UIKit
 import RealmSwift
 
 class FavouritesTableViewController: UITableViewController {
-
+    
     let db = DBHelper.sharedInstance
     var favouritePlayers: Results<FavouritePlayer>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
         setUpTableview()
         getFavouritePlayerData()
     }
-
+    
+    func setupUI() {
+        self.title = "Favourite Players"
+    }
+    
     func getFavouritePlayerData() {
         self.favouritePlayers = db.getAllFavouritePlayers()
     }
@@ -27,19 +32,25 @@ class FavouritesTableViewController: UITableViewController {
     func setUpTableview() {
         tableView.register(UINib(nibName: TableViewCellIdentifier.playerCell, bundle: nil),
                            forCellReuseIdentifier: TableViewCellIdentifier.playerCell)
+        tableView.register(UINib(nibName: TableViewCellIdentifier.genericCell, bundle: nil),
+        forCellReuseIdentifier: TableViewCellIdentifier.genericCell)
         //TODO: Use heightForRowAtIndexPath to make UI more consistent in both TVs.
         tableView.rowHeight = 75
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.playerCell,
-                                                    for: indexPath) as? PlayerTableViewCell {
-            
-            guard let players = favouritePlayers else {
-                //TODO: Make this into a 'No Favourite Players!' cell.
-                return UITableViewCell()
-            }
         
+        guard let players = favouritePlayers else { return UITableViewCell() }
+        
+        if players.isEmpty {
+            guard let genericCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.genericCell,
+                                                                  for: indexPath) as? GenericTableViewCell else { return UITableViewCell() }
+            genericCell.centerLabel.text = "No Favourites!"
+            
+            return genericCell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.playerCell,
+                                                           for: indexPath) as? PlayerTableViewCell else { return UITableViewCell() }
             let player = players[indexPath.row]
             cell.playerNameLabel.text = "\(player.playerFirstName) \(player.playerSecondName)"
             cell.ageLabel.text = "\(player.playerAge)"
@@ -48,23 +59,24 @@ class FavouritesTableViewController: UITableViewController {
             
             return cell
         }
-        return UITableViewCell()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        //There is always only one section in this controller.
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         guard let players = favouritePlayers else { return 1 }
-        
-        if players.isEmpty {
-            return 1
-        } else {
-            return players.count
-        }
+        return players.isEmpty ? 1 : players.count
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let players = self.favouritePlayers else { return }
+        
+        if !players.isEmpty{
+            let player = players[indexPath.row]
+            db.deleteFavouritePlayer(playerID: player.playerID)
+            tableView.reloadData()
+        }
+    }
 }

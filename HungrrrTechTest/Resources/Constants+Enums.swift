@@ -24,7 +24,7 @@ public enum DownloadError: String, Error {
 struct TableViewCellIdentifier {
     static let playerCell = "PlayerTableViewCell"
     static let teamCell = "TeamTableViewCell"
-    static let noResultsCell = "NoResultsTableViewCell"
+    static let genericCell = "GenericTableViewCell"
     static let moreCell = "MoreTableViewCell"
 }
 

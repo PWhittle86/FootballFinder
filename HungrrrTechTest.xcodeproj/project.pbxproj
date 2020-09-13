@@ -32,10 +32,10 @@
 		22848944250BF72300F12010 /* TeamSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22848940250BF72300F12010 /* TeamSearchViewController.xib */; };
 		229EAAE1250CFB8600FE3CE7 /* Constants+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAE0250CFB8600FE3CE7 /* Constants+Enums.swift */; };
 		229EAAE2250CFB8600FE3CE7 /* Constants+Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAE0250CFB8600FE3CE7 /* Constants+Enums.swift */; };
-		229EAAE5250D2B4500FE3CE7 /* NoResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAE3250D2B4400FE3CE7 /* NoResultsTableViewCell.swift */; };
-		229EAAE6250D2B4500FE3CE7 /* NoResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAE3250D2B4400FE3CE7 /* NoResultsTableViewCell.swift */; };
-		229EAAE7250D2B4500FE3CE7 /* NoResultsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 229EAAE4250D2B4400FE3CE7 /* NoResultsTableViewCell.xib */; };
-		229EAAE8250D2B4500FE3CE7 /* NoResultsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 229EAAE4250D2B4400FE3CE7 /* NoResultsTableViewCell.xib */; };
+		229EAAE5250D2B4500FE3CE7 /* GenericTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAE3250D2B4400FE3CE7 /* GenericTableViewCell.swift */; };
+		229EAAE6250D2B4500FE3CE7 /* GenericTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAE3250D2B4400FE3CE7 /* GenericTableViewCell.swift */; };
+		229EAAE7250D2B4500FE3CE7 /* GenericTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 229EAAE4250D2B4400FE3CE7 /* GenericTableViewCell.xib */; };
+		229EAAE8250D2B4500FE3CE7 /* GenericTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 229EAAE4250D2B4400FE3CE7 /* GenericTableViewCell.xib */; };
 		229EAAEF250D4E8600FE3CE7 /* MoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAED250D4E8600FE3CE7 /* MoreTableViewCell.swift */; };
 		229EAAF0250D4E8600FE3CE7 /* MoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAED250D4E8600FE3CE7 /* MoreTableViewCell.swift */; };
 		229EAAF1250D4E8600FE3CE7 /* MoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 229EAAEE250D4E8600FE3CE7 /* MoreTableViewCell.xib */; };
@@ -86,8 +86,8 @@
 		2284893F250BF72300F12010 /* TeamSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSearchViewController.swift; sourceTree = "<group>"; };
 		22848940250BF72300F12010 /* TeamSearchViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamSearchViewController.xib; sourceTree = "<group>"; };
 		229EAAE0250CFB8600FE3CE7 /* Constants+Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Constants+Enums.swift"; sourceTree = "<group>"; };
-		229EAAE3250D2B4400FE3CE7 /* NoResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoResultsTableViewCell.swift; sourceTree = "<group>"; };
-		229EAAE4250D2B4400FE3CE7 /* NoResultsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoResultsTableViewCell.xib; sourceTree = "<group>"; };
+		229EAAE3250D2B4400FE3CE7 /* GenericTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericTableViewCell.swift; sourceTree = "<group>"; };
+		229EAAE4250D2B4400FE3CE7 /* GenericTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericTableViewCell.xib; sourceTree = "<group>"; };
 		229EAAED250D4E8600FE3CE7 /* MoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableViewCell.swift; sourceTree = "<group>"; };
 		229EAAEE250D4E8600FE3CE7 /* MoreTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MoreTableViewCell.xib; sourceTree = "<group>"; };
 		229EAAF3250D5AB400FE3CE7 /* SearchParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchParameter.swift; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				229EAAEC250D4C6F00FE3CE7 /* More */,
-				229EAAEB250D4C6300FE3CE7 /* No Results */,
+				229EAAEB250D4C6300FE3CE7 /* Generic Cell */,
 				229EAAEA250D4C5300FE3CE7 /* Team */,
 				229EAAE9250D4C4300FE3CE7 /* Player */,
 			);
@@ -259,13 +259,13 @@
 			path = Team;
 			sourceTree = "<group>";
 		};
-		229EAAEB250D4C6300FE3CE7 /* No Results */ = {
+		229EAAEB250D4C6300FE3CE7 /* Generic Cell */ = {
 			isa = PBXGroup;
 			children = (
-				229EAAE3250D2B4400FE3CE7 /* NoResultsTableViewCell.swift */,
-				229EAAE4250D2B4400FE3CE7 /* NoResultsTableViewCell.xib */,
+				229EAAE3250D2B4400FE3CE7 /* GenericTableViewCell.swift */,
+				229EAAE4250D2B4400FE3CE7 /* GenericTableViewCell.xib */,
 			);
-			path = "No Results";
+			path = "Generic Cell";
 			sourceTree = "<group>";
 		};
 		229EAAEC250D4C6F00FE3CE7 /* More */ = {
@@ -401,7 +401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2284891F250BF09D00F12010 /* LaunchScreen.storyboard in Resources */,
-				229EAAE7250D2B4500FE3CE7 /* NoResultsTableViewCell.xib in Resources */,
+				229EAAE7250D2B4500FE3CE7 /* GenericTableViewCell.xib in Resources */,
 				229EAAF1250D4E8600FE3CE7 /* MoreTableViewCell.xib in Resources */,
 				220CE959250E3B6A00BC35A0 /* FavouritesTableViewController.xib in Resources */,
 				22848943250BF72300F12010 /* TeamSearchViewController.xib in Resources */,
@@ -417,7 +417,7 @@
 			files = (
 				2211AC65250C031A002EC546 /* TeamTableViewCell.xib in Resources */,
 				229EAAF2250D4E8600FE3CE7 /* MoreTableViewCell.xib in Resources */,
-				229EAAE8250D2B4500FE3CE7 /* NoResultsTableViewCell.xib in Resources */,
+				229EAAE8250D2B4500FE3CE7 /* GenericTableViewCell.xib in Resources */,
 				2211AC6B250C033C002EC546 /* PlayerTableViewCell.xib in Resources */,
 				22848944250BF72300F12010 /* TeamSearchViewController.xib in Resources */,
 				220CE95A250E3B6A00BC35A0 /* FavouritesTableViewController.xib in Resources */,
@@ -503,7 +503,7 @@
 				220CE957250E3B6A00BC35A0 /* FavouritesTableViewController.swift in Sources */,
 				229EAAEF250D4E8600FE3CE7 /* MoreTableViewCell.swift in Sources */,
 				2284893D250BF4AC00F12010 /* CoordinatorProtocol.swift in Sources */,
-				229EAAE5250D2B4500FE3CE7 /* NoResultsTableViewCell.swift in Sources */,
+				229EAAE5250D2B4500FE3CE7 /* GenericTableViewCell.swift in Sources */,
 				22848913250BF09A00F12010 /* AppDelegate.swift in Sources */,
 				22848941250BF72300F12010 /* TeamSearchViewController.swift in Sources */,
 				22DC46AC250C18290000A47E /* Player.swift in Sources */,
@@ -518,7 +518,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				229EAAE6250D2B4500FE3CE7 /* NoResultsTableViewCell.swift in Sources */,
+				229EAAE6250D2B4500FE3CE7 /* GenericTableViewCell.swift in Sources */,
 				2284892A250BF09D00F12010 /* HungrrrTechTestTests.swift in Sources */,
 				22848942250BF72300F12010 /* TeamSearchViewController.swift in Sources */,
 				22B4F13D250E5D23003AB751 /* DBHelper.swift in Sources */,

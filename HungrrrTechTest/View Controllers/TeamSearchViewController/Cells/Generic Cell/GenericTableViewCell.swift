@@ -8,8 +8,10 @@
 
 import UIKit
 
-class NoResultsTableViewCell: UITableViewCell {
+class GenericTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var centerLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -24,9 +24,11 @@ class TeamSearchViewController: UIViewController {
     var players: [Player] = []
     var teams: [Team] = []
     var favouritePlayers: [FavouritePlayer] = []
-    var hideNoResultsFoundLabel = true
     
+    var hideNoResultsFoundLabel = true
     var previousSearchString: String?
+    var timer: Timer?
+    
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchButton: UIButton!
@@ -42,6 +44,11 @@ class TeamSearchViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.timer?.invalidate()
+        super.viewWillDisappear(animated)
     }
     
     //MARK: Setup Functions - Called As Part Of View Did Load
@@ -149,6 +156,7 @@ class TeamSearchViewController: UIViewController {
     }
     
     //MARK: Search Management Functions - Used To Manage When/How User Searches For Data
+    //TODO: get rid of this if timer functionality works
     @IBAction func searchButtonTapped(_ sender: Any) {
         /*
          When a search is completed for the first time, we can start to show the 'No Results Found!' cell, so we update the 'hideNoResultsFound' property
@@ -164,7 +172,18 @@ class TeamSearchViewController: UIViewController {
         executeSearch(searchString:searchString, searchParameter: nil, offset: nil)
     }
     
-    private func executeSearch(searchString: String, searchParameter: SearchParameter?, offset: Int?) {
+    //TODO: Give this a better name
+    @objc func initialSearchActions() {
+        if hideNoResultsFoundLabel {
+            hideNoResultsFoundLabel = !hideNoResultsFoundLabel
+        }
+        self.searchButton.isEnabled = false
+        guard let searchString = self.searchBar.text else { return }
+        executeSearch(searchString:searchString, searchParameter: nil, offset: nil)
+        self.timer?.invalidate()
+    }
+    
+    func executeSearch(searchString: String, searchParameter: SearchParameter?, offset: Int?) {
         /*Grab the searchString from the searchBar and check if the user is seeking additional results for the same string. If they are, the additional parameters necessary are passed to the Network Utility.*/
         let isNewSearch = self.firstSearchCheck(searchString: searchString)
 
@@ -199,6 +218,9 @@ class TeamSearchViewController: UIViewController {
     }
 }
 
+//MARK: Tableview Controller Data Source & Delegate
+//These functions should be in their own dedicated class, but under the time pressure I wanted to make sure I could deliver a sound, working build.
+//My first port of call, given another day to work on this, would be to reduce the size of this controller!
 extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -438,11 +460,18 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
-//Perhaps put these into their own variables to tidy the file up a bit?
 extension TeamSearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         /*A single character isn't enough info for a useful search to be completed. As such, I've limited access to the search button until the user has entered at least 2 characters. Additionally, since we want users to search for more players/teams using the More cell, rather than the search button, the search cell is disabled if the search text is the same as the last string they searched for.*/
+        
+        self.timer?.invalidate()
+        self.timer = Timer.scheduledTimer(timeInterval: 0.4,
+                                          target: self,
+                                          selector: #selector(initialSearchActions),
+                                          userInfo: nil,
+                                          repeats: false)
+        
         if (searchText.count >= 2) && (searchText != previousSearchString) {
             self.searchButton.isEnabled = true
         } else {

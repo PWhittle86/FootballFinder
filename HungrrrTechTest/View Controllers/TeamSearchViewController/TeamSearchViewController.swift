@@ -182,7 +182,7 @@ class TeamSearchViewController: UIViewController {
         self.previousSearchString = searchString
     }
     
-    func isFavouritePlayer(playerID: Int) -> Bool {
+    func isFavouritePlayer(playerID: String) -> Bool {
         return !db.findFavouritePlayer(playerID: playerID).isEmpty
     }
     
@@ -281,12 +281,11 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
             guard let playerCell = cell as? PlayerTableViewCell else {  return }
                         
             let player = players[indexPath.row]
-            guard let playerID = Int(player.playerID) else { return }
             
-            if isFavouritePlayer(playerID: playerID) {
+            if isFavouritePlayer(playerID: player.playerID) {
                 playerCell.setFavouritePlayerStatus(bool: false)
                 playerCell.hideHeartImage()
-                db.deleteFavouritePlayer(playerID: playerID)
+                db.deleteFavouritePlayer(playerID: player.playerID)
             } else {
                 playerCell.setFavouritePlayerStatus(bool: true)
                 playerCell.showHeartImage()
@@ -358,6 +357,12 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
             }
             
             let player = self.players[indexPath.row]
+            
+            if isFavouritePlayer(playerID: player.playerID) {
+                playerCell.setFavouritePlayerStatus(bool: true)
+                playerCell.showHeartImage()
+            }
+            
             playerCell.playerNameLabel.text = "\(player.playerFirstName) \(player.playerSecondName)"
             playerCell.ageLabel.text = player.playerAge
             playerCell.clubLabel.text = player.playerClub

@@ -24,7 +24,6 @@ class DBHelper {
     }
     
     func addFavouritePlayer(player: FavouritePlayer) {
-//        let backgroundRealm = try! Realm(configuration: self.configuration)
             do { try db.write({
             db.add(player)
             })
@@ -33,7 +32,15 @@ class DBHelper {
         }
     }
     
-    func deleteFavouritePlayer(playerID: Int) {
+    func findFavouritePlayer(playerID: String) -> Results<FavouritePlayer> {
+        return db.objects(FavouritePlayer.self).filter("playerID = '\(playerID)'")
+    }
+    
+    func getAllFavouritePlayers() -> Results<FavouritePlayer> {
+        return db.objects(FavouritePlayer.self)
+    }
+    
+    func deleteFavouritePlayer(playerID: String) {
         let player = self.findFavouritePlayer(playerID: playerID)[0]
         do { try db.write({
             db.delete(player)
@@ -41,13 +48,5 @@ class DBHelper {
         } catch {
             print("Unable to delete object from realm. Error: \(error)")
         }
-    }
-    
-    func findFavouritePlayer(playerID: Int) -> Results<FavouritePlayer> {
-        return db.objects(FavouritePlayer.self).filter("playerID = '\(playerID)'")
-    }
-    
-    func getAllFavouritePlayers() -> Results<FavouritePlayer> {
-        return db.objects(FavouritePlayer.self)
     }
 }

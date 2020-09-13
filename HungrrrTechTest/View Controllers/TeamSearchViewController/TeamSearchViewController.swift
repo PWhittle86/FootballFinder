@@ -264,7 +264,13 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.cellForRow(at: indexPath) else {
             return
         }
-            
+        
+        if cell.isKind(of: PlayerTableViewCell.self) {
+            guard let playerCell = cell as? PlayerTableViewCell else {  return }
+            playerCell.toggleFavouritePlayerStatus()
+            playerCell.toggleHeartImageVisibility()
+        }
+        
         if cell.isKind(of: MoreTableViewCell.self) {
             switch availableDataCheck() {
             case .PlayersAndTeams:

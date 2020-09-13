@@ -21,8 +21,6 @@
 		22403FD9250E9E310085B7E7 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 22403FD7250E9E310085B7E7 /* Lato-Light.ttf */; };
 		22403FE3250ED61D0085B7E7 /* AlertUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22403FE2250ED61D0085B7E7 /* AlertUtility.swift */; };
 		22403FE4250ED61D0085B7E7 /* AlertUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22403FE2250ED61D0085B7E7 /* AlertUtility.swift */; };
-		22403FE7250ED6E60085B7E7 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22403FE6250ED6E60085B7E7 /* UIApplication+Extensions.swift */; };
-		22403FE8250ED6E60085B7E7 /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22403FE6250ED6E60085B7E7 /* UIApplication+Extensions.swift */; };
 		22848913250BF09A00F12010 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22848912250BF09A00F12010 /* AppDelegate.swift */; };
 		22848915250BF09A00F12010 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22848914250BF09A00F12010 /* SceneDelegate.swift */; };
 		2284891C250BF09D00F12010 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2284891B250BF09D00F12010 /* Assets.xcassets */; };
@@ -81,7 +79,6 @@
 		22403FD6250E9E310085B7E7 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
 		22403FD7250E9E310085B7E7 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		22403FE2250ED61D0085B7E7 /* AlertUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertUtility.swift; sourceTree = "<group>"; };
-		22403FE6250ED6E60085B7E7 /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
 		2284890F250BF09A00F12010 /* HungrrrTechTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HungrrrTechTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22848912250BF09A00F12010 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22848914250BF09A00F12010 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -162,14 +159,6 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		22403FE5250ED6CD0085B7E7 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				22403FE6250ED6E60085B7E7 /* UIApplication+Extensions.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		22848906250BF09A00F12010 = {
 			isa = PBXGroup;
 			children = (
@@ -195,7 +184,6 @@
 			children = (
 				22848937250BF21100F12010 /* Application Files */,
 				22848936250BF17E00F12010 /* Coordinators */,
-				22403FE5250ED6CD0085B7E7 /* Extensions */,
 				22DC46A7250C13760000A47E /* Models */,
 				2284893B250BF43100F12010 /* Protocols */,
 				229EAADF250CFB6500FE3CE7 /* Resources */,
@@ -529,7 +517,6 @@
 			files = (
 				22DC46A6250C0A520000A47E /* PlayerTableViewCell.swift in Sources */,
 				22DC46B7250C1EF10000A47E /* Codables.swift in Sources */,
-				22403FE7250ED6E60085B7E7 /* UIApplication+Extensions.swift in Sources */,
 				229EAAF4250D5AB400FE3CE7 /* SearchParameter.swift in Sources */,
 				2211AC62250C031A002EC546 /* TeamTableViewCell.swift in Sources */,
 				22848939250BF40800F12010 /* MainCoordinator.swift in Sources */,
@@ -558,7 +545,6 @@
 				22B4F13D250E5D23003AB751 /* DBUtility.swift in Sources */,
 				22403FE4250ED61D0085B7E7 /* AlertUtility.swift in Sources */,
 				229EAAF0250D4E8600FE3CE7 /* MoreTableViewCell.swift in Sources */,
-				22403FE8250ED6E60085B7E7 /* UIApplication+Extensions.swift in Sources */,
 				2211AC63250C031A002EC546 /* TeamTableViewCell.swift in Sources */,
 				22DC46B8250C1EF10000A47E /* Codables.swift in Sources */,
 				229EAAE2250CFB8600FE3CE7 /* Constants+Enums.swift in Sources */,

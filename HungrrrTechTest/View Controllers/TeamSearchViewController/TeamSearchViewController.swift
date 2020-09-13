@@ -36,6 +36,7 @@ class TeamSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        networkUtility.delegate = self
         setupTableView()
         setupSearchBar()
         setupButtons()
@@ -208,9 +209,6 @@ class TeamSearchViewController: UIViewController {
     //MARK: Spinner functions
     func displaySpinner() {
         
-        guard let tableView = self.tableView else { return }
-        tableView.isScrollEnabled = false
-        
         if self.loadingWebDataView == nil {
             
             guard let window = self.view.window else { return }
@@ -234,6 +232,8 @@ class TeamSearchViewController: UIViewController {
     }
         
         DispatchQueue.main.async {
+            guard let tableView = self.tableView else { return }
+            tableView.isScrollEnabled = false
             tableView.backgroundColor = .clear
             guard let loadview = self.loadingWebDataView else { return }
             tableView.addSubview(loadview)
@@ -242,10 +242,9 @@ class TeamSearchViewController: UIViewController {
     
     func removeSpinner() {
         
-        guard let tableview = self.tableView else { return }
-        tableview.isScrollEnabled = true
-        
         DispatchQueue.main.async {
+            guard let tableview = self.tableView else { return }
+            tableview.isScrollEnabled = true
             guard let loadview = self.loadingWebDataView else { return }
             loadview.removeFromSuperview()
             self.loadingWebDataView = nil
@@ -504,6 +503,14 @@ extension TeamSearchViewController: UISearchBarDelegate {
                                               selector: #selector(initialSearchActions),
                                               userInfo: nil,
                                               repeats: false)
+        }
+    }
+}
+
+extension TeamSearchViewController: FailedToCompleteNetworkRequest {
+    func didFailToProcessNetworkRequest() {
+        if self.loadingWebDataView != nil {
+            self.removeSpinner()
         }
     }
 }

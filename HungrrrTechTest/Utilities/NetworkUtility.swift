@@ -8,8 +8,15 @@
 
 import Foundation
 
+protocol FailedToCompleteNetworkRequest: class {
+    func didFailToProcessNetworkRequest()
+}
+
 class NetworkUtility {
 
+    let alertUtility = AlertUtility()
+    weak var delegate: FailedToCompleteNetworkRequest?
+    
     //The prime function of the class. Sends POST requests to the specified API, decodes the data and returns it to the requesting class in a completion handler.
     func executeSearch(searchString: String,
                        searchType: SearchParameter?,
@@ -30,6 +37,7 @@ class NetworkUtility {
             jsonData = try JSONSerialization.data(withJSONObject: searchParameters, options: [])
         } catch {
             print("Error: Unable to serialise JSON data for upload: \(error)")
+            self.delegate?.didFailToProcessNetworkRequest()
             return
         }
 
@@ -40,18 +48,22 @@ class NetworkUtility {
             //Check that we can parse the response from the API.
             guard let httpResponse = response as? HTTPURLResponse else {
                 print("Error: Unable to parse API response as HTTPURLResponse")
+                self.delegate?.didFailToProcessNetworkRequest()
                 return
             }
 
-            //Check for any http status code errors using the network response checker.
+            //Check for any http status code errors using the network response checker. Display alert based on response received.
             if let responseError = self.handleNetworkResponse(response: httpResponse) {
-                print("Unexpected API HTTP response: \(responseError.rawValue)")
+                self.alertUtility.presentOKAlert(title: "Error!", message: "Unable to connect to the data server: \(responseError.rawValue)")
+                self.delegate?.didFailToProcessNetworkRequest()
+                print("Unexpected HTTP response: \(responseError.rawValue)")
                 return
             }
 
             //Check we have received valid data and unwrap it.
             guard let data = data else {
                 print("Unable to safely unwrap data received from API.")
+                self.delegate?.didFailToProcessNetworkRequest()
                 return
             }
 
@@ -62,6 +74,7 @@ class NetworkUtility {
                 completionHandler(playerTeams, searchString)
             } catch {
                 print("Unable to decode data received from API. Error: \(error)")
+                self.delegate?.didFailToProcessNetworkRequest()
                 }
         }
         task.resume()
@@ -71,6 +84,7 @@ class NetworkUtility {
     private func generatePOSTURLRequest() -> URLRequest {
         guard let footballAPI = URL(string: NetworkUtilityConstant.apiString) else {
             print("Failure to generate URL for playerTeamSearch.")
+            self.delegate?.didFailToProcessNetworkRequest()
             return URLRequest(url: URL(string: "")!)
         }
         var request = URLRequest(url: footballAPI)
@@ -99,6 +113,7 @@ class NetworkUtility {
     
     //Convenience function to return specific error codes for http codes that don't represent success.
     private func handleNetworkResponse(response: HTTPURLResponse) -> DownloadError? {
+        return (.redirectionError)
         switch response.statusCode {
         case 200...299: return (nil)
         case 300...399: return (.redirectionError)

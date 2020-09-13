@@ -24,6 +24,7 @@ class TeamSearchViewController: UIViewController {
     var players: [Player] = []
     var teams: [Team] = []
     var favouritePlayers: [FavouritePlayer] = []
+    var hideNoResultsFoundLabel = true
     
     var previousSearchString: String?
     
@@ -141,6 +142,9 @@ class TeamSearchViewController: UIViewController {
     @IBAction func searchButtonTapped(_ sender: Any) {
         //TODO: Temp solution to double search issue, but architectural change of firstSearchCheck might be better.
         //Disabling the search button after a search so that user has to change the search string to search for new data.
+        if hideNoResultsFoundLabel {
+            hideNoResultsFoundLabel = !hideNoResultsFoundLabel
+        }
         self.searchButton.isEnabled = false
         executeSearch(searchParameter: nil, offset: nil)
     }
@@ -265,6 +269,12 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         case .NoData:
             if let genericCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.genericCell,
                                                                  for: indexPath) as? GenericTableViewCell {
+                if hideNoResultsFoundLabel {
+                    genericCell.centerLabel.isHidden = true
+                } else {
+                    genericCell.centerLabel.isHidden = false
+                }
+                genericCell.centerLabel.text = "No Results Found!"
                 return genericCell
             }
         }

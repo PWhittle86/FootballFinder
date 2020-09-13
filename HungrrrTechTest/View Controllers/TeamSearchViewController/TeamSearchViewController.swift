@@ -29,9 +29,9 @@ class TeamSearchViewController: UIViewController {
     var previousSearchString: String?
     var timer: Timer?
     
+    var loadingWebDataView: UIView?
     
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -72,13 +72,11 @@ class TeamSearchViewController: UIViewController {
     private func setupButtons() {
         let favouritesButton = UIBarButtonItem(title: "Favourites", style: .plain, target: self, action: #selector(favouritesButtonTapped))
         self.navigationItem.rightBarButtonItem = favouritesButton
-        self.searchButton.isEnabled = false
     }
     
     private func setupUI() {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: CustomFontNames.latoBold, size: 20) as Any]
         self.searchBar.searchTextField.font = UIFont(name: CustomFontNames.latoLight, size: 15)
-        self.searchButton.titleLabel?.font = UIFont(name: CustomFontNames.latoBold, size: 17)
         self.title = "Football Finder"
     }
     
@@ -141,6 +139,7 @@ class TeamSearchViewController: UIViewController {
                 }
             }
             DispatchQueue.main.async {
+                self?.removeSpinner()
                 self?.tableView.reloadData()
             }
         }
@@ -156,30 +155,15 @@ class TeamSearchViewController: UIViewController {
     }
     
     //MARK: Search Management Functions - Used To Manage When/How User Searches For Data
-    //TODO: get rid of this if timer functionality works
-    @IBAction func searchButtonTapped(_ sender: Any) {
-        /*
-         When a search is completed for the first time, we can start to show the 'No Results Found!' cell, so we update the 'hideNoResultsFound' property
-         as soon as a search takes place. Additionally the search button is disabled to encourage the user to interact with the tableview to search for new
-         results or an existing searchString. Finally, we pass data to the executeSearch function, which does some processing to ensure the correct data is passed
-         to the Network Utility.
-         */
-        if hideNoResultsFoundLabel {
-            hideNoResultsFoundLabel = !hideNoResultsFoundLabel
-        }
-        self.searchButton.isEnabled = false
-        guard let searchString = self.searchBar.text else { return }
-        executeSearch(searchString:searchString, searchParameter: nil, offset: nil)
-    }
-    
     //TODO: Give this a better name
     @objc func initialSearchActions() {
         if hideNoResultsFoundLabel {
             hideNoResultsFoundLabel = !hideNoResultsFoundLabel
         }
-        self.searchButton.isEnabled = false
         guard let searchString = self.searchBar.text else { return }
-        executeSearch(searchString:searchString, searchParameter: nil, offset: nil)
+        if searchString.count > 2 {
+            executeSearch(searchString:searchString, searchParameter: nil, offset: nil)
+        }
         self.timer?.invalidate()
     }
     
@@ -187,6 +171,10 @@ class TeamSearchViewController: UIViewController {
         /*Grab the searchString from the searchBar and check if the user is seeking additional results for the same string. If they are, the additional parameters necessary are passed to the Network Utility.*/
         let isNewSearch = self.firstSearchCheck(searchString: searchString)
 
+        if self.loadingWebDataView == nil {
+            displaySpinner()
+        }
+        
         if isNewSearch {
             self.fetchPlayerAndTeamData(searchString: searchString,
                                        searchType: nil,
@@ -215,6 +203,53 @@ class TeamSearchViewController: UIViewController {
     //MARK: Navigation Functions
     @objc func favouritesButtonTapped() {
         self.coordinator?.navigateToFavouritesController()
+    }
+    
+    //MARK: Spinner functions
+    func displaySpinner() {
+        
+        guard let tableView = self.tableView else { return }
+        tableView.isScrollEnabled = false
+        
+        if self.loadingWebDataView == nil {
+            
+            guard let window = self.view.window else { return }
+            
+            let spinnerView = UIView.init(frame: window.frame)
+            spinnerView.center = window.center
+            spinnerView.backgroundColor = .clear
+            
+            let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
+            blurView.frame = window.frame
+            blurView.center = window.center
+            blurView.alpha = 0.8
+            spinnerView.insertSubview(blurView, at: 0)
+            
+            let activityIndicator = UIActivityIndicatorView.init(style: .medium)
+            activityIndicator.startAnimating()
+            activityIndicator.center = spinnerView.center
+            
+            self.loadingWebDataView = spinnerView
+            self.loadingWebDataView?.addSubview(activityIndicator)
+    }
+        
+        DispatchQueue.main.async {
+            tableView.backgroundColor = .clear
+            guard let loadview = self.loadingWebDataView else { return }
+            tableView.addSubview(loadview)
+        }
+    }
+    
+    func removeSpinner() {
+        
+        guard let tableview = self.tableView else { return }
+        tableview.isScrollEnabled = true
+        
+        DispatchQueue.main.async {
+            guard let loadview = self.loadingWebDataView else { return }
+            loadview.removeFromSuperview()
+            self.loadingWebDataView = nil
+        }
     }
 }
 
@@ -447,7 +482,6 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
             if self.teams.isEmpty {
                 return teamCell
             }
-            
             let team = teams[indexPath.row]
             teamCell.cityLabel.text = team.city
             teamCell.stadiumLabel.text = team.stadium
@@ -461,21 +495,15 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension TeamSearchViewController: UISearchBarDelegate {
-    
+    //If searchbar text changes do a search after 0.4 seconds have passed.
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        /*A single character isn't enough info for a useful search to be completed. As such, I've limited access to the search button until the user has entered at least 2 characters. Additionally, since we want users to search for more players/teams using the More cell, rather than the search button, the search cell is disabled if the search text is the same as the last string they searched for.*/
-        
-        self.timer?.invalidate()
-        self.timer = Timer.scheduledTimer(timeInterval: 0.4,
-                                          target: self,
-                                          selector: #selector(initialSearchActions),
-                                          userInfo: nil,
-                                          repeats: false)
-        
-        if (searchText.count >= 2) && (searchText != previousSearchString) {
-            self.searchButton.isEnabled = true
-        } else {
-            self.searchButton.isEnabled = false
+        if !searchText.isEmpty{
+            self.timer?.invalidate()
+            self.timer = Timer.scheduledTimer(timeInterval: 0.4,
+                                              target: self,
+                                              selector: #selector(initialSearchActions),
+                                              userInfo: nil,
+                                              repeats: false)
         }
     }
 }

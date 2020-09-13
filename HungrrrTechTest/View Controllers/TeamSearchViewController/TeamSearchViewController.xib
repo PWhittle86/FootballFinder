@@ -10,7 +10,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TeamSearchViewController" customModule="HungrrrTechTest" customModuleProvider="target">
             <connections>
                 <outlet property="searchBar" destination="5pP-L6-CzL" id="YOD-Kh-0GH"/>
-                <outlet property="searchButton" destination="t4E-9i-vrp" id="N9h-03-bgE"/>
                 <outlet property="tableView" destination="9c3-YZ-CBd" id="oId-tL-Skn"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="B6t-kZ-357"/>
             </connections>
@@ -27,17 +26,9 @@
                             <rect key="frame" x="0.0" y="0.0" width="404" height="56"/>
                             <subviews>
                                 <searchBar contentMode="redraw" placeholder="Search for a player or team!" translatesAutoresizingMaskIntoConstraints="NO" id="5pP-L6-CzL">
-                                    <rect key="frame" x="0.0" y="0.0" width="331" height="56"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="404" height="56"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4E-9i-vrp">
-                                    <rect key="frame" x="331" y="0.0" width="73" height="56"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                    <state key="normal" title="Search"/>
-                                    <connections>
-                                        <action selector="searchButtonTapped:" destination="-1" eventType="touchUpInside" id="Aah-Jn-Z3e"/>
-                                    </connections>
-                                </button>
                             </subviews>
                         </stackView>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9c3-YZ-CBd">

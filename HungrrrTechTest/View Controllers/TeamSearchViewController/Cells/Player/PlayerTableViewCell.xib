@@ -34,7 +34,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="1cv-zn-AYX">
-                                <rect key="frame" x="0.0" y="48" width="200" height="22"/>
+                                <rect key="frame" x="0.0" y="48" width="188" height="22"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Age" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C04-aS-PmD" userLabel="Age Label">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="22"/>
@@ -64,14 +64,14 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Barcelona" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1TH-se-ZXj" userLabel="Club Actual">
-                                        <rect key="frame" x="119" y="0.0" width="81" height="22"/>
+                                        <rect key="frame" x="119" y="0.0" width="69" height="22"/>
                                         <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="DNT-pd-LxB"/>
+                                    <constraint firstAttribute="width" constant="300" id="DNT-pd-LxB"/>
                                 </constraints>
                             </stackView>
                         </subviews>

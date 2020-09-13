@@ -6,6 +6,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="EHf-IW-A2E">
@@ -15,24 +20,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="cGk-gK-w6a">
+                                <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Football Finder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ieR-3B-ipR">
-                                <rect key="frame" x="150" y="437.5" width="114" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <rect key="frame" x="91" y="579" width="232" height="41"/>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="34"/>
+                                <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="ieR-3B-ipR" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="6bd-VN-sn5"/>
-                            <constraint firstItem="ieR-3B-ipR" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="qD1-he-SIe"/>
+                            <constraint firstItem="ieR-3B-ipR" firstAttribute="centerX" secondItem="cGk-gK-w6a" secondAttribute="centerX" id="9cj-De-KJs"/>
+                            <constraint firstItem="cGk-gK-w6a" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="HBo-sp-ua8"/>
+                            <constraint firstItem="cGk-gK-w6a" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="TAl-Jj-rhU"/>
+                            <constraint firstItem="ieR-3B-ipR" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="535" id="gT2-BA-5h5"/>
+                            <constraint firstItem="cGk-gK-w6a" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="rBv-Z2-vc5"/>
+                            <constraint firstAttribute="bottom" secondItem="cGk-gK-w6a" secondAttribute="bottom" id="so8-za-b56"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-103" y="290"/>
+            <point key="canvasLocation" x="-104.34782608695653" y="289.95535714285711"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="backgroundImage" width="3072" height="4096"/>
+    </resources>
 </document>

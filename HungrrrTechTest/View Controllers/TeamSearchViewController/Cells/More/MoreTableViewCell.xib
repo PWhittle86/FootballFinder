@@ -7,8 +7,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Lato-Light.ttf">
-            <string>Lato-Light</string>
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
         </array>
     </customFonts>
     <objects>
@@ -22,8 +22,8 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="More..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H7g-8h-id0">
-                        <rect key="frame" x="130.5" y="10" width="59.5" height="24"/>
-                        <fontDescription key="fontDescription" name="Lato-Light" family="Lato" pointSize="20"/>
+                        <rect key="frame" x="133.5" y="12" width="53" height="20.5"/>
+                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>

@@ -52,10 +52,10 @@ class TeamSearchViewController: UIViewController {
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: CustomFontNames.latoBold, size: 20) as Any]
         self.searchBar.searchTextField.font = UIFont(name: CustomFontNames.latoLight, size: 15)
-        self.searchButton.titleLabel?.font = UIFont(name: CustomFontNames.latoLight, size: 20)
+        self.searchButton.titleLabel?.font = UIFont(name: CustomFontNames.latoBold, size: 17)
         
-        self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: CustomFontNames.latoLight, size: 20) as Any], for: .normal)
-        self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: CustomFontNames.latoLight, size: 10) as Any], for: .selected)
+        self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: CustomFontNames.latoBold, size: 17) as Any], for: .normal)
+        self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: CustomFontNames.latoBold, size: 17) as Any], for: .selected)
         
         self.title = "Football Finder"
     }

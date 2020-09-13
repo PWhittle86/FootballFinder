@@ -46,7 +46,6 @@ class FavouritesTableViewController: UITableViewController {
             guard let genericCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.genericCell,
                                                                   for: indexPath) as? GenericTableViewCell else { return UITableViewCell() }
             genericCell.centerLabel.text = "No Favourites!"
-            
             return genericCell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.playerCell,
@@ -56,7 +55,6 @@ class FavouritesTableViewController: UITableViewController {
             cell.ageLabel.text = "\(player.playerAge)"
             cell.clubLabel.text = "\(player.playerClub)"
             cell.showHeartImage()
-            
             return cell
         }
     }
@@ -79,6 +77,7 @@ class FavouritesTableViewController: UITableViewController {
             DispatchQueue.main.async {
                 if players.count >= 1 {
                     tableView.deleteRows(at: [indexPath], with: .fade)
+                    tableView.reloadData()
                 } else {
                     //TODO: Must be a way that this can smoothly transition into the generic cell.
                     tableView.reloadData()

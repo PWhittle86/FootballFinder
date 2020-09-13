@@ -39,6 +39,11 @@ struct NetworkUtilityConstant {
     static let apiString = "http://trials.mtcmobile.co.uk/api/football/1.0/search"
 }
 
+struct CustomFontNames {
+    static let latoBold = "Lato-Bold"
+    static let latoLight = "Lato-Light"
+}
+
 //MARK: Search parameter types for API requests
 public enum SearchParameter {
     case players

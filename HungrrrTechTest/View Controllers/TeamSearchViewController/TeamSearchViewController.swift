@@ -40,19 +40,34 @@ class TeamSearchViewController: UIViewController {
         setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
+    
     //MARK: Setup Functions - Called As Part Of View Did Load
-    func setupUI() {
+    private func setupUI() {
+        
+//        let lightFontSize20 = UIFont(name: CustomFontNames.latoLight, size: 20)
+//        let boldFontSize20 = UIFont(name: CustomFontNames.latoBold, size: 20)
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: CustomFontNames.latoBold, size: 20) as Any]
+        self.searchBar.searchTextField.font = UIFont(name: CustomFontNames.latoLight, size: 15)
+        self.searchButton.titleLabel?.font = UIFont(name: CustomFontNames.latoLight, size: 20)
+        
+        self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: CustomFontNames.latoLight, size: 20) as Any], for: .normal)
+        self.navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: CustomFontNames.latoLight, size: 10) as Any], for: .selected)
+        
         self.title = "Football Finder"
     }
     
-    func setupButtons() {
+    private func setupButtons() {
         let favouritesButton = UIBarButtonItem(title: "Favourites", style: .plain, target: self, action: #selector(favouritesButtonTapped))
         self.navigationItem.rightBarButtonItem = favouritesButton
         
         self.searchButton.isEnabled = false
     }
     
-    func setupTableView() {
+    private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: TableViewCellIdentifier.playerCell, bundle: nil),
@@ -65,12 +80,12 @@ class TeamSearchViewController: UIViewController {
                            forCellReuseIdentifier: TableViewCellIdentifier.moreCell)
     }
     
-    func setupSearchBar() {
+    private func setupSearchBar() {
         searchBar.delegate = self
     }
     
     //MARK: Data Functions - Used For Interacting With the DB
-    func availableDataCheck() -> AvailableTableviewData {
+    private func availableDataCheck() -> AvailableTableviewData {
         
         /*
          This function is used to check what data, if any, is available for the tableview to use following a search to the player/team API.
@@ -105,7 +120,7 @@ class TeamSearchViewController: UIViewController {
         return AvailableTableviewData.NoData
     }
     
-    func fetchPlayerAndTeamData(searchString: String,
+    private func fetchPlayerAndTeamData(searchString: String,
                                 searchType: SearchParameter?,
                                 offset: Int?) {
         /*
@@ -135,7 +150,7 @@ class TeamSearchViewController: UIViewController {
                                      completionHandler: completionHandler)
     }
     
-    func isFavouritePlayer(playerID: String) -> Bool {
+    private func isFavouritePlayer(playerID: String) -> Bool {
         //Quick check to determine if a specific player is in the DB based on their id (which is the designated primary key).
         return !db.findFavouritePlayer(playerID: playerID).isEmpty
     }
@@ -156,7 +171,7 @@ class TeamSearchViewController: UIViewController {
         executeSearch(searchParameter: nil, offset: nil)
     }
     
-    func executeSearch(searchParameter: SearchParameter?, offset: Int?) {
+    private func executeSearch(searchParameter: SearchParameter?, offset: Int?) {
         /*
          This function grabs the searchString from the searchBar and checks to see whether this is the first time the user has searched for the data. If it's
          not a new search, the additional parameters necessary are passed to the Network Utility.
@@ -178,12 +193,12 @@ class TeamSearchViewController: UIViewController {
     }
     
     //TODO: This will cause issues if the user updates the searchstring and then taps on more. Fix.
-    func firstSearchCheck(searchString: String) -> Bool {
+    private func firstSearchCheck(searchString: String) -> Bool {
         //Check if user is searching for the first time by comparing the string he is searching for to the last string he searched for.
         return searchString == previousSearchString ? false : true
     }
     
-    func clearTableDataPriorToNewSearch(searchString: String) {
+    private func clearTableDataPriorToNewSearch(searchString: String) {
         //Clears everything that we currently hold in the data arrays if the user is searching for a fresh searchString.
         if self.previousSearchString ?? "" != searchString {
             players.removeAll()
@@ -200,6 +215,24 @@ class TeamSearchViewController: UIViewController {
 }
 
 extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+
+        switch availableDataCheck() {
+        case .PlayersAndTeams:
+            if indexPath.section == 0 {
+                return 80
+            } else {
+                return 100
+            }
+        case .OnlyPlayers:
+            return 80
+        case .OnlyTeams:
+            return 100
+        case .NoData:
+            return 80
+        }
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return tableviewSectionCount()
@@ -378,6 +411,9 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
             if isFavouritePlayer(playerID: player.playerID) {
                 playerCell.setFavouritePlayerStatus(bool: true)
                 playerCell.showHeartImage()
+            } else {
+                playerCell.setFavouritePlayerStatus(bool: false)
+                playerCell.hideHeartImage()
             }
             
             playerCell.playerNameLabel.text = "\(player.playerFirstName) \(player.playerSecondName)"
@@ -416,6 +452,7 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return TeamTableViewCell()
     }
+    
 }
 
 //Perhaps put these into their own variables to tidy the file up a bit?

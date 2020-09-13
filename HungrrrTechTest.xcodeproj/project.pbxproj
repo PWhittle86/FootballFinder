@@ -17,6 +17,8 @@
 		2211AC65250C031A002EC546 /* TeamTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2211AC61250C031A002EC546 /* TeamTableViewCell.xib */; };
 		2211AC6A250C033C002EC546 /* PlayerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2211AC67250C033C002EC546 /* PlayerTableViewCell.xib */; };
 		2211AC6B250C033C002EC546 /* PlayerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2211AC67250C033C002EC546 /* PlayerTableViewCell.xib */; };
+		22403FD8250E9E310085B7E7 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 22403FD6250E9E310085B7E7 /* Lato-Bold.ttf */; };
+		22403FD9250E9E310085B7E7 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 22403FD7250E9E310085B7E7 /* Lato-Light.ttf */; };
 		22848913250BF09A00F12010 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22848912250BF09A00F12010 /* AppDelegate.swift */; };
 		22848915250BF09A00F12010 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22848914250BF09A00F12010 /* SceneDelegate.swift */; };
 		2284891C250BF09D00F12010 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2284891B250BF09D00F12010 /* Assets.xcassets */; };
@@ -72,6 +74,8 @@
 		2211AC60250C031A002EC546 /* TeamTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamTableViewCell.swift; sourceTree = "<group>"; };
 		2211AC61250C031A002EC546 /* TeamTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TeamTableViewCell.xib; sourceTree = "<group>"; };
 		2211AC67250C033C002EC546 /* PlayerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerTableViewCell.xib; sourceTree = "<group>"; };
+		22403FD6250E9E310085B7E7 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
+		22403FD7250E9E310085B7E7 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		2284890F250BF09A00F12010 /* HungrrrTechTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HungrrrTechTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22848912250BF09A00F12010 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22848914250BF09A00F12010 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -143,6 +147,15 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		22403FD5250E9DCB0085B7E7 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				22403FD6250E9E310085B7E7 /* Lato-Bold.ttf */,
+				22403FD7250E9E310085B7E7 /* Lato-Light.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		22848906250BF09A00F12010 = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +219,7 @@
 		22848937250BF21100F12010 /* Application Files */ = {
 			isa = PBXGroup;
 			children = (
+				22403FD5250E9DCB0085B7E7 /* Fonts */,
 				2284891D250BF09D00F12010 /* LaunchScreen.storyboard */,
 				22848912250BF09A00F12010 /* AppDelegate.swift */,
 				22848914250BF09A00F12010 /* SceneDelegate.swift */,
@@ -405,8 +419,10 @@
 				229EAAF1250D4E8600FE3CE7 /* MoreTableViewCell.xib in Resources */,
 				220CE959250E3B6A00BC35A0 /* FavouritesTableViewController.xib in Resources */,
 				22848943250BF72300F12010 /* TeamSearchViewController.xib in Resources */,
+				22403FD9250E9E310085B7E7 /* Lato-Light.ttf in Resources */,
 				2211AC64250C031A002EC546 /* TeamTableViewCell.xib in Resources */,
 				2284891C250BF09D00F12010 /* Assets.xcassets in Resources */,
+				22403FD8250E9E310085B7E7 /* Lato-Bold.ttf in Resources */,
 				2211AC6A250C033C002EC546 /* PlayerTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

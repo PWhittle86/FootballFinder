@@ -40,6 +40,9 @@ class TeamSearchViewController: UIViewController {
         setupUI()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
     
     //MARK: Setup Functions - Called As Part Of View Did Load
     private func setupTableView() {

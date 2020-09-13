@@ -44,6 +44,7 @@ class FavouritesTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let players = favouritePlayers else { return 1 }
+        //If players array is empty, return 1 row for the No Data cell.
         return players.isEmpty ? 1 : players.count
     }
     
@@ -52,15 +53,16 @@ class FavouritesTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         guard let players = favouritePlayers else { return UITableViewCell() }
         
         if players.isEmpty {
+            //Show generic cell with a label indicating no favourites saved on device.
             guard let genericCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.genericCell,
                                                                   for: indexPath) as? GenericTableViewCell else { return UITableViewCell() }
-            genericCell.centerLabel.text = "No Favourites!"
+            genericCell.centerLabel.text = "No Favourites saved!"
             return genericCell
         } else {
+            //Show player cell.
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.playerCell,
                                                            for: indexPath) as? PlayerTableViewCell else { return UITableViewCell() }
             let player = players[indexPath.row]
@@ -71,19 +73,20 @@ class FavouritesTableViewController: UITableViewController {
             return cell
         }
     }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let players = self.favouritePlayers else { return }
-        
-        if !players.isEmpty{
-            let player = players[indexPath.row]
-            db.deleteFavouritePlayer(playerID: player.playerID)
-            DispatchQueue.main.async {
-                if players.count >= 1 {
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                    tableView.reloadData()
-                } else {
-                    tableView.reloadData()
+
+    //Standard iOS swipe tableview cell left to expose delete button and tap to delete.
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            guard let players = self.favouritePlayers else { return }
+            if !players.isEmpty{
+                let player = players[indexPath.row]
+                db.deleteFavouritePlayer(playerID: player.playerID)
+                DispatchQueue.main.async {
+                    if players.count >= 1 {
+                        tableView.deleteRows(at: [indexPath], with: .fade)
+                    } else {
+                        tableView.reloadData()
+                    }
                 }
             }
         }

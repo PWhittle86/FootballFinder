@@ -45,21 +45,6 @@ class TeamSearchViewController: UIViewController {
     }
     
     //MARK: Setup Functions - Called As Part Of View Did Load
-    private func setupUI() {
-
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: CustomFontNames.latoBold, size: 20) as Any]
-        self.searchBar.searchTextField.font = UIFont(name: CustomFontNames.latoLight, size: 15)
-        self.searchButton.titleLabel?.font = UIFont(name: CustomFontNames.latoBold, size: 17)
-        self.title = "Football Finder"
-    }
-    
-    private func setupButtons() {
-        let favouritesButton = UIBarButtonItem(title: "Favourites", style: .plain, target: self, action: #selector(favouritesButtonTapped))
-        self.navigationItem.rightBarButtonItem = favouritesButton
-        
-        self.searchButton.isEnabled = false
-    }
-    
     private func setupTableView() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -75,6 +60,19 @@ class TeamSearchViewController: UIViewController {
     
     private func setupSearchBar() {
         searchBar.delegate = self
+    }
+    
+    private func setupButtons() {
+        let favouritesButton = UIBarButtonItem(title: "Favourites", style: .plain, target: self, action: #selector(favouritesButtonTapped))
+        self.navigationItem.rightBarButtonItem = favouritesButton
+        self.searchButton.isEnabled = false
+    }
+    
+    private func setupUI() {
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: CustomFontNames.latoBold, size: 20) as Any]
+        self.searchBar.searchTextField.font = UIFont(name: CustomFontNames.latoLight, size: 15)
+        self.searchButton.titleLabel?.font = UIFont(name: CustomFontNames.latoBold, size: 17)
+        self.title = "Football Finder"
     }
     
     //MARK: Data Functions - Used For Interacting With the DB
@@ -121,8 +119,10 @@ class TeamSearchViewController: UIViewController {
          whilst the searchType and offset parameters are only used when the user is doing a follow-up search for more players or teams. A completion handler is
          used to pass data back to the table view controller once the data has been returned from the back end.
          */
-        
-        let completionHandler: (PlayerTeamRootObject) -> Void = { [weak self] (footballData) in
+        let completionHandler: (PlayerTeamRootObject, String) -> Void = { [weak self] (footballData, searchString) in
+            
+            self?.clearDataIfUserSearchedNewString(searchString: searchString)
+
             if let players = footballData.result.players {
                 for player in players {
                     self?.players.append(player)
@@ -156,25 +156,19 @@ class TeamSearchViewController: UIViewController {
          results or an existing searchString. Finally, we pass data to the executeSearch function, which does some processing to ensure the correct data is passed
          to the Network Utility.
          */
-        //TODO: Temp solution to double search issue, but architectural change of firstSearchCheck might be better.
         if hideNoResultsFoundLabel {
             hideNoResultsFoundLabel = !hideNoResultsFoundLabel
         }
         self.searchButton.isEnabled = false
-        executeSearch(searchParameter: nil, offset: nil)
+        guard let searchString = self.searchBar.text else { return }
+        executeSearch(searchString:searchString, searchParameter: nil, offset: nil)
     }
     
-    private func executeSearch(searchParameter: SearchParameter?, offset: Int?) {
-        /*
-         This function grabs the searchString from the searchBar and checks to see whether this is the first time the user has searched for the data. If it's
-         not a new search, the additional parameters necessary are passed to the Network Utility.
-         */
-        guard let searchString = self.searchBar.text else { return }
+    private func executeSearch(searchString: String, searchParameter: SearchParameter?, offset: Int?) {
+        /*Grab the searchString from the searchBar and check if the user is seeking additional results for the same string. If they are, the additional parameters necessary are passed to the Network Utility.*/
         let isNewSearch = self.firstSearchCheck(searchString: searchString)
 
         if isNewSearch {
-            //TODO: Move the table clear logic into the completion handler - makes more sense for data to be cleared only when we know we have new data.
-            self.clearTableDataPriorToNewSearch(searchString: searchString)
             self.fetchPlayerAndTeamData(searchString: searchString,
                                        searchType: nil,
                                        offset: nil)
@@ -185,13 +179,12 @@ class TeamSearchViewController: UIViewController {
         }
     }
     
-    //TODO: This will cause issues if the user updates the searchstring and then taps on more. Fix.
     private func firstSearchCheck(searchString: String) -> Bool {
         //Check if user is searching for the first time by comparing the string he is searching for to the last string he searched for.
         return searchString == previousSearchString ? false : true
     }
     
-    private func clearTableDataPriorToNewSearch(searchString: String) {
+    private func clearDataIfUserSearchedNewString(searchString: String) {
         //Clears everything that we currently hold in the data arrays if the user is searching for a fresh searchString.
         if self.previousSearchString ?? "" != searchString {
             players.removeAll()
@@ -202,7 +195,6 @@ class TeamSearchViewController: UIViewController {
     
     //MARK: Navigation Functions
     @objc func favouritesButtonTapped() {
-        //Tells the coordinator that the user wants to navigate away from this page to the Favourites Controller
         self.coordinator?.navigateToFavouritesController()
     }
 }
@@ -347,24 +339,25 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         if cell.isKind(of: MoreTableViewCell.self) {
+            guard let searchString = self.previousSearchString else { return }
             switch availableDataCheck() {
             case .PlayersAndTeams:
                 if indexPath.section == 0 {
                     //Further search for players
-                    self.executeSearch(searchParameter: SearchParameter.players, offset: self.players.count)
+                    self.executeSearch(searchString:searchString, searchParameter: SearchParameter.players, offset: self.players.count)
                     return
                 } else {
-                    self.executeSearch(searchParameter: SearchParameter.teams, offset: self.teams.count)
+                    self.executeSearch(searchString:searchString, searchParameter: SearchParameter.teams, offset: self.teams.count)
                     //Further search for teams
                     return
                 }
             case .OnlyPlayers:
                 //Further search for players
-                self.executeSearch(searchParameter: SearchParameter.players, offset: self.players.count)
+                self.executeSearch(searchString:searchString, searchParameter: SearchParameter.players, offset: self.players.count)
                 return
             case .OnlyTeams:
                 //further search for teams
-                self.executeSearch(searchParameter: SearchParameter.teams, offset: self.teams.count)
+                self.executeSearch(searchString: searchString, searchParameter: SearchParameter.teams, offset: self.teams.count)
                 return
             case .NoData:
                 return
@@ -383,8 +376,7 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     func getPlayerCell(tableView: UITableView,
                        indexPath: IndexPath) -> UITableViewCell {
-        
-        //TODO: Placeholder - make this more robust.
+        //Check to see if we've reached the 'more' cell indexpath, which will always be 1 greater than the number of players. Adding 1 to the indexpath row is necessary to account for the entry at the 0 index.
         if (indexPath.row + 1) > self.players.count {
             if let moreCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.moreCell,
                                                             for: indexPath) as? MoreTableViewCell {
@@ -420,8 +412,7 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     func getTeamCell(tableView: UITableView,
                      indexPath: IndexPath) -> UITableViewCell {
-        
-        //TODO: Placeholder. Make this more robust.
+        //Check to see if we've reached the 'more' cell indexpath, which will always be 1 greater than the number of players. Adding 1 to the indexpath row is necessary to account for the entry at the 0 index.
         if (indexPath.row + 1) > self.teams.count {
             if let moreCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.moreCell,
                                                             for: indexPath) as? MoreTableViewCell {
@@ -453,7 +444,6 @@ extension TeamSearchViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         /*A single character isn't enough info for a useful search to be completed. As such, I've limited access to the search button until the user has entered at least 2 characters. Additionally, since we want users to search for more players/teams using the More cell, rather than the search button, the search cell is disabled if the search text is the same as the last string they searched for.*/
-        //TODO: Review as part of previousSearchString refactoring (if necessary).
         if (searchText.count >= 2) && (searchText != previousSearchString) {
             self.searchButton.isEnabled = true
         } else {

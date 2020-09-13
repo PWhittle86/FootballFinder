@@ -34,8 +34,6 @@ class FavouritesTableViewController: UITableViewController {
                            forCellReuseIdentifier: TableViewCellIdentifier.playerCell)
         tableView.register(UINib(nibName: TableViewCellIdentifier.genericCell, bundle: nil),
         forCellReuseIdentifier: TableViewCellIdentifier.genericCell)
-        //TODO: Use heightForRowAtIndexPath to make UI more consistent in both TVs.
-        tableView.rowHeight = 75
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -79,7 +77,6 @@ class FavouritesTableViewController: UITableViewController {
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     tableView.reloadData()
                 } else {
-                    //TODO: Must be a way that this can smoothly transition into the generic cell.
                     tableView.reloadData()
                 }
             }

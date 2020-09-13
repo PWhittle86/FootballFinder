@@ -16,7 +16,7 @@ class NetworkUtility {
     func executeSearch(searchString: String,
                        searchType: SearchParameter?,
                        offset: Int?,
-                       completionHandler: @escaping (PlayerTeamRootObject) -> Void) {
+                       completionHandler: @escaping (PlayerTeamRootObject, String) -> Void) {
 
         //Generate URL Request
         let request = generateURLRequest()
@@ -62,7 +62,7 @@ class NetworkUtility {
             do {
                 let decoder = JSONDecoder()
                 let playerTeams = try decoder.decode(PlayerTeamRootObject.self, from: data)
-                completionHandler(playerTeams)
+                completionHandler(playerTeams, searchString)
             } catch {
                 print("Unable to decode data received from API. Error: \(error)")
                 }
@@ -72,7 +72,6 @@ class NetworkUtility {
     
     func generateURLRequest() -> URLRequest {
         guard let footballAPI = URL(string: apiString) else { print("Failure to generate URL for playerTeamSearch.")
-            //TODO: Force unwrap here, fix it.
             return URLRequest(url: URL(string: "")!)
         }
         var request = URLRequest(url: footballAPI)

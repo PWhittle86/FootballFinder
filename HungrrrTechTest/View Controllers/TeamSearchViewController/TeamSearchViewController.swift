@@ -59,8 +59,8 @@ class TeamSearchViewController: UIViewController {
                            forCellReuseIdentifier: TableViewCellIdentifier.playerCell)
         tableView.register(UINib(nibName: TableViewCellIdentifier.teamCell, bundle: nil),
                            forCellReuseIdentifier: TableViewCellIdentifier.teamCell)
-        tableView.register(UINib(nibName: TableViewCellIdentifier.noResultsCell, bundle: nil),
-                           forCellReuseIdentifier: TableViewCellIdentifier.noResultsCell)
+        tableView.register(UINib(nibName: TableViewCellIdentifier.genericCell, bundle: nil),
+                           forCellReuseIdentifier: TableViewCellIdentifier.genericCell)
         tableView.register(UINib(nibName: TableViewCellIdentifier.moreCell, bundle: nil),
                            forCellReuseIdentifier: TableViewCellIdentifier.moreCell)
     }
@@ -263,9 +263,9 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
             return getPlayerCell(tableView: tableView,
                                  indexPath: indexPath)
         case .NoData:
-            if let noResultsCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.noResultsCell,
-                                                                 for: indexPath) as? NoResultsTableViewCell {
-                return noResultsCell
+            if let genericCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.genericCell,
+                                                                 for: indexPath) as? GenericTableViewCell {
+                return genericCell
             }
         }
         return UITableViewCell()

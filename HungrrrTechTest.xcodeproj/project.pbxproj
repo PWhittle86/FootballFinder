@@ -42,8 +42,8 @@
 		229EAAF2250D4E8600FE3CE7 /* MoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 229EAAEE250D4E8600FE3CE7 /* MoreTableViewCell.xib */; };
 		229EAAF4250D5AB400FE3CE7 /* SearchParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAF3250D5AB400FE3CE7 /* SearchParameter.swift */; };
 		229EAAF5250D5AB400FE3CE7 /* SearchParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAF3250D5AB400FE3CE7 /* SearchParameter.swift */; };
-		22B4F13C250E5D23003AB751 /* DBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B4F13B250E5D23003AB751 /* DBHelper.swift */; };
-		22B4F13D250E5D23003AB751 /* DBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B4F13B250E5D23003AB751 /* DBHelper.swift */; };
+		22B4F13C250E5D23003AB751 /* DBUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B4F13B250E5D23003AB751 /* DBUtility.swift */; };
+		22B4F13D250E5D23003AB751 /* DBUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B4F13B250E5D23003AB751 /* DBUtility.swift */; };
 		22DC46A6250C0A520000A47E /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46A5250C0A520000A47E /* PlayerTableViewCell.swift */; };
 		22DC46AC250C18290000A47E /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46AB250C18290000A47E /* Player.swift */; };
 		22DC46AD250C18290000A47E /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46AB250C18290000A47E /* Player.swift */; };
@@ -91,7 +91,7 @@
 		229EAAED250D4E8600FE3CE7 /* MoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableViewCell.swift; sourceTree = "<group>"; };
 		229EAAEE250D4E8600FE3CE7 /* MoreTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MoreTableViewCell.xib; sourceTree = "<group>"; };
 		229EAAF3250D5AB400FE3CE7 /* SearchParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchParameter.swift; sourceTree = "<group>"; };
-		22B4F13B250E5D23003AB751 /* DBHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBHelper.swift; sourceTree = "<group>"; };
+		22B4F13B250E5D23003AB751 /* DBUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBUtility.swift; sourceTree = "<group>"; };
 		22DC46A5250C0A520000A47E /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTableViewCell.swift; sourceTree = "<group>"; };
 		22DC46AB250C18290000A47E /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		22DC46B3250C1A990000A47E /* NetworkUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtility.swift; sourceTree = "<group>"; };
@@ -290,7 +290,7 @@
 		22DC46B2250C1A2C0000A47E /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				22B4F13B250E5D23003AB751 /* DBHelper.swift */,
+				22B4F13B250E5D23003AB751 /* DBUtility.swift */,
 				22DC46B3250C1A990000A47E /* NetworkUtility.swift */,
 			);
 			path = Utilities;
@@ -510,7 +510,7 @@
 				22848915250BF09A00F12010 /* SceneDelegate.swift in Sources */,
 				22DC46B4250C1A990000A47E /* NetworkUtility.swift in Sources */,
 				229EAAE1250CFB8600FE3CE7 /* Constants+Enums.swift in Sources */,
-				22B4F13C250E5D23003AB751 /* DBHelper.swift in Sources */,
+				22B4F13C250E5D23003AB751 /* DBUtility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,7 +521,7 @@
 				229EAAE6250D2B4500FE3CE7 /* GenericTableViewCell.swift in Sources */,
 				2284892A250BF09D00F12010 /* HungrrrTechTestTests.swift in Sources */,
 				22848942250BF72300F12010 /* TeamSearchViewController.swift in Sources */,
-				22B4F13D250E5D23003AB751 /* DBHelper.swift in Sources */,
+				22B4F13D250E5D23003AB751 /* DBUtility.swift in Sources */,
 				229EAAF0250D4E8600FE3CE7 /* MoreTableViewCell.swift in Sources */,
 				2211AC63250C031A002EC546 /* TeamTableViewCell.swift in Sources */,
 				22DC46B8250C1EF10000A47E /* Codables.swift in Sources */,

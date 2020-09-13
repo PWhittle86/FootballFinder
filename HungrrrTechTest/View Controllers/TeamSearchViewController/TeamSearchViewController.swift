@@ -19,7 +19,7 @@ class TeamSearchViewController: UIViewController {
     
     var coordinator: MainCoordinator?
     let networkUtility = NetworkUtility()
-    let db = DBHelper.sharedInstance
+    let db = DBUtility.sharedInstance
     
     var players: [Player] = []
     var teams: [Team] = []
@@ -36,20 +36,19 @@ class TeamSearchViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         setupSearchBar()
-        setupSearchbutton()
+        setupButtons()
         setupUI()
     }
     
-    //MARK: Setup Functions
-    
+    //MARK: Setup Functions - Called As Part Of View Did Load
     func setupUI() {
         self.title = "Football Finder"
-        
-        let favouritesButton = UIBarButtonItem(title: "Favourites", style: .plain, target: self, action: #selector(favouritesButtonTapped))
-        self.navigationItem.rightBarButtonItem = favouritesButton
     }
     
-    func setupSearchbutton() {
+    func setupButtons() {
+        let favouritesButton = UIBarButtonItem(title: "Favourites", style: .plain, target: self, action: #selector(favouritesButtonTapped))
+        self.navigationItem.rightBarButtonItem = favouritesButton
+        
         self.searchButton.isEnabled = false
     }
     
@@ -70,22 +69,23 @@ class TeamSearchViewController: UIViewController {
         searchBar.delegate = self
     }
     
-    //MARK: Data Functions
-    
-    /*
-     This function is used to check what data, if any, is currently available for the tableview to use following a search to the player/team API.
-     It is used extensively throughout the tableview's delegate functions.
-     
-     There are 4 possible scenarios being checked:
-     1. Teams + Players
-     2. Only Players
-     3. Only Teams
-     4. No Players or Teams
-     
-     Based on the current capabilities of the API and the scope of this exercise, this covers all of the different types of
-     data configurations that need to be considered by the tableview.
-     */
+    //MARK: Data Functions - Used For Interacting With the DB
     func availableDataCheck() -> AvailableTableviewData {
+        
+        /*
+         This function is used to check what data, if any, is available for the tableview to use following a search to the player/team API.
+         It is used throughout the tableview's delegate functions.
+         
+         There are 4 possible scenarios where different data sets are available:
+         1. Teams + Players
+         2. Only Players
+         3. Only Teams
+         4. No Players or Teams
+         
+         Based on the current capabilities of the API and the scope of this exercise, this covers all of the different types of
+         data configurations that need to be considered by the tableview.
+         */
+        
         let appHasPlayerData = !self.players.isEmpty
         let appHasTeamData = !self.teams.isEmpty
         
@@ -106,42 +106,49 @@ class TeamSearchViewController: UIViewController {
     }
     
     func fetchPlayerAndTeamData(searchString: String,
-                                isFirstSearch: Bool,
                                 searchType: SearchParameter?,
                                 offset: Int?) {
+        /*
+         This is the function used to pass the relevant data to the Network Utility to request data from the API. The searchString is always required,
+         whilst the searchType and offset parameters are only used when the user is doing a follow-up search for more players or teams. A completion handler is
+         used to pass data back to the table view controller once the data has been returned from the back end.
+         */
+        
         let completionHandler: (PlayerTeamRootObject) -> Void = { [weak self] (footballData) in
-            
             if let players = footballData.result.players {
                 for player in players {
                     self?.players.append(player)
                 }
             }
-            
             if let teams = footballData.result.teams {
                 for team in teams {
                     self?.teams.append(team)
                 }
             }
-            
             DispatchQueue.main.async {
                 self?.tableView.reloadData()
             }
         }
-        
         networkUtility.executeSearch(searchString: searchString,
-                                     isFirstSearch: isFirstSearch,
                                      searchType: searchType,
                                      offset: offset,
                                      completionHandler: completionHandler)
     }
     
-    @objc func favouritesButtonTapped() {
-        self.coordinator?.navigateToFavouritesController()
+    func isFavouritePlayer(playerID: String) -> Bool {
+        //Quick check to determine if a specific player is in the DB based on their id (which is the designated primary key).
+        return !db.findFavouritePlayer(playerID: playerID).isEmpty
     }
     
+    //MARK: Search Management Functions - Used To Manage When/How User Searches For Data
     @IBAction func searchButtonTapped(_ sender: Any) {
+        /*
+         When a search is completed for the first time, we can start to show the 'No Results Found!' cell, so we update the 'hideNoResultsFound' property
+         as soon as a search takes place. Additionally the search button is disabled to encourage the user to interact with the tableview to search for new
+         results or an existing searchString. Finally, we pass data to the executeSearch function, which does some processing to ensure the correct data is passed
+         to the Network Utility.
+         */
         //TODO: Temp solution to double search issue, but architectural change of firstSearchCheck might be better.
-        //Disabling the search button after a search so that user has to change the search string to search for new data.
         if hideNoResultsFoundLabel {
             hideNoResultsFoundLabel = !hideNoResultsFoundLabel
         }
@@ -150,35 +157,34 @@ class TeamSearchViewController: UIViewController {
     }
     
     func executeSearch(searchParameter: SearchParameter?, offset: Int?) {
-        //TODO: Check this is working as intended.
+        /*
+         This function grabs the searchString from the searchBar and checks to see whether this is the first time the user has searched for the data. If it's
+         not a new search, the additional parameters necessary are passed to the Network Utility.
+         */
         guard let searchString = self.searchBar.text else { return }
         let isNewSearch = self.firstSearchCheck(searchString: searchString)
 
         if isNewSearch {
+            //TODO: Move the table clear logic into the completion handler - makes more sense for data to be cleared only when we know we have new data.
             self.clearTableDataPriorToNewSearch(searchString: searchString)
             self.fetchPlayerAndTeamData(searchString: searchString,
-                                       isFirstSearch: isNewSearch,
                                        searchType: nil,
                                        offset: nil)
         } else {
             self.fetchPlayerAndTeamData(searchString: searchString,
-                                        isFirstSearch: false,
                                         searchType: searchParameter,
                                         offset: offset)
         }
-        
-
     }
     
-    //TODO: This won't work - will cause issues if the user updates the searchstring and then taps on more. Fix.
-    //Check if user is searching for the first time by comparing the string he is searching for to the last string he searched for.
+    //TODO: This will cause issues if the user updates the searchstring and then taps on more. Fix.
     func firstSearchCheck(searchString: String) -> Bool {
+        //Check if user is searching for the first time by comparing the string he is searching for to the last string he searched for.
         return searchString == previousSearchString ? false : true
     }
     
-    //If the user is searching for new data, clear everything that we currently hold in the data arrays.
     func clearTableDataPriorToNewSearch(searchString: String) {
-        //TODO: Consider moving this logic to the completion handler, so that data is only deleted once we know new data has been successfully received?
+        //Clears everything that we currently hold in the data arrays if the user is searching for a fresh searchString.
         if self.previousSearchString ?? "" != searchString {
             players.removeAll()
             teams.removeAll()
@@ -186,10 +192,11 @@ class TeamSearchViewController: UIViewController {
         self.previousSearchString = searchString
     }
     
-    func isFavouritePlayer(playerID: String) -> Bool {
-        return !db.findFavouritePlayer(playerID: playerID).isEmpty
+    //MARK: Navigation Functions
+    @objc func favouritesButtonTapped() {
+        //Tells the coordinator that the user wants to navigate away from this page to the Favourites Controller
+        self.coordinator?.navigateToFavouritesController()
     }
-    
 }
 
 extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {

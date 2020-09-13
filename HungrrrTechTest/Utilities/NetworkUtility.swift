@@ -14,7 +14,6 @@ class NetworkUtility {
     let apiString = "http://trials.mtcmobile.co.uk/api/football/1.0/search"
 
     func executeSearch(searchString: String,
-                       isFirstSearch: Bool,
                        searchType: SearchParameter?,
                        offset: Int?,
                        completionHandler: @escaping (PlayerTeamRootObject) -> Void) {

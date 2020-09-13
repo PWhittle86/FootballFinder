@@ -10,9 +10,9 @@ import Foundation
 
 import RealmSwift
 
-class DBHelper {
+class DBUtility {
     
-    static let sharedInstance = DBHelper()
+    static let sharedInstance = DBUtility()
     let db : Realm
     var configuration = Realm.Configuration()
     

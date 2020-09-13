@@ -23,6 +23,7 @@ class PlayerTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         //Hide heart image initially so that user can add
+        self.selectionStyle = .none
         heartImage.alpha = 0
     }
 

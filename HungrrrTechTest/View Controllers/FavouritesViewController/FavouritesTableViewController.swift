@@ -11,7 +11,7 @@ import RealmSwift
 
 class FavouritesTableViewController: UITableViewController {
     
-    let db = DBHelper.sharedInstance
+    let db = DBUtility.sharedInstance
     var favouritePlayers: Results<FavouritePlayer>?
     
     override func viewDidLoad() {
@@ -76,7 +76,14 @@ class FavouritesTableViewController: UITableViewController {
         if !players.isEmpty{
             let player = players[indexPath.row]
             db.deleteFavouritePlayer(playerID: player.playerID)
-            tableView.reloadData()
+            DispatchQueue.main.async {
+                if players.count >= 1 {
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                } else {
+                    //TODO: Must be a way that this can smoothly transition into the generic cell.
+                    tableView.reloadData()
+                }
+            }
         }
     }
 }

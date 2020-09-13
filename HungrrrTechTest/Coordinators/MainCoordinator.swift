@@ -8,6 +8,11 @@
 
 import UIKit
 
+/*
+ A coordinator is overkill for a project of this size with only 2 view controller, but as it provides a solid framework to help reduce the load on view
+ controllers and helps to make app growth more scalable and managable, I have added it to the project.
+ */
+
 class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
     
     var navigationController = UINavigationController()

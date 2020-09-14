@@ -1,5 +1,5 @@
 //
-//  Player.swift
+//  FavouritePlayer.swift
 //  HungrrrTechTest
 //
 //  Created by Peter Whittle on 11/09/2020.

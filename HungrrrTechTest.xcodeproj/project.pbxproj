@@ -44,13 +44,11 @@
 		229EAAF0250D4E8600FE3CE7 /* MoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAED250D4E8600FE3CE7 /* MoreTableViewCell.swift */; };
 		229EAAF1250D4E8600FE3CE7 /* MoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 229EAAEE250D4E8600FE3CE7 /* MoreTableViewCell.xib */; };
 		229EAAF2250D4E8600FE3CE7 /* MoreTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 229EAAEE250D4E8600FE3CE7 /* MoreTableViewCell.xib */; };
-		229EAAF4250D5AB400FE3CE7 /* SearchParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAF3250D5AB400FE3CE7 /* SearchParameter.swift */; };
-		229EAAF5250D5AB400FE3CE7 /* SearchParameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229EAAF3250D5AB400FE3CE7 /* SearchParameter.swift */; };
 		22B4F13C250E5D23003AB751 /* DBUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B4F13B250E5D23003AB751 /* DBUtility.swift */; };
 		22B4F13D250E5D23003AB751 /* DBUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B4F13B250E5D23003AB751 /* DBUtility.swift */; };
 		22DC46A6250C0A520000A47E /* PlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46A5250C0A520000A47E /* PlayerTableViewCell.swift */; };
-		22DC46AC250C18290000A47E /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46AB250C18290000A47E /* Player.swift */; };
-		22DC46AD250C18290000A47E /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46AB250C18290000A47E /* Player.swift */; };
+		22DC46AC250C18290000A47E /* FavouritePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46AB250C18290000A47E /* FavouritePlayer.swift */; };
+		22DC46AD250C18290000A47E /* FavouritePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46AB250C18290000A47E /* FavouritePlayer.swift */; };
 		22DC46B4250C1A990000A47E /* NetworkUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46B3250C1A990000A47E /* NetworkUtility.swift */; };
 		22DC46B5250C1A990000A47E /* NetworkUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46B3250C1A990000A47E /* NetworkUtility.swift */; };
 		22DC46B7250C1EF10000A47E /* Codables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DC46B6250C1EF10000A47E /* Codables.swift */; };
@@ -97,10 +95,9 @@
 		229EAAE4250D2B4400FE3CE7 /* GenericTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericTableViewCell.xib; sourceTree = "<group>"; };
 		229EAAED250D4E8600FE3CE7 /* MoreTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreTableViewCell.swift; sourceTree = "<group>"; };
 		229EAAEE250D4E8600FE3CE7 /* MoreTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MoreTableViewCell.xib; sourceTree = "<group>"; };
-		229EAAF3250D5AB400FE3CE7 /* SearchParameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchParameter.swift; sourceTree = "<group>"; };
 		22B4F13B250E5D23003AB751 /* DBUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DBUtility.swift; sourceTree = "<group>"; };
 		22DC46A5250C0A520000A47E /* PlayerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerTableViewCell.swift; sourceTree = "<group>"; };
-		22DC46AB250C18290000A47E /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		22DC46AB250C18290000A47E /* FavouritePlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePlayer.swift; sourceTree = "<group>"; };
 		22DC46B3250C1A990000A47E /* NetworkUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtility.swift; sourceTree = "<group>"; };
 		22DC46B6250C1EF10000A47E /* Codables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Codables.swift; sourceTree = "<group>"; };
 		267B375B1B43D19D1DC68B22 /* Pods-HungrrrTechTestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HungrrrTechTestTests.release.xcconfig"; path = "Target Support Files/Pods-HungrrrTechTestTests/Pods-HungrrrTechTestTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -297,9 +294,8 @@
 		22DC46A7250C13760000A47E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				22DC46AB250C18290000A47E /* Player.swift */,
+				22DC46AB250C18290000A47E /* FavouritePlayer.swift */,
 				22DC46B6250C1EF10000A47E /* Codables.swift */,
-				229EAAF3250D5AB400FE3CE7 /* SearchParameter.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -517,7 +513,6 @@
 			files = (
 				22DC46A6250C0A520000A47E /* PlayerTableViewCell.swift in Sources */,
 				22DC46B7250C1EF10000A47E /* Codables.swift in Sources */,
-				229EAAF4250D5AB400FE3CE7 /* SearchParameter.swift in Sources */,
 				2211AC62250C031A002EC546 /* TeamTableViewCell.swift in Sources */,
 				22848939250BF40800F12010 /* MainCoordinator.swift in Sources */,
 				22403FE3250ED61D0085B7E7 /* AlertUtility.swift in Sources */,
@@ -527,7 +522,7 @@
 				229EAAE5250D2B4500FE3CE7 /* GenericTableViewCell.swift in Sources */,
 				22848913250BF09A00F12010 /* AppDelegate.swift in Sources */,
 				22848941250BF72300F12010 /* TeamSearchViewController.swift in Sources */,
-				22DC46AC250C18290000A47E /* Player.swift in Sources */,
+				22DC46AC250C18290000A47E /* FavouritePlayer.swift in Sources */,
 				22848915250BF09A00F12010 /* SceneDelegate.swift in Sources */,
 				22DC46B4250C1A990000A47E /* NetworkUtility.swift in Sources */,
 				229EAAE1250CFB8600FE3CE7 /* Constants+Enums.swift in Sources */,
@@ -548,8 +543,7 @@
 				2211AC63250C031A002EC546 /* TeamTableViewCell.swift in Sources */,
 				22DC46B8250C1EF10000A47E /* Codables.swift in Sources */,
 				229EAAE2250CFB8600FE3CE7 /* Constants+Enums.swift in Sources */,
-				22DC46AD250C18290000A47E /* Player.swift in Sources */,
-				229EAAF5250D5AB400FE3CE7 /* SearchParameter.swift in Sources */,
+				22DC46AD250C18290000A47E /* FavouritePlayer.swift in Sources */,
 				22DC46B5250C1A990000A47E /* NetworkUtility.swift in Sources */,
 				2284893A250BF40800F12010 /* MainCoordinator.swift in Sources */,
 				2284893E250BF4AC00F12010 /* CoordinatorProtocol.swift in Sources */,

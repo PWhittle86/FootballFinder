@@ -69,7 +69,6 @@ class FavouritesTableViewController: UITableViewController {
             cell.playerNameLabel.text = "\(player.playerFirstName) \(player.playerSecondName)"
             cell.ageLabel.text = "\(player.playerAge)"
             cell.clubLabel.text = "\(player.playerClub)"
-            cell.showHeartImage()
             return cell
         }
     }

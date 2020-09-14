@@ -29,7 +29,7 @@ class TeamSearchViewController: UIViewController {
     var previousSearchString: String?
     var timer: Timer?
     
-    var loadingWebDataView: UIView?
+    var spinnerView: UIView?
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -82,21 +82,14 @@ class TeamSearchViewController: UIViewController {
     }
     
     //MARK: Data Functions - Used For Interacting With the DB
+    //Function to check which of the 4 possible data sets are available for the tableview to use.
     private func availableDataCheck() -> AvailableTableviewData {
         
-        /*
-         This function is used to check what data, if any, is available for the tableview to use following a search to the player/team API.
-         It is used throughout the tableview's delegate functions.
-         
-         There are 4 possible scenarios where different data sets are available:
+        /* There are 4 possible scenarios where different data sets are available:
          1. Teams + Players
          2. Only Players
          3. Only Teams
-         4. No Players or Teams
-         
-         Based on the current capabilities of the API and the scope of this exercise, this covers all of the different types of
-         data configurations that need to be considered by the tableview.
-         */
+         4. No Players or Teams */
         
         let appHasPlayerData = !self.players.isEmpty
         let appHasTeamData = !self.teams.isEmpty
@@ -117,27 +110,22 @@ class TeamSearchViewController: UIViewController {
         return AvailableTableviewData.NoData
     }
     
+    /* Function used to pass the correct data to the Network Utility. The searchString is always required, whilst the searchType and offset parameters are
+    only used for follow up team/player searches. A completion handler is used to pass data back to the table view controller once the data
+    has been returned from the back end. */
     private func fetchPlayerAndTeamData(searchString: String,
                                 searchType: SearchParameter?,
                                 offset: Int?) {
-        /*
-         This is the function used to pass the relevant data to the Network Utility to request data from the API. The searchString is always required,
-         whilst the searchType and offset parameters are only used when the user is doing a follow-up search for more players or teams. A completion handler is
-         used to pass data back to the table view controller once the data has been returned from the back end.
-         */
         let completionHandler: (FootballAPIRootDataObject, String) -> Void = { [weak self] (footballData, searchString) in
             
+            //Remove old data from the team/player array if player searched for a new string
             self?.clearDataIfUserSearchedNewString(searchString: searchString)
 
             if let players = footballData.result.players {
-                for player in players {
-                    self?.players.append(player)
-                }
+                for player in players { self?.players.append(player) }
             }
             if let teams = footballData.result.teams {
-                for team in teams {
-                    self?.teams.append(team)
-                }
+                for team in teams { self?.teams.append(team) }
             }
             DispatchQueue.main.async {
                 self?.removeSpinner()
@@ -150,50 +138,47 @@ class TeamSearchViewController: UIViewController {
                                      completionHandler: completionHandler)
     }
     
+    //Quick check to determine if a specific player is in the DB based on their id (which is the designated primary key).
     private func isFavouritePlayer(playerID: String) -> Bool {
-        //Quick check to determine if a specific player is in the DB based on their id (which is the designated primary key).
         return !db.findFavouritePlayer(playerID: playerID).isEmpty
     }
     
     //MARK: Search Management Functions - Used To Manage When/How User Searches For Data
-    //TODO: Give this a better name
+    //Initial actions to be completed before starting a search.
     @objc func initialSearchActions() {
         if hideNoResultsFoundLabel {
             hideNoResultsFoundLabel = !hideNoResultsFoundLabel
         }
         guard let searchString = self.searchBar.text else { return }
+        //Don't execute a search if less than 3 characters - data only really starts to become useful at that stage.
         if searchString.count > 2 {
             executeSearch(searchString:searchString, searchParameter: nil, offset: nil)
         }
         self.timer?.invalidate()
     }
     
+    //Grab the searchString from the searchBar and check if the user is seeking additional results for the same string. If they are, additional params processed.
     func executeSearch(searchString: String, searchParameter: SearchParameter?, offset: Int?) {
-        /*Grab the searchString from the searchBar and check if the user is seeking additional results for the same string. If they are, the additional parameters necessary are passed to the Network Utility.*/
         let isNewSearch = self.firstSearchCheck(searchString: searchString)
 
-        if self.loadingWebDataView == nil {
+        if self.spinnerView == nil {
             displaySpinner()
         }
         
         if isNewSearch {
-            self.fetchPlayerAndTeamData(searchString: searchString,
-                                       searchType: nil,
-                                       offset: nil)
+            self.fetchPlayerAndTeamData(searchString: searchString, searchType: nil, offset: nil)
         } else {
-            self.fetchPlayerAndTeamData(searchString: searchString,
-                                        searchType: searchParameter,
-                                        offset: offset)
+            self.fetchPlayerAndTeamData(searchString: searchString, searchType: searchParameter, offset: offset)
         }
     }
     
+    //Check if user is searching for the first time by comparing the string he is searching for to the last string he searched for.
     private func firstSearchCheck(searchString: String) -> Bool {
-        //Check if user is searching for the first time by comparing the string he is searching for to the last string he searched for.
         return searchString == previousSearchString ? false : true
     }
     
+    //Clears everything that we currently hold in the data arrays if the user is searching for a fresh searchString.
     private func clearDataIfUserSearchedNewString(searchString: String) {
-        //Clears everything that we currently hold in the data arrays if the user is searching for a fresh searchString.
         if self.previousSearchString ?? "" != searchString {
             players.removeAll()
             teams.removeAll()
@@ -206,11 +191,10 @@ class TeamSearchViewController: UIViewController {
         self.coordinator?.navigateToFavouritesController()
     }
     
-    //MARK: Spinner functions
+    //MARK: Spinner Functions
+    //Spinner to be shown whilst searching for data
     func displaySpinner() {
-        
-        if self.loadingWebDataView == nil {
-            
+        if self.spinnerView == nil {
             guard let window = self.view.window else { return }
             
             let spinnerView = UIView.init(frame: window.frame)
@@ -227,38 +211,37 @@ class TeamSearchViewController: UIViewController {
             activityIndicator.startAnimating()
             activityIndicator.center = spinnerView.center
             
-            self.loadingWebDataView = spinnerView
-            self.loadingWebDataView?.addSubview(activityIndicator)
+            self.spinnerView = spinnerView
+            self.spinnerView?.addSubview(activityIndicator)
     }
-        
         DispatchQueue.main.async {
             guard let tableView = self.tableView else { return }
             tableView.isScrollEnabled = false
             tableView.backgroundColor = .clear
-            guard let loadview = self.loadingWebDataView else { return }
+            guard let loadview = self.spinnerView else { return }
             tableView.addSubview(loadview)
         }
     }
     
+    //Removes spinner and nullifies the spinner view.
     func removeSpinner() {
-        
         DispatchQueue.main.async {
             guard let tableview = self.tableView else { return }
             tableview.isScrollEnabled = true
-            guard let loadview = self.loadingWebDataView else { return }
+            guard let loadview = self.spinnerView else { return }
             loadview.removeFromSuperview()
-            self.loadingWebDataView = nil
+            self.spinnerView = nil
         }
     }
 }
 
 //MARK: Tableview Controller Data Source & Delegate
 //These functions should be in their own dedicated class, but under the time pressure I wanted to make sure I could deliver a sound, working build.
-//My first port of call, given another day to work on this, would be to reduce the size of this controller!
+//My first port of call, given another day to work on this, would be to reduce the size of this controller by carting this lot elsewhere!
 extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     
+    //Configure height of tableview cells based on section & data available
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
         switch availableDataCheck() {
         case .PlayersAndTeams:
             if indexPath.section == 0 {
@@ -266,19 +249,18 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 return 100
             }
-        case .OnlyPlayers:
-            return 80
-        case .OnlyTeams:
-            return 100
-        case .NoData:
-            return 80
+        case .OnlyPlayers: return 80
+        case .OnlyTeams: return 100
+        case .NoData: return 80
         }
     }
-    
+
+    //Configure number of sections to display
     func numberOfSections(in tableView: UITableView) -> Int {
         return tableviewSectionCount()
     }
     
+    //Configure header section titles
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let playerHeading = TableViewSectionHeader.players
         let teamHeading = TableViewSectionHeader.teams
@@ -290,26 +272,25 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 return teamHeading
             }
-        case .OnlyPlayers:
-            return playerHeading
-        case .OnlyTeams:
-            return teamHeading
-        case .NoData:
-            return ""
+        case .OnlyPlayers: return playerHeading
+        case .OnlyTeams: return teamHeading
+        case .NoData: return ""
         }
     }
     
+    //Determine number of rows to be shown in tableview section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var playerCount = players.count
         var teamCount = teams.count
         
-        //If not 0 and multiple of 10 there may be more data available to download from the API. Add 1 to the team/player count so there is room for the MoreCell.
-        //TODO: Figure out how to handle a final batch of data which brings the player count to a multiple of 10.
+        /*If datacount != 0 and is a multiple of 10, there may be more data available to download from the API. Make room in the table for the 'More' cell,
+          to enable additional data download.*/
         if (playerCount != 0) && (playerCount % 10 == 0){
+            //Add 1 to the team/player count so there is room for the MoreCell.
             playerCount += 1
         }
-        
         if (teamCount != 0) && (teamCount % 10 == 0){
+            //Add 1 to the team/player count so there is room for the MoreCell.
             teamCount += 1
         }
         
@@ -320,16 +301,15 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 return teamCount
             }
-        case .OnlyPlayers:
-            return playerCount
-        case .OnlyTeams:
-            return teamCount
+        case .OnlyPlayers: return playerCount
+        case .OnlyTeams: return teamCount
         case .NoData:
             //Return a single row in the event that no data is available, for the No Data cell.
             return 1
         }
     }
     
+    //Populate rows with the appropriate cells, based on available data.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch availableDataCheck() {
         case .PlayersAndTeams:
@@ -341,14 +321,12 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
                                    indexPath: indexPath)
             }
         case .OnlyTeams:
-            return getTeamCell(tableView: tableView,
-                               indexPath: indexPath)
+            return getTeamCell(tableView: tableView, indexPath: indexPath)
         case .OnlyPlayers:
-            return getPlayerCell(tableView: tableView,
-                                 indexPath: indexPath)
+            return getPlayerCell(tableView: tableView, indexPath: indexPath)
         case .NoData:
-            if let genericCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.genericCell,
-                                                                 for: indexPath) as? GenericTableViewCell {
+            guard let genericCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.genericCell,
+                                                                  for: indexPath) as? GenericTableViewCell else { return UITableViewCell() }
                 if hideNoResultsFoundLabel {
                     genericCell.centerLabel.isHidden = true
                 } else {
@@ -356,28 +334,22 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
                 }
                 genericCell.centerLabel.text = "No Results Found!"
                 return genericCell
-            }
         }
-        return UITableViewCell()
     }
     
+    //Allow user to mark players as favourites by selecting rows and to load more data by tapping 'More' cells.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        guard let cell = tableView.cellForRow(at: indexPath) else {
-            return
-        }
+        guard let cell = tableView.cellForRow(at: indexPath) else { return }
         
         if cell.isKind(of: PlayerTableViewCell.self) {
-            guard let playerCell = cell as? PlayerTableViewCell else {  return }
+            guard let playerCell = cell as? PlayerTableViewCell else { return }
                         
             let player = players[indexPath.row]
             
             if isFavouritePlayer(playerID: player.id) {
-                playerCell.setFavouritePlayerStatus(bool: false)
                 playerCell.hideHeartImage()
                 db.deleteFavouritePlayer(playerID: player.id)
             } else {
-                playerCell.setFavouritePlayerStatus(bool: true)
                 playerCell.showHeartImage()
                 
                 let favouritePlayer = FavouritePlayer()
@@ -402,8 +374,8 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
                     self.executeSearch(searchString:searchString, searchParameter: SearchParameter.players, offset: self.players.count)
                     return
                 } else {
-                    self.executeSearch(searchString:searchString, searchParameter: SearchParameter.teams, offset: self.teams.count)
                     //Further search for teams
+                    self.executeSearch(searchString:searchString, searchParameter: SearchParameter.teams, offset: self.teams.count)
                     return
                 }
             case .OnlyPlayers:
@@ -411,7 +383,7 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
                 self.executeSearch(searchString:searchString, searchParameter: SearchParameter.players, offset: self.players.count)
                 return
             case .OnlyTeams:
-                //further search for teams
+                //Further search for teams
                 self.executeSearch(searchString: searchString, searchParameter: SearchParameter.teams, offset: self.teams.count)
                 return
             case .NoData:
@@ -420,39 +392,36 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    //Return number of sections based on available data
     func tableviewSectionCount() -> Int {
-        switch  availableDataCheck() {
-        case .PlayersAndTeams:
-            return 2
-        default:
-            return 1
+        switch availableDataCheck() {
+            case .PlayersAndTeams: return 2
+            default: return 1
         }
     }
     
+    //Convenience function for returning the correct data for Player cells in cellForRowAtIndexPath.
     func getPlayerCell(tableView: UITableView,
                        indexPath: IndexPath) -> UITableViewCell {
-        //Check to see if we've reached the 'more' cell indexpath, which will always be 1 greater than the number of players. Adding 1 to the indexpath row is necessary to account for the entry at the 0 index.
+
         if (indexPath.row + 1) > self.players.count {
-            if let moreCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.moreCell,
-                                                            for: indexPath) as? MoreTableViewCell {
+            /*Check to see if we've reached the 'more' cell indexpath, which will always be 1 greater than the number of players. Adding 1 to the indexpath row
+             is necessary to account for the entry at the 0 index. */
+            guard let moreCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.moreCell,
+                                                               for: indexPath) as? MoreTableViewCell else { return UITableViewCell() }
                 moreCell.setLabelText(tableViewSectionType: TableViewSectionHeader.players)
                 return moreCell
             }
-        }
         
         if let playerCell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.playerCell,
                                                           for: indexPath) as? PlayerTableViewCell {
-            if self.players.isEmpty {
-                return playerCell
-            }
+            if self.players.isEmpty { return playerCell }
             
             let player = self.players[indexPath.row]
             
             if isFavouritePlayer(playerID: player.id) {
-                playerCell.setFavouritePlayerStatus(bool: true)
                 playerCell.showHeartImage()
             } else {
-                playerCell.setFavouritePlayerStatus(bool: false)
                 playerCell.hideHeartImage()
             }
             
@@ -465,6 +434,7 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         return PlayerTableViewCell()
     }
     
+    //Convenience function for returning the correct data for team cells in cellForRowAtIndexPath.
     func getTeamCell(tableView: UITableView,
                      indexPath: IndexPath) -> UITableViewCell {
         //Check to see if we've reached the 'more' cell indexpath, which will always be 1 greater than the number of players. Adding 1 to the indexpath row is necessary to account for the entry at the 0 index.
@@ -508,8 +478,9 @@ extension TeamSearchViewController: UISearchBarDelegate {
 }
 
 extension TeamSearchViewController: FailedToCompleteNetworkRequest {
+    //Delegate function from AlertUtility to dismiss spinner if anything stops data from being received.
     func didFailToProcessNetworkRequest() {
-        if self.loadingWebDataView != nil {
+        if self.spinnerView != nil {
             self.removeSpinner()
         }
     }

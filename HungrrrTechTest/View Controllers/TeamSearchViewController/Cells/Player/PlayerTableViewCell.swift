@@ -17,18 +17,12 @@ class PlayerTableViewCell: UITableViewCell {
     @IBOutlet weak var clubHeadingLabel: UILabel!
     @IBOutlet weak var clubLabel: UILabel!
     @IBOutlet weak var heartImage: UIImageView!
-    
-    private var favouritePlayer = false
-    
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         //Hide heart image initially so that user can add
         self.selectionStyle = .none
         heartImage.alpha = 0
-    }
-
-    func setFavouritePlayerStatus(bool: Bool) {
-        favouritePlayer = bool
     }
     
     func showHeartImage() {

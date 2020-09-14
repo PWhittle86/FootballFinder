@@ -10,7 +10,6 @@ import UIKit
 
 class PlayerTableViewCell: UITableViewCell {
 
-    
     @IBOutlet weak var playerNameLabel: UILabel!
     @IBOutlet weak var ageHeadingLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!

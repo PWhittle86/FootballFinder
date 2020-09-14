@@ -46,7 +46,7 @@
 		22403FD6250E9E310085B7E7 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
 		22403FD7250E9E310085B7E7 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		22403FE2250ED61D0085B7E7 /* AlertUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertUtility.swift; sourceTree = "<group>"; };
-		2284890F250BF09A00F12010 /* HungrrrTechTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HungrrrTechTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2284890F250BF09A00F12010 /* Football Finder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Football Finder.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		22848912250BF09A00F12010 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22848914250BF09A00F12010 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		2284891B250BF09D00F12010 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -127,7 +127,7 @@
 		22848910250BF09A00F12010 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2284890F250BF09A00F12010 /* HungrrrTechTest.app */,
+				2284890F250BF09A00F12010 /* Football Finder.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -296,7 +296,7 @@
 			);
 			name = HungrrrTechTest;
 			productName = HungrrrTechTest;
-			productReference = 2284890F250BF09A00F12010 /* HungrrrTechTest.app */;
+			productReference = 2284890F250BF09A00F12010 /* Football Finder.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -560,7 +560,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "whittle-productions.HungrrrTechTest";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Football Finder";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -580,7 +580,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "whittle-productions.HungrrrTechTest";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Football Finder";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

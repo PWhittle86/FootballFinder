@@ -239,76 +239,7 @@ class TeamSearchViewController: UIViewController {
 //These functions should be in their own dedicated class, but under the time pressure I wanted to make sure I could deliver a sound, working build.
 //My first port of call, given another day to work on this, would be to reduce the size of this controller by carting this lot elsewhere!
 extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    //Configure height of tableview cells based on section & data available
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch availableDataCheck() {
-        case .PlayersAndTeams:
-            if indexPath.section == 0 {
-                return 80
-            } else {
-                return 100
-            }
-        case .OnlyPlayers: return 80
-        case .OnlyTeams: return 100
-        case .NoData: return 80
-        }
-    }
 
-    //Configure number of sections to display
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return tableviewSectionCount()
-    }
-    
-    //Configure header section titles
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let playerHeading = TableViewSectionHeader.players
-        let teamHeading = TableViewSectionHeader.teams
-        
-        switch availableDataCheck() {
-        case .PlayersAndTeams:
-            if section == 0 {
-                return playerHeading
-            } else {
-                return teamHeading
-            }
-        case .OnlyPlayers: return playerHeading
-        case .OnlyTeams: return teamHeading
-        case .NoData: return ""
-        }
-    }
-    
-    //Determine number of rows to be shown in tableview section
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var playerCount = players.count
-        var teamCount = teams.count
-        
-        /*If datacount != 0 and is a multiple of 10, there may be more data available to download from the API. Make room in the table for the 'More' cell,
-          to enable additional data download.*/
-        if (playerCount != 0) && (playerCount % 10 == 0){
-            //Add 1 to the team/player count so there is room for the MoreCell.
-            playerCount += 1
-        }
-        if (teamCount != 0) && (teamCount % 10 == 0){
-            //Add 1 to the team/player count so there is room for the MoreCell.
-            teamCount += 1
-        }
-        
-        switch availableDataCheck() {
-        case .PlayersAndTeams:
-            if section == 0 {
-                return playerCount
-            } else {
-                return teamCount
-            }
-        case .OnlyPlayers: return playerCount
-        case .OnlyTeams: return teamCount
-        case .NoData:
-            //Return a single row in the event that no data is available, for the No Data cell.
-            return 1
-        }
-    }
-    
     //Populate rows with the appropriate cells, based on available data.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch availableDataCheck() {
@@ -392,11 +323,80 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    //Configure header section titles
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let playerHeading = TableViewSectionHeader.players
+        let teamHeading = TableViewSectionHeader.teams
+        
+        switch availableDataCheck() {
+        case .PlayersAndTeams:
+            if section == 0 {
+                return playerHeading
+            } else {
+                return teamHeading
+            }
+        case .OnlyPlayers: return playerHeading
+        case .OnlyTeams: return teamHeading
+        case .NoData: return ""
+        }
+    }
+    
+    //Configure number of sections to display
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return tableviewSectionCount()
+    }
+    
+    //Determine number of rows to be shown in tableview section
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var playerCount = players.count
+        var teamCount = teams.count
+        
+        /*If datacount != 0 and is a multiple of 10, there may be more data available to download from the API. Make room in the table for the 'More' cell,
+          to enable additional data download.*/
+        if (playerCount != 0) && (playerCount % 10 == 0){
+            //Add 1 to the team/player count so there is room for the MoreCell.
+            playerCount += 1
+        }
+        if (teamCount != 0) && (teamCount % 10 == 0){
+            //Add 1 to the team/player count so there is room for the MoreCell.
+            teamCount += 1
+        }
+        
+        switch availableDataCheck() {
+        case .PlayersAndTeams:
+            if section == 0 {
+                return playerCount
+            } else {
+                return teamCount
+            }
+        case .OnlyPlayers: return playerCount
+        case .OnlyTeams: return teamCount
+        case .NoData:
+            //Return a single row in the event that no data is available, for the No Data cell.
+            return 1
+        }
+    }
+    
     //Return number of sections based on available data
     func tableviewSectionCount() -> Int {
         switch availableDataCheck() {
             case .PlayersAndTeams: return 2
             default: return 1
+        }
+    }
+    
+    //Configure height of tableview cells based on section & data available
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch availableDataCheck() {
+        case .PlayersAndTeams:
+            if indexPath.section == 0 {
+                return 80
+            } else {
+                return 100
+            }
+        case .OnlyPlayers: return 80
+        case .OnlyTeams: return 100
+        case .NoData: return 80
         }
     }
     
@@ -424,7 +424,7 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 playerCell.hideHeartImage()
             }
-            
+
             playerCell.playerNameLabel.text = "\(player.firstName) \(player.secondName)"
             playerCell.ageLabel.text = player.age
             playerCell.clubLabel.text = player.club

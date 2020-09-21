@@ -270,6 +270,9 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
     
     //Allow user to mark players as favourites by selecting rows and to load more data by tapping 'More' cells.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        self.view.endEditing(true)
+        
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         
         if cell.isKind(of: PlayerTableViewCell.self) {
@@ -460,6 +463,7 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return TeamTableViewCell()
     }
+    
     
 }
 

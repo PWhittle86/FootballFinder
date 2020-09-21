@@ -97,10 +97,10 @@
 		2211AC5F250C02E7002EC546 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				229EAAEC250D4C6F00FE3CE7 /* More */,
 				229EAAEB250D4C6300FE3CE7 /* Generic Cell */,
-				229EAAEA250D4C5300FE3CE7 /* Team */,
+				229EAAEC250D4C6F00FE3CE7 /* More */,
 				229EAAE9250D4C4300FE3CE7 /* Player */,
+				229EAAEA250D4C5300FE3CE7 /* Team */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -241,8 +241,8 @@
 		22DC46A7250C13760000A47E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				22DC46AB250C18290000A47E /* FavouritePlayer.swift */,
 				22DC46B6250C1EF10000A47E /* Codables.swift */,
+				22DC46AB250C18290000A47E /* FavouritePlayer.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -250,9 +250,9 @@
 		22DC46B2250C1A2C0000A47E /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				22403FE2250ED61D0085B7E7 /* AlertUtility.swift */,
 				22B4F13B250E5D23003AB751 /* DBUtility.swift */,
 				22DC46B3250C1A990000A47E /* NetworkUtility.swift */,
-				22403FE2250ED61D0085B7E7 /* AlertUtility.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";

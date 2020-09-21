@@ -66,9 +66,9 @@ class FavouritesTableViewController: UITableViewController {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.playerCell,
                                                            for: indexPath) as? PlayerTableViewCell else { return UITableViewCell() }
             let player = players[indexPath.row]
-            cell.playerNameLabel.text = "\(player.playerFirstName) \(player.playerSecondName)"
-            cell.ageLabel.text = "\(player.playerAge)"
-            cell.clubLabel.text = "\(player.playerClub)"
+            cell.playerNameLabel.text = "\(player.firstName) \(player.secondName)"
+            cell.ageLabel.text = "\(player.age)"
+            cell.clubLabel.text = "\(player.club)"
             return cell
         }
     }
@@ -79,7 +79,7 @@ class FavouritesTableViewController: UITableViewController {
             guard let players = self.favouritePlayers else { return }
             if !players.isEmpty{
                 let player = players[indexPath.row]
-                db.deleteFavouritePlayer(playerID: player.playerID)
+                db.deleteFavouritePlayer(playerID: player.ID)
                 DispatchQueue.main.async {
                     if players.count >= 1 {
                         tableView.deleteRows(at: [indexPath], with: .fade)

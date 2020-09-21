@@ -33,7 +33,7 @@ class DBUtility {
     
     //Returns a player with a matching ID (primary key).
     func findFavouritePlayer(playerID: String) -> Results<FavouritePlayer> {
-        return db.objects(FavouritePlayer.self).filter("playerID = '\(playerID)'")
+        return db.objects(FavouritePlayer.self).filter("ID = '\(playerID)'")
     }
     
     //Returns all favourite players saved to the DB.

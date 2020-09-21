@@ -11,16 +11,28 @@ import RealmSwift
 
 class FavouritePlayer: Object {
 
-    @objc dynamic var playerID = ""
-    @objc dynamic var playerFirstName = ""
-    @objc dynamic var playerSecondName = ""
-    @objc dynamic var playerNationality = ""
-    @objc dynamic var playerAge = ""
-    @objc dynamic var playerClub = ""
+    @objc dynamic var ID = ""
+    @objc dynamic var firstName = ""
+    @objc dynamic var secondName = ""
+    @objc dynamic var nationality = ""
+    @objc dynamic var age = ""
+    @objc dynamic var club = ""
 
+    init(id: String, firstName: String, secondName: String, nationality: String, age: String, club: String) {
+        self.ID = id
+        self.firstName = firstName
+        self.secondName = secondName
+        self.nationality = nationality
+        self.age = age
+        self.club = club
+    }
+    
+    required init() {
+        //Do nothing.
+    }
     
     override static func primaryKey() -> String? {
-        return "playerID"
+        return "ID"
     }
     
 }

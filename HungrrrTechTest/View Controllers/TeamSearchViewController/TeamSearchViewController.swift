@@ -286,15 +286,13 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 playerCell.showHeartImage()
                 
-                let favouritePlayer = FavouritePlayer()
-                
-                favouritePlayer.playerID = player.id
-                favouritePlayer.playerFirstName = player.firstName
-                favouritePlayer.playerSecondName = player.secondName
-                favouritePlayer.playerNationality = player.nationality
-                favouritePlayer.playerAge = player.age
-                favouritePlayer.playerClub = player.club
-                
+                let favouritePlayer = FavouritePlayer(id: player.id,
+                                                      firstName: player.firstName,
+                                                      secondName: player.secondName,
+                                                      nationality: player.nationality,
+                                                      age: player.age,
+                                                      club: player.club)
+
                 db.addFavouritePlayer(player: favouritePlayer)
             }
         }

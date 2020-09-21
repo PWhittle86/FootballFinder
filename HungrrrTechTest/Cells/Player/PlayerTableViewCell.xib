@@ -79,6 +79,10 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w0U-SR-cz3">
                         <rect key="frame" x="308" y="33" width="25" height="25"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="double-left" id="uad-vS-3hl">
+                                <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Heart" id="hIi-1n-bWN">
                                 <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
@@ -106,6 +110,7 @@
                 <outlet property="ageLabel" destination="hMC-A3-ryh" id="01k-lm-pjE"/>
                 <outlet property="clubHeadingLabel" destination="5um-bV-Sta" id="hE5-ba-cac"/>
                 <outlet property="clubLabel" destination="1TH-se-ZXj" id="U5a-ha-bay"/>
+                <outlet property="doubleLeftImage" destination="uad-vS-3hl" id="1b4-Br-4YK"/>
                 <outlet property="heartImage" destination="hIi-1n-bWN" id="1W5-RW-HlF"/>
                 <outlet property="playerNameLabel" destination="62f-SY-k6n" id="GsD-rs-Apf"/>
             </connections>
@@ -114,5 +119,6 @@
     </objects>
     <resources>
         <image name="Heart" width="50" height="50"/>
+        <image name="double-left" width="50" height="50"/>
     </resources>
 </document>

@@ -426,10 +426,7 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
                 playerCell.hideHeartImage()
             }
 
-            playerCell.playerNameLabel.text = "\(player.firstName) \(player.secondName)"
-            playerCell.ageLabel.text = player.age
-            playerCell.clubLabel.text = player.club
-            
+            playerCell.populatePlayerData(name: "\(player.firstName) \(player.secondName)", age: player.age, club: player.club)
             return playerCell
         }
         return PlayerTableViewCell()

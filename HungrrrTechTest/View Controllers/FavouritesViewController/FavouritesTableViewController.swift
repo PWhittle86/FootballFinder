@@ -66,9 +66,10 @@ class FavouritesTableViewController: UITableViewController {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCellIdentifier.playerCell,
                                                            for: indexPath) as? PlayerTableViewCell else { return UITableViewCell() }
             let player = players[indexPath.row]
-            cell.playerNameLabel.text = "\(player.firstName) \(player.secondName)"
-            cell.ageLabel.text = "\(player.age)"
-            cell.clubLabel.text = "\(player.club)"
+            cell.populatePlayerData(name: "\(player.firstName) \(player.secondName)",
+                                    age: "\(player.age)",
+                                    club: "\(player.club)")
+            cell.showDoubleLeftImage()
             return cell
         }
     }

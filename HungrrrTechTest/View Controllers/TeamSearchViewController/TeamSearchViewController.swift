@@ -110,9 +110,7 @@ class TeamSearchViewController: UIViewController {
         return AvailableTableviewData.NoData
     }
     
-    /* Function used to pass the correct data to the Network Utility. The searchString is always required, whilst the searchType and offset parameters are
-    only used for follow up team/player searches. A completion handler is used to pass data back to the table view controller once the data
-    has been returned from the back end. */
+    /* Function used to pass the correct data to the Network Utility. The searchString is always required, whilst the searchType and offset parameters are only used for follow up team/player searches. A completion handler is used to pass data back to the table view controller once the data has been returned from the back end. */
     private func fetchPlayerAndTeamData(searchString: String,
                                 searchType: SearchParameter?,
                                 offset: Int?) {
@@ -458,7 +456,6 @@ extension TeamSearchViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return TeamTableViewCell()
     }
-    
     
 }
 

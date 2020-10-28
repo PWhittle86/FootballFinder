@@ -114,7 +114,7 @@ class NetworkUtility {
     //Convenience function to return specific error codes for http codes that don't represent success.
     private func handleNetworkResponse(response: HTTPURLResponse) -> DownloadError? {
         switch response.statusCode {
-        case 200...299: return (nil)
+        case 200...299: return (.none)
         case 300...399: return (.redirectionError)
         case 400...499: return (.clientError)
         case 500...599: return (.serverError)
